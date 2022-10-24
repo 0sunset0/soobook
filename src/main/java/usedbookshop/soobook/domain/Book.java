@@ -15,12 +15,14 @@ public class Book {
 
     private String name;
     private int price;
-    private int stockQuantity;
     private int score;
-    private String isbn;
     private String author;
+    private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_book_id")
     private CategoryBook categorybook;
+
+    @Enumerated(EnumType.STRING)
+    private BookStatus bookStatus;
 }

@@ -7,10 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Reply extends Date{
+public class Comment extends Date{
 
     @Id @GeneratedValue
-    @Column(name = "reply_id")
+    @Column(name = "comment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,8 +18,8 @@ public class Reply extends Date{
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "review_id")
+    private Review review;
 
     private String contents;
 

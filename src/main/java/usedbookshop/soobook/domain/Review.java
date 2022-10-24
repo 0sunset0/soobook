@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Board extends Date {
+public class Review extends Date {
 
     @Id
     @GeneratedValue
-    @Column(name = "board_id")
+    @Column(name = "review_id")
     private Long id;
 
     private String title;

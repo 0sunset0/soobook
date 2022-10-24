@@ -1,0 +1,17 @@
+package usedbookshop.soobook.repository.comment;
+
+import usedbookshop.soobook.domain.Review;
+import usedbookshop.soobook.domain.Comment;
+
+import java.util.List;
+
+public interface CommentRepository {
+
+    void save(Comment comment);
+
+    Comment findOne(Long commentId);
+
+    List<Comment> findByReview(Review review);
+
+    void delete(Comment comment);
+}
