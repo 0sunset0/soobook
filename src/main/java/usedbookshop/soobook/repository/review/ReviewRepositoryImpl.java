@@ -7,12 +7,13 @@ import usedbookshop.soobook.domain.Order;
 import usedbookshop.soobook.domain.Review;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class ReviewRepositoryImpl implements ReviewRepository{
-
+    @PersistenceContext
     private final EntityManager em;
 
     @Override

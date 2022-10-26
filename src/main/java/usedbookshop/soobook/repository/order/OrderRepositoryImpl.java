@@ -6,12 +6,13 @@ import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.domain.Order;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepository{
-
+    @PersistenceContext
     private final EntityManager em;
 
     @Override
@@ -20,7 +21,7 @@ public class OrderRepositoryImpl implements OrderRepository{
     }
 
     @Override
-    public Order findOne(Long orderId) {
+    public Order findById(Long orderId) {
         return em.find(Order.class, orderId);
     }
 

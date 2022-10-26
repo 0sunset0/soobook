@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Getter @Setter
+@Getter
 public class Member {
 
     @Id @GeneratedValue
@@ -17,21 +17,32 @@ public class Member {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="city", column = @Column(name = "home_city"))
-            ,@AttributeOverride(name="street", column = @Column(name = "home_street"))
-            ,@AttributeOverride(name="zipcode", column = @Column(name = "home_zipcode"))
+            @AttributeOverride(name="area", column = @Column(name = "home_area"))
+            ,@AttributeOverride(name="roadName", column = @Column(name = "home_roadName"))
+            ,@AttributeOverride(name="roadCode", column = @Column(name = "home_roadCode"))
     })
     private Address homeAddress;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="city", column = @Column(name = "work_city"))
-            ,@AttributeOverride(name="street", column = @Column(name = "work_street"))
-            ,@AttributeOverride(name="zipcode", column = @Column(name = "work_zipcode"))
+            @AttributeOverride(name="area", column = @Column(name = "work_area"))
+            ,@AttributeOverride(name="roadName", column = @Column(name = "work_roadName"))
+            ,@AttributeOverride(name="roadCode", column = @Column(name = "work_roadCode"))
     })
     private Address workAddress;
 
+    @Column(unique = true)
     private String email;
+
+    @Column(unique = true)
     private String password;
 
+
+    public Member(String name, Address homeAddress, Address workAddress, String email, String password) {
+        this.name = name;
+        this.homeAddress = homeAddress;
+        this.workAddress = workAddress;
+        this.email = email;
+        this.password = password;
+    }
 }

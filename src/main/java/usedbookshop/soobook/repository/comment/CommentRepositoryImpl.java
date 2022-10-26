@@ -7,12 +7,13 @@ import usedbookshop.soobook.domain.Comment;
 import usedbookshop.soobook.domain.Review;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository{
-
+    @PersistenceContext
     private final EntityManager em;
 
     @Override
@@ -21,7 +22,7 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
-    public Comment findOne(Long commentId) {
+    public Comment findById(Long commentId) {
         return em.find(Comment.class, commentId);
     }
 

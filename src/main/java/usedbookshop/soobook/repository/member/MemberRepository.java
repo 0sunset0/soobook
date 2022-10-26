@@ -3,6 +3,7 @@ package usedbookshop.soobook.repository.member;
 import usedbookshop.soobook.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository {
 
@@ -10,5 +11,6 @@ public interface MemberRepository {
 
     Member findById(Long memberId);
 
-    List<Member> findByEmail(String email);
+    Optional<Member> findByEmail(String email);
+
 }

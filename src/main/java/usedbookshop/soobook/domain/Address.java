@@ -9,17 +9,18 @@ import java.util.Objects;
 @Getter
 public class Address {
 
-    private String city;
-    private String street;
-    private String zipcode;
+    private String area;
+    private String roadName;
+    private int roadCode;
 
     protected Address() {
     }
 
-    public Address(String city, String street, String zipcode) {
-        this.city = city;
-        this.street = street;
-        this.zipcode = zipcode;
+
+    public Address(String area, String roadName, int roadCode) {
+        this.area = area;
+        this.roadName = roadName;
+        this.roadCode = roadCode;
     }
 
     @Override
@@ -27,11 +28,11 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getZipcode(), address.getZipcode());
+        return getRoadCode() == address.getRoadCode() && Objects.equals(getArea(), address.getArea()) && Objects.equals(getRoadName(), address.getRoadName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCity(), getStreet(), getZipcode());
+        return Objects.hash(getArea(), getRoadName(), getRoadCode());
     }
 }

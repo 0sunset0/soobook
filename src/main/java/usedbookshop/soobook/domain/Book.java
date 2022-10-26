@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Book {
+public class Book extends Date{
 
     @Id @GeneratedValue
     @Column(name = "book_id")
@@ -21,8 +21,38 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_book_id")
-    private CategoryBook categorybook;
+    private CategoryBook categoryBook;
 
     @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
+
+    public Book(String name, int price, String author, int quantity, CategoryBook categoryBook) {
+        this.name = name;
+        this.price = price;
+        this.score = 0;
+        this.author = author;
+        this.quantity = quantity;
+        this.categoryBook = categoryBook;
+        this.bookStatus = BookStatus.SALE;
+    }
+
+    public void modifyName(String name) {
+        this.name = name;
+    }
+
+    public void modifyPrice(int price) {
+        this.price = price;
+    }
+
+    public void modifyAuthor(String author) {
+        this.author = author;
+    }
+
+    public void modifyQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void modifyCategoryBook(CategoryBook categoryBook) {
+        this.categoryBook = categoryBook;
+    }
 }

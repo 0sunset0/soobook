@@ -7,13 +7,14 @@ import usedbookshop.soobook.domain.Category;
 import usedbookshop.soobook.domain.CategoryBook;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-
+    @PersistenceContext
     private final EntityManager em;
 
     @Override
@@ -40,13 +41,13 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findAllOrderByScore() {
-        return em.createQuery("select b from Book b order by b.score", Book.class)
+    public List<Book> findAllOrderByCreatedDate() {
+        return em.createQuery("select b from Book b order by b.createdDate desc", Book.class)
                 .getResultList();
     }
 
     @Override
-    public List<Book> findByCategory(CategoryBook categoryBook) {
+    public List<Book> findByCategoryBook(CategoryBook categoryBook) {
         //이거 마저 구현하기...
         return null;
     }

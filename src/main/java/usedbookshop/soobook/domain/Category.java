@@ -27,7 +27,11 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_book_id")
-    private CategoryBook categorybook;
+    private CategoryBook categoryBook;
 
+    public void addSubCategory(Category subCategory) {
+        this.subCategories.add(subCategory);
+        subCategory.setParentCategory(this);
+    }
 
 }

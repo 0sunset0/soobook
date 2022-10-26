@@ -9,7 +9,7 @@ public interface CommentRepository {
 
     void save(Comment comment);
 
-    Comment findOne(Long commentId);
+    Comment findById(Long commentId);
 
     List<Comment> findByReview(Review review);
 
