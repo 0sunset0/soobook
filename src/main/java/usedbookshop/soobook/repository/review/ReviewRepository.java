@@ -1,5 +1,6 @@
 package usedbookshop.soobook.repository.review;
 
+import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.Review;
 import usedbookshop.soobook.domain.Member;
 
@@ -11,9 +12,9 @@ public interface ReviewRepository {
 
     Review findById(Long reviewId);
 
-    List<Review> findAll();
-
     List<Review> findByMember(Member member);
 
-    void delete(Review review);
+    List<Review> findByBook(Book book);
+
+    Long delete(Review review);
 }

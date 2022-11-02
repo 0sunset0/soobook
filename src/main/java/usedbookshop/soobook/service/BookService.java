@@ -10,10 +10,10 @@ import usedbookshop.soobook.repository.book.BookRepository;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class BookService {
 
-    private  final BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Transactional
     public void saveBook(Book book){
@@ -29,6 +29,7 @@ public class BookService {
         findBook.modifyQuantity(quantity);
         findBook.modifyCategoryBook(categoryBook);
     }
+
 
     public List<Book> findAllBooks(){
         return bookRepository.findAll();

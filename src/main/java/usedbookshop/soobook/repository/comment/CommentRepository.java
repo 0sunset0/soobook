@@ -13,5 +13,5 @@ public interface CommentRepository {
 
     List<Comment> findByReview(Review review);
 
-    void delete(Comment comment);
+    Long delete(Comment comment);
 }

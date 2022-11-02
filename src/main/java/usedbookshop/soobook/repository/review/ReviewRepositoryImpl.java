@@ -2,6 +2,7 @@ package usedbookshop.soobook.repository.review;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.domain.Order;
 import usedbookshop.soobook.domain.Review;
@@ -26,11 +27,6 @@ public class ReviewRepositoryImpl implements ReviewRepository{
         return em.find(Review.class, reviewId);
     }
 
-    @Override
-    public List<Review> findAll() {
-        return em.createQuery("select r from Review r", Review.class)
-                .getResultList();
-    }
 
     @Override
     public List<Review> findByMember(Member member) {
@@ -40,7 +36,15 @@ public class ReviewRepositoryImpl implements ReviewRepository{
     }
 
     @Override
-    public void delete(Review review) {
+    public List<Review> findByBook(Book book) {
+        return em.createQuery("select r from Review r inner join r.book b on b.id=:bookId", Review.class)
+                .setParameter("bookId", book.getId())
+                .getResultList();
+    }
+
+    @Override
+    public Long delete(Review review) {
         em.remove(review);
+        return review.getId();
     }
 }
