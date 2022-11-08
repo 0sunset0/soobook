@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewRepository {
 
-    void save(Review review);
+    Long save(Review review);
 
     Review findById(Long reviewId);
 

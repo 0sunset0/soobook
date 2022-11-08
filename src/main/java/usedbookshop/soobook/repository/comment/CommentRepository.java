@@ -11,6 +11,8 @@ public interface CommentRepository {
 
     Comment findById(Long commentId);
 
+    List<Comment> findAll();
+
     List<Comment> findByReview(Review review);
 
     Long delete(Comment comment);

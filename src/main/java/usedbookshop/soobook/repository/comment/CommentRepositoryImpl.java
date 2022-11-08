@@ -27,6 +27,12 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
+    public List<Comment> findAll() {
+        return em.createQuery("select c from Comment c", Comment.class)
+                .getResultList();
+    }
+
+    @Override
     public List<Comment> findByReview(Review review) {
         return em.createQuery("select c from Comment c inner join c.review r on r.id=:reviewId", Comment.class)
                 .setParameter("reviewId", review.getId())

@@ -23,5 +23,9 @@ public class Comment extends Date{
 
     private String contents;
 
-
+    public Comment(Member member, Review review, String contents) {
+        this.member = member;
+        this.contents = contents;
+        review.addComment(this);
+    }
 }

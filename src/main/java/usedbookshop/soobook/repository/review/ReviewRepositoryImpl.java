@@ -18,8 +18,10 @@ public class ReviewRepositoryImpl implements ReviewRepository{
     private final EntityManager em;
 
     @Override
-    public void save(Review review) {
+    public Long save(Review review) {
         em.persist(review);
+        em.flush();
+        return review.getId();
     }
 
     @Override

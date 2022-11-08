@@ -69,6 +69,7 @@ public class Book extends Date{
     }
 
 
+
     /**
      * 비즈니스 로직
      */
@@ -96,6 +97,7 @@ public class Book extends Date{
         for (Review review : reviewList){
             bookScore += review.getScore().getValue();
         }
+        System.out.println("review의 개수 : "+reviewList.size());
         score =  bookScore/reviewList.size();
     }
 

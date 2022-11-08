@@ -9,7 +9,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.book.BookRepository;
+import usedbookshop.soobook.repository.comment.CommentRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
+
+import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
@@ -19,41 +24,53 @@ class ReviewServiceTest {
 
     @Autowired ReviewService reviewService;
     @Autowired ReviewRepository reviewRepository;
-    @Autowired BookService bookService;
+    @Autowired CommentRepository commentRepository;
+    @Autowired EntityManager em;
 
 
     @Test
     void 리뷰작성() {
         // given
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("경기도", "와우안길", 2222);
-        Member member = new Member("노을", homeAddress, workAddress, "sunset@naver.com", "1234");
-
-        CategoryBook categoryBook = new CategoryBook();
-        Book book = new Book("DB",50000, "박다솜",5, categoryBook);
-
-        Review review = new Review("책 좋아요", "내용 없음", ReviewScore.FIVE, book, member);
-
+        Member member = getMember();
+        Book book = getBook();
+        Review review = getReview("a","a", ReviewScore.FIVE, book, member);
 
         // when
-        reviewRepository.save(review);
-
+        Long saveId = reviewService.createReview(review);
 
         // then
+        Assertions.assertThat(review.getId()).isEqualTo(saveId);
+    }
+
+    private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
+        Review review = new Review(title, contents, reviewScore, book, member);
+        return review;
+    }
+
+    private Book getBook() {
+        CategoryBook categoryBook = new CategoryBook();
+        em.persist(categoryBook);
+        Book book = new Book("a",50000, "a",5, categoryBook);
+        em.persist(book);
+        return book;
+    }
+
+    private Member getMember() {
+        Address homeAddress = new Address("a", "a", 1111);
+        Address workAddress = new Address("a", "a", 2222);
+        Member member = new Member("a", homeAddress, workAddress, "sunset@naver.com", "1234");
+        em.persist(member);
+        return member;
     }
 
     @Test
     void 리뷰들_점수의_평균이_책평점() {
         // given
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("경기도", "와우안길", 2222);
-        Member member = new Member("노을", homeAddress, workAddress, "sunset@naver.com", "1234");
+        Member member = getMember();
+        Book book = getBook();
 
-        CategoryBook categoryBook = new CategoryBook();
-        Book book = new Book("DB",50000, "박다솜",5, categoryBook);
-
-        Review review1 = new Review("책 좋아요", "내용 없음", ReviewScore.FIVE, book, member);
-        Review review2 = new Review("책 싫어요", "내용 없음", ReviewScore.ONE, book, member);
+        Review review1 = getReview("a","a", ReviewScore.FIVE, book, member);
+        Review review2 = getReview("a","a", ReviewScore.ONE, book, member);
 
         // when
         reviewService.createReview(review1);
@@ -68,13 +85,30 @@ class ReviewServiceTest {
     void 리뷰삭제시_댓글들도_삭제() {
 
         // given
+        Member member = getMember();
+        Book book = getBook();
+        Review review = getReview("a","a", ReviewScore.FIVE, book, member);
+        Comment comment1 = getComment(member, review, "Good");
+        Comment comment2 = getComment(member, review, "Good");
 
         // when
+        reviewService.createReview(review);
+        System.out.println("review id= " + review.getId());
+        reviewService.deleteReview(review);
+
 
         // then
+        List<Review> findReviews = reviewRepository.findByBook(book);
+        for (Review findReview : findReviews) {
+            System.out.println("findReview id = " + findReview.getId());
+        }
+
     }
 
-
-
+    private Comment getComment(Member member, Review review, String contents) {
+        Comment comment = new Comment(member, review, contents);
+        em.persist(comment);
+        return comment;
+    }
 
 }

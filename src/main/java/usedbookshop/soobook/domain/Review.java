@@ -40,8 +40,18 @@ public class Review extends Date {
         this.title = title;
         this.contents = contents;
         this.score = score;
-        this.book = book;
         this.member = member;
+        addReview(book);
+    }
+
+    //연관관계 메서드
+    private void addReview(Book book) {
+        book.getReviewList().add(this);
+        this.setBook(book);
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     //연관관계 메서드
@@ -49,4 +59,5 @@ public class Review extends Date {
         commentList.add(comment);
         comment.setReview(this);
     }
+
 }

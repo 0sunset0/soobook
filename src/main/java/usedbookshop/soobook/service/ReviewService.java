@@ -7,6 +7,8 @@ import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.comment.CommentRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
@@ -15,16 +17,20 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    @PersistenceContext
+    private final EntityManager em;
 
     //리뷰 작성
     @Transactional
-    public void createReview(Review review){
+    public Long createReview(Review review){
         reviewRepository.save(review);
         review.getBook().updateScore();
+        return review.getId();
     }
 
     //리뷰 삭제
     public Long deleteReview(Review review){
+        review.getBook().getReviewList().remove(review);
         return reviewRepository.delete(review);
     }
 
