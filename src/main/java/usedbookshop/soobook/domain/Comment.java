@@ -26,6 +26,14 @@ public class Comment extends Date{
     public Comment(Member member, Review review, String contents) {
         this.member = member;
         this.contents = contents;
-        review.addComment(this);
+        addComment(review);
+    }
+
+    /**
+     * 연관관계 메서드
+     */
+    public void addComment(Review review){
+        this.review = review;
+        review.getCommentList().add(this);
     }
 }

@@ -74,12 +74,12 @@ public class Book extends Date{
      * 비즈니스 로직
      */
     //quantity 증가
-    public void addQuantity(int quantity){
+    public void increaseQuantity(int quantity){
         this.quantity += quantity;
     }
 
     //quantity 감소
-    public void removeQuantity(int quantity){
+    public void reduceQuantity(int quantity){
         int restStock = this.quantity - quantity;
         if (restStock < 0) {
             throw new NotEnoughStockException("need more stock");

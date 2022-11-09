@@ -44,20 +44,11 @@ public class Review extends Date {
         addReview(book);
     }
 
-    //연관관계 메서드
+    /**
+     * 연관관계 메서드
+     */
     private void addReview(Book book) {
         book.getReviewList().add(this);
-        this.setBook(book);
-    }
-
-    public void setBook(Book book) {
         this.book = book;
     }
-
-    //연관관계 메서드
-    public void addComment(Comment comment){
-        commentList.add(comment);
-        comment.setReview(this);
-    }
-
 }
