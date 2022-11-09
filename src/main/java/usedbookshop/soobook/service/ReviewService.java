@@ -29,19 +29,18 @@ public class ReviewService {
     }
 
     //리뷰 삭제
-    public Long deleteReview(Review review){
-        review.getBook().getReviewList().remove(review);
-        return reviewRepository.delete(review);
+    public Long deleteReview(Long reviewId){
+        return reviewRepository.delete(reviewId);
     }
 
     //도서 별 리뷰들 보기
-    public List<Review> findByBook(Book book){
-        return reviewRepository.findByBook(book);
+    public List<Review> findByBook(Long bookId){
+        return reviewRepository.findByBook(bookId);
     }
 
     //멤버 별 리뷰들 보기
-    public List<Review> findByMember(Member member){
-        return reviewRepository.findByMember(member);
+    public List<Review> findByMember(Long memberId){
+        return reviewRepository.findByMember(memberId);
     }
 
 

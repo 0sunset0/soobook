@@ -40,8 +40,9 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
-    public Long delete(Comment comment) {
-        em.remove(comment);
-        return comment.getId();
+    public Long delete(Long commentId) {
+        Comment removeComment = findById(commentId);
+        em.remove(removeComment);
+        return removeComment.getId();
     }
 }

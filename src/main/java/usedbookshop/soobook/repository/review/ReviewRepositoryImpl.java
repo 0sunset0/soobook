@@ -31,22 +31,24 @@ public class ReviewRepositoryImpl implements ReviewRepository{
 
 
     @Override
-    public List<Review> findByMember(Member member) {
+    public List<Review> findByMember(Long memberId) {
         return em.createQuery("select r from Review r inner join r.member m on m.id=:memberId", Review.class)
-                .setParameter("memberId", member.getId())
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 
     @Override
-    public List<Review> findByBook(Book book) {
+    public List<Review> findByBook(Long bookId) {
         return em.createQuery("select r from Review r inner join r.book b on b.id=:bookId", Review.class)
-                .setParameter("bookId", book.getId())
+                .setParameter("bookId", bookId)
                 .getResultList();
     }
 
     @Override
-    public Long delete(Review review) {
-        em.remove(review);
-        return review.getId();
+    public Long delete(Long reviewId) {
+        Review removeReview = findById(reviewId);
+        removeReview.getBook().getReviewList().remove(removeReview);
+        em.remove(removeReview);
+        return removeReview.getId();
     }
 }

@@ -12,9 +12,9 @@ public interface ReviewRepository {
 
     Review findById(Long reviewId);
 
-    List<Review> findByMember(Member member);
+    List<Review> findByMember(Long memberId);
 
-    List<Review> findByBook(Book book);
+    List<Review> findByBook(Long bookId);
 
-    Long delete(Review review);
+    Long delete(Long reviewId);
 }

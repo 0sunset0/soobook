@@ -93,11 +93,11 @@ public class Book extends Date{
 
     //책의 평점 계산 후 업데이트
     public void updateScore(){
+
         int bookScore = 0;
         for (Review review : reviewList){
             bookScore += review.getScore().getValue();
         }
-        System.out.println("review의 개수 : "+reviewList.size());
         score =  bookScore/reviewList.size();
     }
 

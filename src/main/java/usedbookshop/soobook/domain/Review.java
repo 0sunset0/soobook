@@ -48,7 +48,7 @@ public class Review extends Date {
      * 연관관계 메서드
      */
     private void addReview(Book book) {
-        book.getReviewList().add(this);
         this.book = book;
+        book.getReviewList().add(this);
     }
 }

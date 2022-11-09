@@ -23,7 +23,7 @@ public class CommentService {
 
     //댓글 삭제
     @Transactional
-    public Long deleteComment(Comment comment){
-        return commentRepository.delete(comment);
+    public Long deleteComment(Long commentId){
+        return commentRepository.delete(commentId);
     }
 }

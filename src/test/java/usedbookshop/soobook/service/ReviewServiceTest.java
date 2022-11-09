@@ -71,10 +71,10 @@ class ReviewServiceTest {
 
         // when
         reviewService.createReview(review);
-        reviewService.deleteReview(review);
+        reviewService.deleteReview(review.getId());
 
         //then
-        List<Review> findReviews = reviewRepository.findByBook(book);
+        List<Review> findReviews = reviewRepository.findByBook(book.getId());
         List<Comment> findComments = commentRepository.findAll();
         Assertions.assertThat(review).isNotIn(findReviews);
         Assertions.assertThat(comment).isNotIn(findComments);
