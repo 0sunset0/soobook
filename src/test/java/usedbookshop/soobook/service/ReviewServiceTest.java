@@ -42,27 +42,6 @@ class ReviewServiceTest {
         Assertions.assertThat(review.getId()).isEqualTo(saveId);
     }
 
-    private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
-        Review review = new Review(title, contents, reviewScore, book, member);
-        return review;
-    }
-
-    private Book getBook() {
-        CategoryBook categoryBook = new CategoryBook();
-        em.persist(categoryBook);
-        Book book = new Book("a",50000, "a",5, categoryBook);
-        em.persist(book);
-        return book;
-    }
-
-    private Member getMember() {
-        Address homeAddress = new Address("a", "a", 1111);
-        Address workAddress = new Address("a", "a", 2222);
-        Member member = new Member("a", homeAddress, workAddress, "sunset@naver.com", "1234");
-        em.persist(member);
-        return member;
-    }
-
     @Test
     void 리뷰들_점수의_평균이_책평점() {
         // given
@@ -88,22 +67,42 @@ class ReviewServiceTest {
         Member member = getMember();
         Book book = getBook();
         Review review = getReview("a","a", ReviewScore.FIVE, book, member);
-        Comment comment1 = getComment(member, review, "Good");
-        Comment comment2 = getComment(member, review, "Good");
+        Comment comment = getComment(member, review, "Good");
 
         // when
         reviewService.createReview(review);
-        System.out.println("review id= " + review.getId());
         reviewService.deleteReview(review);
 
-
-        // then
+        //then
         List<Review> findReviews = reviewRepository.findByBook(book);
-        for (Review findReview : findReviews) {
-            System.out.println("findReview id = " + findReview.getId());
-        }
+        List<Comment> findComments = commentRepository.findAll();
+        Assertions.assertThat(review).isNotIn(findReviews);
+        Assertions.assertThat(comment).isNotIn(findComments);
 
     }
+
+    private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
+        Review review = new Review(title, contents, reviewScore, book, member);
+        return review;
+    }
+
+    private Book getBook() {
+        CategoryBook categoryBook = new CategoryBook();
+        em.persist(categoryBook);
+        Book book = new Book("a",50000, "a",5, categoryBook);
+        em.persist(book);
+        return book;
+    }
+
+    private Member getMember() {
+        Address homeAddress = new Address("a", "a", 1111);
+        Address workAddress = new Address("a", "a", 2222);
+        Member member = new Member("a", homeAddress, workAddress, "sunset@naver.com", "1234");
+        em.persist(member);
+        return member;
+    }
+
+
 
     private Comment getComment(Member member, Review review, String contents) {
         Comment comment = new Comment(member, review, contents);
