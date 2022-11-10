@@ -24,4 +24,18 @@ public class OrderBook {
     private int orderPrice;
 
     private int count;
+
+    public OrderBook(Book book, int orderPrice, int count) {
+        this.book = book;
+        this.orderPrice = orderPrice;
+        this.count = count;
+    }
+
+    /**
+     * 비즈니스 로직
+     */
+    //주문한 상품 취소
+    public void cancel() {
+        getBook().increaseQuantity(count);
+    }
 }

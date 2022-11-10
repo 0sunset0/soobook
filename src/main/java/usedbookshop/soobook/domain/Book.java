@@ -1,7 +1,6 @@
 package usedbookshop.soobook.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 import usedbookshop.soobook.exception.NotEnoughStockException;
 
 import javax.persistence.*;
@@ -9,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Book extends Date{
 
     @Id @GeneratedValue
     @Column(name = "book_id")
     private Long id;
 
-    private String name;
+    private String title;
     private int price;
     private int score;
     private String author;
@@ -33,8 +32,8 @@ public class Book extends Date{
     List<Review> reviewList = new ArrayList<>();
 
 
-    public Book(String name, int price, String author, int quantity, CategoryBook categoryBook) {
-        this.name = name;
+    public Book(String title, int price, String author, int quantity, CategoryBook categoryBook) {
+        this.title = title;
         this.price = price;
         this.score = 0;
         this.author = author;
@@ -44,8 +43,8 @@ public class Book extends Date{
     }
 
 
-    public void modifyName(String name) {
-        this.name = name;
+    public void modifyName(String title) {
+        this.title = title;
     }
 
     public void modifyPrice(int price) {

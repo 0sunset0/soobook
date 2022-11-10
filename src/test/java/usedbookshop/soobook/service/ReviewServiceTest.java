@@ -31,8 +31,8 @@ class ReviewServiceTest {
     @Test
     void 리뷰작성() {
         // given
-        Member member = getMember();
-        Book book = getBook();
+        Member member = getMember("노을", "1234@naver.com", "1234");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
         Review review = getReview("리뷰제목","리뷰내용", ReviewScore.FIVE, book, member);
 
         // when
@@ -45,8 +45,8 @@ class ReviewServiceTest {
     @Test
     void 리뷰들_점수의_평균이_책평점() {
         // given
-        Member member = getMember();
-        Book book = getBook();
+        Member member = getMember("노을", "1234@naver.com", "1234");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
 
         Review review1 = getReview("리뷰제목1","good", ReviewScore.FIVE, book, member);
         Review review2 = getReview("리뷰제목2","bad", ReviewScore.ONE, book, member);
@@ -64,8 +64,8 @@ class ReviewServiceTest {
     void 리뷰삭제시_댓글들도_삭제() {
 
         // given
-        Member member = getMember();
-        Book book = getBook();
+        Member member = getMember("노을", "1234@naver.com", "1234");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
         Review review = getReview("리뷰제목","good", ReviewScore.FIVE, book, member);
         Comment comment = getComment(member, review, "Good");
 
@@ -86,18 +86,18 @@ class ReviewServiceTest {
         return review;
     }
 
-    private Book getBook() {
+    private Book getBook(String title, int price, String author, int quantity) {
         CategoryBook categoryBook = new CategoryBook();
         em.persist(categoryBook);
-        Book book = new Book("데이터베이스",50000, "노을",5, categoryBook);
+        Book book = new Book(title,price, author,quantity, categoryBook);
         em.persist(book);
         return book;
     }
 
-    private Member getMember() {
+    private Member getMember(String name, String email, String password) {
         Address homeAddress = new Address("인천", "원당대로", 1111);
         Address workAddress = new Address("서울", "양화대로", 2222);
-        Member member = new Member("a", homeAddress, workAddress, "sunset@naver.com", "1234");
+        Member member = new Member(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;
     }

@@ -17,7 +17,9 @@ public interface BookRepository {
 
     List<Book> findByName(String name);
 
-    List<Book> findAllOrderByCreatedDate();
+    List<Book> findBooksOrderByCreatedDate();
 
     List<Book> findByCategoryBook(CategoryBook categoryBook);
+
+    List<Book> findBooksByScore();
 }

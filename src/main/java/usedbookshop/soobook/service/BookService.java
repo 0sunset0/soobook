@@ -31,12 +31,24 @@ public class BookService {
     }
 
 
+    //모든 책 보기
     public List<Book> findAllBooks(){
         return bookRepository.findAll();
     }
 
+    //검색
     public Book findBook(Long bookId){
         return bookRepository.findById(bookId);
+    }
+
+    //score 순으로 보기
+    public List<Book> findBooksByScore(){
+        return bookRepository.findBooksByScore();
+    }
+
+    //최신순으로 보기
+    public List<Book> findBooksOrderByCreatedDate(){
+        return bookRepository.findBooksOrderByCreatedDate();
     }
 
 

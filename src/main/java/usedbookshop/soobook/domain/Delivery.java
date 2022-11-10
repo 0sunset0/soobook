@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Delivery {
 
     @Id @GeneratedValue
@@ -19,4 +19,9 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
+
+    public Delivery(Address address) {
+        this.address = address;
+        this.deliveryStatus = DeliveryStatus.READY;
+    }
 }

@@ -41,7 +41,7 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findAllOrderByCreatedDate() {
+    public List<Book> findBooksOrderByCreatedDate() {
         return em.createQuery("select b from Book b order by b.createdDate desc", Book.class)
                 .getResultList();
     }
@@ -50,6 +50,12 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> findByCategoryBook(CategoryBook categoryBook) {
         //이거 마저 구현하기...
         return null;
+    }
+
+    @Override
+    public List<Book> findBooksByScore() {
+        return em.createQuery("select b from Book b order by b.score desc", Book.class)
+                .getResultList();
     }
 
 }

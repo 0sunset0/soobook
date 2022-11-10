@@ -1,13 +1,16 @@
 package usedbookshop.soobook.domain;
 
+import lombok.Getter;
+
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@Getter
 public abstract class Date {
 
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
-    private LocalDateTime deletedDate;
+    protected LocalDateTime createdDate;
+    protected LocalDateTime modifiedDate;
+    protected LocalDateTime deletedDate;
 
 }
