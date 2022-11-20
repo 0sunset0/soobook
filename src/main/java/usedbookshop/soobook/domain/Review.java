@@ -44,6 +44,15 @@ public class Review extends Date {
         addReview(book);
     }
 
+    public Long updateReview(String title, String contents, ReviewScore score, Member member) {
+        this.title = title;
+        this.contents = contents;
+        this.score = score;
+        this.member = member;
+        return this.getId();
+    }
+
+
     /**
      * 연관관계 메서드
      */

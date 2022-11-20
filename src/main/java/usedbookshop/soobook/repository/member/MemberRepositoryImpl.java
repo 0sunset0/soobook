@@ -25,11 +25,16 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findByEmail(String email) {
-        List<Member> memberList = em.createQuery("select m from Member m where m.email = :email", Member.class)
-                .setParameter("email", email)
+    public List<Member> findAll() {
+        return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
-        return memberList.stream().findAny();
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return findAll().stream()
+                .filter(m -> m.getEmail().equals(email))
+                .findAny();
     }
 
 }

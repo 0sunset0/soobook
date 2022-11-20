@@ -81,6 +81,22 @@ class ReviewServiceTest {
 
     }
 
+    @Test
+    void 리뷰수정() {
+        // given
+        Member member = getMember("노을", "1234@naver.com", "1234");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
+        Review review = getReview("리뷰제목","good", ReviewScore.FIVE, book, member);
+
+        // when
+        reviewService.createReview(review);
+        reviewService.updateReview(review.getId(), "리뷰 제목", "bad", ReviewScore.ONE, member.getId());
+
+        // then
+        Review findReview = reviewRepository.findById(review.getId());
+        Assertions.assertThat(findReview.getScore()).isEqualTo(ReviewScore.ONE);
+    }
+
     private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
         Review review = new Review(title, contents, reviewScore, book, member);
         return review;
@@ -101,8 +117,6 @@ class ReviewServiceTest {
         em.persist(member);
         return member;
     }
-
-
 
     private Comment getComment(Member member, Review review, String contents) {
         Comment comment = new Comment(member, review, contents);

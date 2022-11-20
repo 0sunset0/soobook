@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.*;
-import usedbookshop.soobook.repository.comment.CommentRepository;
+import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
@@ -17,8 +15,7 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    @PersistenceContext
-    private final EntityManager em;
+    private final MemberRepository memberRepository;
 
     //리뷰 작성
     @Transactional
@@ -31,6 +28,14 @@ public class ReviewService {
     //리뷰 삭제
     public Long deleteReview(Long reviewId){
         return reviewRepository.delete(reviewId);
+    }
+
+    //리뷰 수정
+    public Long updateReview(Long reviewId, String title, String contents, ReviewScore score, Long memberId){
+        Review findReview = reviewRepository.findById(reviewId);
+        Member findMember = memberRepository.findById(memberId);
+        findReview.updateReview(title, contents, score, findMember);
+        return findReview.getId();
     }
 
     //도서 별 리뷰들 보기

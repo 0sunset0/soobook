@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,7 +32,7 @@ public class MemberService {
         }
     }
 
-    //로그인 -> 세션 기능 추가해야 함.
+    //TODO 로그인 : 세션 유지 기능
     public Member login(String email, String password) {
         return memberRepository.findByEmail(email)
                 .filter(m -> m.getPassword().equals(password))

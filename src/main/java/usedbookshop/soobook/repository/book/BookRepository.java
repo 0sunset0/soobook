@@ -22,4 +22,6 @@ public interface BookRepository {
     List<Book> findByCategoryBook(CategoryBook categoryBook);
 
     List<Book> findBooksByScore();
+
+
 }

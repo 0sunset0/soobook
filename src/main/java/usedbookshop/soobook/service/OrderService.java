@@ -7,7 +7,6 @@ import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.order.OrderRepository;
-import usedbookshop.soobook.repository.order.OrderRepositoryImpl;
 
 import java.util.List;
 
