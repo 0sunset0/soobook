@@ -24,9 +24,7 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         //given
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("경기도", "와우안길", 2222);
-        Member member = new Member("노을", homeAddress, workAddress, "sunset@naver.com", "1234");
+        Member member = getMember("노을", "sunset@naver.com", "1234");
 
         //when
         Long savedId = memberService.join(member);
@@ -38,14 +36,8 @@ class MemberServiceTest {
     @Test
     void 중복회원검사() {
         // given
-        Address homeAddress1 = new Address("인천", "원당대로", 1111);
-        Address workAddress1 = new Address("경기도", "와우안길", 2222);
-        Member member1 = new Member("노을1", homeAddress1, workAddress1, "sunset@naver.com", "1234");
-
-        Address homeAddress2 = new Address("인천", "원당대로", 1111);
-        Address workAddress2= new Address("경기도", "와우안길", 2222);
-        Member member2 = new Member("노을2", homeAddress2, workAddress2, "sunset@naver.com", "1234");
-
+        Member member1 = getMember("노을1", "sunset@naver.com", "1234");
+        Member member2 = getMember("노을2", "sunset@naver.com", "1234");
 
         // when
         memberService.join(member1);
@@ -58,9 +50,7 @@ class MemberServiceTest {
     @Test
     void 로그인() {
         // given
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("경기도", "와우안길", 2222);
-        Member member = new Member("노을", homeAddress, workAddress, "sunset@naver.com", "1234");
+        Member member = getMember("노을", "abcd@naver.com", "1111");
 
         // when
         memberService.join(member);
@@ -69,6 +59,12 @@ class MemberServiceTest {
         // then
         Assertions.assertThat(loginMember).isNotNull();
 
+    }
+    private Member getMember(String name, String email, String password) {
+        Address homeAddress = new Address("인천", "원당대로", 1111);
+        Address workAddress = new Address("서울", "양화대로", 2222);
+        Member member = Member.createMember(name, homeAddress, workAddress, email, password);
+        return member;
     }
 
 }

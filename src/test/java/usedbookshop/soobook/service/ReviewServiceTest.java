@@ -98,14 +98,14 @@ class ReviewServiceTest {
     }
 
     private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
-        Review review = new Review(title, contents, reviewScore, book, member);
+        Review review = Review.createReview(title, contents, reviewScore, book, member);
         return review;
     }
 
     private Book getBook(String title, int price, String author, int quantity) {
         CategoryBook categoryBook = new CategoryBook();
         em.persist(categoryBook);
-        Book book = new Book(title,price, author,quantity, categoryBook);
+        Book book = Book.createBook(title, price, author, quantity, categoryBook);
         em.persist(book);
         return book;
     }
@@ -113,13 +113,13 @@ class ReviewServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = new Address("인천", "원당대로", 1111);
         Address workAddress = new Address("서울", "양화대로", 2222);
-        Member member = new Member(name, homeAddress, workAddress, email, password);
+        Member member = Member.createMember(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;
     }
 
     private Comment getComment(Member member, Review review, String contents) {
-        Comment comment = new Comment(member, review, contents);
+        Comment comment = Comment.createComment(member, review, contents);
         em.persist(comment);
         return comment;
     }

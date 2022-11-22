@@ -35,18 +35,24 @@ public class Order extends Date{
         this.orderStatus = orderStatus;
     }
 
-    /**
-     * 주문 생성자
-     */
-    public Order(Member member, Delivery delivery, OrderBook... orderBookList) {
-        this.createdDate = LocalDateTime.now();
+    private Order(Member member, Delivery delivery, OrderBook... orderBookList) {
         this.member = member;
         this.delivery = delivery;
-        this.orderStatus = OrderStatus.ORDER;
         for (OrderBook orderBook : orderBookList){
             this.addOrderBook(orderBook);
         }
     }
+
+    /**
+     * 주문 정적 팩토리 메서드
+     */
+    public static Order createOrder(Member member, Delivery delivery, OrderBook... orderBookList) {
+        Order order = new Order(member, delivery, orderBookList);
+        order.createdDate = LocalDateTime.now();
+        order.orderStatus = OrderStatus.ORDER;
+        return order;
+    }
+
     /**
      * 연관관계 메서드
      */
@@ -54,7 +60,6 @@ public class Order extends Date{
         orderBook.setOrder(this);
         orderBookList.add(orderBook);
     }
-
 
 
 

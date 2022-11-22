@@ -76,7 +76,7 @@ class OrderServiceTest {
     private Book getBook(String title, int price, String author, int quantity) {
         CategoryBook categoryBook = new CategoryBook();
         em.persist(categoryBook);
-        Book book = new Book(title,price, author,quantity, categoryBook);
+        Book book = Book.createBook(title, price, author, quantity, categoryBook);
         em.persist(book);
         return book;
     }
@@ -84,7 +84,7 @@ class OrderServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = new Address("인천", "원당대로", 1111);
         Address workAddress = new Address("서울", "양화대로", 2222);
-        Member member = new Member(name, homeAddress, workAddress, email, password);
+        Member member = Member.createMember(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;
     }

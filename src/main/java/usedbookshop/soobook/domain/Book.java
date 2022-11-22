@@ -32,7 +32,8 @@ public class Book extends Date{
     List<Review> reviewList = new ArrayList<>();
 
 
-    public Book(String title, int price, String author, int quantity, CategoryBook categoryBook) {
+    //private 생성자
+    private Book(String title, int price, String author, int quantity, CategoryBook categoryBook) {
         this.title = title;
         this.price = price;
         this.score = 0;
@@ -40,6 +41,11 @@ public class Book extends Date{
         this.quantity = quantity;
         this.categoryBook = categoryBook;
         this.bookStatus = BookStatus.SALE;
+    }
+
+    public static Book createBook(String title, int price, String author, int quantity,
+                                  CategoryBook categoryBook){
+        return new Book(title, price, author, quantity, categoryBook);
     }
 
 

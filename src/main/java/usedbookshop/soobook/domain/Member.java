@@ -38,11 +38,15 @@ public class Member {
     private String password;
 
 
-    public Member(String name, Address homeAddress, Address workAddress, String email, String password) {
+    private Member(String name, Address homeAddress, Address workAddress, String email, String password) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.workAddress = workAddress;
         this.email = email;
         this.password = password;
+    }
+
+    public static Member createMember(String name, Address homeAddress, Address workAddress, String email, String password){
+        return new Member(name, homeAddress, workAddress, email, password);
     }
 }

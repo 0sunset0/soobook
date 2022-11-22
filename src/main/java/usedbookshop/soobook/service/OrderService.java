@@ -26,10 +26,10 @@ public class OrderService {
         Member member = memberRepository.findById(memberId);
         Book book = bookRepository.findById(bookId);
 
-        Delivery delivery = new Delivery(deliveryAddress);
+        Delivery delivery = Delivery.createDelivery(deliveryAddress);
 
         OrderBook orderBook = new OrderBook(book, book.getPrice(), count);
-        Order order = new Order(member, delivery, orderBook);
+        Order order = Order.createOrder(member, delivery, orderBook);
 
         orderRepository.save(order);
         book.reduceQuantity(count);

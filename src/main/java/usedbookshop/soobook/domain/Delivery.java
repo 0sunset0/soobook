@@ -20,8 +20,13 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
-    public Delivery(Address address) {
+    private Delivery(Address address) {
         this.address = address;
         this.deliveryStatus = DeliveryStatus.READY;
     }
+
+    public static Delivery createDelivery(Address address) {
+        return new Delivery(address);
+    }
+
 }

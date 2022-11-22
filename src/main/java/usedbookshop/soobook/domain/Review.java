@@ -36,13 +36,19 @@ public class Review extends Date {
     private List<Comment> commentList = new ArrayList<>();
 
 
-    public Review(String title, String contents, ReviewScore score, Book book, Member member) {
+    private Review(String title, String contents, ReviewScore score, Member member) {
         this.title = title;
         this.contents = contents;
         this.score = score;
         this.member = member;
-        addReview(book);
     }
+
+    public static Review createReview(String title, String contents, ReviewScore score, Book book, Member member){
+        Review review = new Review(title, contents, score, member);
+        review.addReview(book);
+        return review;
+    }
+
 
     public Long updateReview(String title, String contents, ReviewScore score, Member member) {
         this.title = title;

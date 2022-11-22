@@ -23,10 +23,15 @@ public class Comment extends Date{
 
     private String contents;
 
-    public Comment(Member member, Review review, String contents) {
+    public static Comment createComment(Member member, Review review, String contents) {
+        Comment comment = new Comment(member, contents);
+        comment.addComment(review);
+        return comment;
+    }
+
+    private Comment(Member member, String contents) {
         this.member = member;
         this.contents = contents;
-        addComment(review);
     }
 
     /**
