@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
+import usedbookshop.soobook.dto.member.MemberDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
 import java.util.Optional;
@@ -17,7 +18,9 @@ public class MemberService {
 
 
     //회원가입
-    public Long join(Member member){
+    public Long join(MemberDto memberDto){
+        //Dto -> domain
+        Member member = memberDto.toEntity();
         //중복메일 검증
         checkDuplicateMember(member);
         memberRepository.save(member);

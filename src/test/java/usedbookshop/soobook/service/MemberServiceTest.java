@@ -9,6 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Address;
 import usedbookshop.soobook.domain.Member;
+import usedbookshop.soobook.dto.member.MemberDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,24 +25,25 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         //given
-        Member member = getMember("노을", "sunset@naver.com", "1234");
+        MemberDto memberDto = getMemberDto("노을", "1234@naver.com", "1234");
 
         //when
-        Long savedId = memberService.join(member);
+        Long savedId = memberService.join(memberDto);
 
         //then
-        assertEquals(member, memberRepository.findById(savedId));
+        assertEquals(memberDto.getEmail(), memberRepository.findById(savedId).getEmail());
     }
+
 
     @Test
     void 중복회원검사() {
         // given
-        Member member1 = getMember("노을1", "sunset@naver.com", "1234");
-        Member member2 = getMember("노을2", "sunset@naver.com", "1234");
+        MemberDto memberDto1 = getMemberDto("노을1", "sunset@naver.com", "1234");
+        MemberDto memberDto2 = getMemberDto("노을2", "sunset@naver.com", "1234");
 
         // when
-        memberService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+        memberService.join(memberDto1);
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(memberDto2));
 
         // then
         Assertions.assertThat(e.getMessage()).isEqualTo("이미 가입된 메일입니다.");
@@ -50,21 +52,23 @@ class MemberServiceTest {
     @Test
     void 로그인() {
         // given
-        Member member = getMember("노을", "abcd@naver.com", "1111");
+        MemberDto memberDto = getMemberDto("노을", "abcd@naver.com", "1111");
 
         // when
-        memberService.join(member);
-        Member loginMember = memberService.login(member.getEmail(), member.getPassword());
+        memberService.join(memberDto);
+        Member loginMember = memberService.login(memberDto.getEmail(), memberDto.getPassword());
 
         // then
         Assertions.assertThat(loginMember).isNotNull();
 
     }
-    private Member getMember(String name, String email, String password) {
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("서울", "양화대로", 2222);
-        Member member = Member.createMember(name, homeAddress, workAddress, email, password);
-        return member;
+
+    private MemberDto getMemberDto(String name, String email, String password) {
+        MemberDto memberDto = new MemberDto();
+        memberDto.setName(name);
+        memberDto.setEmail(email);
+        memberDto.setPassword(password);
+        return memberDto;
     }
 
 }
