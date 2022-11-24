@@ -6,8 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.dto.member.LoginDto;
-import usedbookshop.soobook.dto.member.MemberDto;
-import usedbookshop.soobook.repository.member.MemberRepository;
+import usedbookshop.soobook.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,19 +22,18 @@ public class MemberController {
     /**
      * 회원가입
      */
-    @GetMapping("/new")
-    public String newMember(@ModelAttribute("memberDto") MemberDto memberDto){
-        return "member/newMemberForm";
+    @GetMapping("/join")
+    public String join(@ModelAttribute("JoinDto") JoinDto joinDto){
+        return "member/join";
     }
 
-    @PostMapping
-    public String addMember(@ModelAttribute("memberDto") MemberDto memberDto, BindingResult bindingResult){
+    @PostMapping("/join")
+    public String join(@ModelAttribute("JoinDto") JoinDto joinDto, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "member/newMemberForm";
+            return "member/join";
         }
-        memberService.join(memberDto);
+        memberService.join(joinDto);
         return "redirect:/";
-
     }
 
     /**
@@ -43,19 +41,19 @@ public class MemberController {
      */
     @GetMapping("/login")
     public String login(@ModelAttribute("loginDto") LoginDto loginDto){
-        return "member/loginForm";
+        return "member/login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request){
         if (bindingResult.hasErrors()){
-            return "member/loginForm";
+            return "/member/login";
         }
 
         Member loginMember = memberService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember == null){
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "member/loginForm";
+            return "/member/login";
         }
 
         /**

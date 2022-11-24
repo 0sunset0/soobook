@@ -1,13 +1,12 @@
 package usedbookshop.soobook.dto.member;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import usedbookshop.soobook.domain.Address;
 import usedbookshop.soobook.domain.Member;
 
 @Getter @Setter
-public class MemberDto {
+public class JoinDto {
 
     private String name;
 

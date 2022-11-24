@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.dto.member.MemberDto;
+import usedbookshop.soobook.dto.member.JoinDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
 import java.util.Optional;
@@ -18,9 +18,9 @@ public class MemberService {
 
 
     //회원가입
-    public Long join(MemberDto memberDto){
+    public Long join(JoinDto joinDto){
         //Dto -> domain
-        Member member = memberDto.toEntity();
+        Member member = joinDto.toEntity();
         //중복메일 검증
         checkDuplicateMember(member);
         memberRepository.save(member);
@@ -35,7 +35,6 @@ public class MemberService {
         }
     }
 
-    //TODO 로그인 : 세션 유지 기능
     public Member login(String email, String password) {
         return memberRepository.findByEmail(email)
                 .filter(m -> m.getPassword().equals(password))

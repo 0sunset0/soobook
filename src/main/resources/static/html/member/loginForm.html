@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{css/bootstrap.min.css}"
+          href="./css/bootstrap.min.css" rel="stylesheet">
     <title>로그인</title>
 </head>
 <body>
 <div class="container">
     <h2>로그인</h2>
-    <form action="member/login" method="post">
+    <form action="login" method="post">
         <div class="mb-3">
             <label class="form-label" for="email">이메일</label>
             <input class="form-control" type="email" name="email" id="email" />

@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.domain.Address;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.dto.member.MemberDto;
+import usedbookshop.soobook.dto.member.JoinDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,21 +24,21 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         //given
-        MemberDto memberDto = getMemberDto("노을", "1234@naver.com", "1234");
+        JoinDto joinDto = getMemberDto("노을", "1234@naver.com", "1234");
 
         //when
-        Long savedId = memberService.join(memberDto);
+        Long savedId = memberService.join(joinDto);
 
         //then
-        assertEquals(memberDto.getEmail(), memberRepository.findById(savedId).getEmail());
+        assertEquals(joinDto.getEmail(), memberRepository.findById(savedId).getEmail());
     }
 
 
     @Test
     void 중복회원검사() {
         // given
-        MemberDto memberDto1 = getMemberDto("노을1", "sunset@naver.com", "1234");
-        MemberDto memberDto2 = getMemberDto("노을2", "sunset@naver.com", "1234");
+        JoinDto memberDto1 = getMemberDto("노을1", "sunset@naver.com", "1234");
+        JoinDto memberDto2 = getMemberDto("노을2", "sunset@naver.com", "1234");
 
         // when
         memberService.join(memberDto1);
@@ -52,7 +51,7 @@ class MemberServiceTest {
     @Test
     void 로그인() {
         // given
-        MemberDto memberDto = getMemberDto("노을", "abcd@naver.com", "1111");
+        JoinDto memberDto = getMemberDto("노을", "abcd@naver.com", "1111");
 
         // when
         memberService.join(memberDto);
@@ -63,8 +62,8 @@ class MemberServiceTest {
 
     }
 
-    private MemberDto getMemberDto(String name, String email, String password) {
-        MemberDto memberDto = new MemberDto();
+    private JoinDto getMemberDto(String name, String email, String password) {
+        JoinDto memberDto = new JoinDto();
         memberDto.setName(name);
         memberDto.setEmail(email);
         memberDto.setPassword(password);

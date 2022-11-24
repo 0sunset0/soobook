@@ -46,9 +46,9 @@ public class BookRepositoryImpl implements BookRepository {
                 .getResultList();
     }
 
+    // TODO 카테고리 별로 책 조회하는 기능
     @Override
     public List<Book> findByCategoryBook(CategoryBook categoryBook) {
-        //이거 마저 구현하기...
         return null;
     }
 
