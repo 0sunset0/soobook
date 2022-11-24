@@ -105,5 +105,4 @@ public class Book extends Date{
         }
         score =  bookScore/reviewList.size();
     }
-
 }
