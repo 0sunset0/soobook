@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Getter
 public class Member {
 
+
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
@@ -37,6 +38,9 @@ public class Member {
     @Column(unique = true)
     private String password;
 
+
+    protected Member() {
+    }
 
     private Member(String name, Address homeAddress, Address workAddress, String email, String password) {
         this.name = name;

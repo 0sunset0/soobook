@@ -1,16 +1,27 @@
 package usedbookshop.soobook.web.controller.member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import usedbookshop.soobook.domain.Member;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import usedbookshop.soobook.domain.*;
+import usedbookshop.soobook.repository.book.BookRepository;
+import usedbookshop.soobook.repository.member.MemberRepository;
+import usedbookshop.soobook.repository.order.OrderRepository;
+import usedbookshop.soobook.repository.review.ReviewRepository;
+import usedbookshop.soobook.service.OrderService;
 import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,6 +29,11 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
+    private final OrderRepository orderRepository;
+    private final BookRepository bookRepository;
+    private final ReviewRepository reviewRepository;
+
 
     /**
      * 회원가입
@@ -42,15 +58,11 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request){
-        if (bindingResult.hasErrors()){
-            return "member/login";
-        }
-
+    public String login(@ModelAttribute("loginDto") LoginDto loginDto, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Member loginMember = memberService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember == null){
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "member/login";
+            redirectAttributes.addAttribute("loginStatus", "fail");
+            return "redirect:/member/login";
         }
 
         /**
@@ -68,9 +80,21 @@ public class MemberController {
      * 마이페이지
      */
     @GetMapping("/mypage")
-    public String mypage(){
+    public String mypage(HttpServletRequest request, Model model){
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "redirect:/member/login";
+        }
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        List<Order> orderList = orderRepository.findByMember(loginMember.getId());
+        List<Review> reviewList = reviewRepository.findByMember(loginMember.getId());
+        List<Book> bookList = bookRepository.findByMember(loginMember.getId());
+
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("bookList", bookList);
         return "member/mypage";
     }
-
 
 }

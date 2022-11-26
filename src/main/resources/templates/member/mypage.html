@@ -25,40 +25,26 @@
     <h1>마이페이지</h1>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">나의 주문</div>
-        <ul class="list-group">
-            <li class="list-group-item">주문정보 1</li>
-            <li class="list-group-item">주문정보 2</li>
-            <li class="list-group-item">주문정보 3</li>
-            <li class="list-group-item">주문정보 4</li>
-            <li class="list-group-item">주문정보 5</li>
+        <ul class="list-group" th:each="order : ${orderList}">
+            <li class="list-group-item" th:text="|'주문날짜 : ', ${order.createDate}|">주문정보 1</li>
         </ul>
     </div>
     <br>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">내가 판매하는 책</div>
-        <ul class="list-group">
-            <li class="list-group-item">판매정보 1</li>
-            <li class="list-group-item">판매정보 2</li>
-            <li class="list-group-item">판매정보 3</li>
-            <li class="list-group-item">판매정보 4</li>
-            <li class="list-group-item">판매정보 5</li>
+        <ul class="list-group" th:each="book : ${bookList}">
+            <li class="list-group-item" th:text="|'판매 상품 : ', ${book.title}|">판매정보 1</li>
         </ul>
     </div>
     <br>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">나의 리뷰</div>
-        <ul class="list-group">
-            <li class="list-group-item">리뷰정보 1</li>
-            <li class="list-group-item">리뷰정보 2</li>
-            <li class="list-group-item">리뷰정보 3</li>
-            <li class="list-group-item">리뷰정보 4</li>
-            <li class="list-group-item">리뷰정보 5</li>
+        <ul class="list-group" th:each="review : ${reviewList}">
+            <li class="list-group-item" th:text="|'리뷰 제목 : ', ${review.title}|">리뷰정보 1</li>
         </ul>
     </div>
     <br>
 </div>
-
-
 
 </body>
 </html>
