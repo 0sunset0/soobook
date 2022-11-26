@@ -27,8 +27,8 @@ class OrderServiceTest {
     void 주문() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", "원당대로", 22643);
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
+        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
 
         // when
         Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
@@ -44,8 +44,8 @@ class OrderServiceTest {
     void 주문취소() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", "원당대로", 22643);
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
+        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
         Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
 
         // when
@@ -61,8 +61,8 @@ class OrderServiceTest {
     void 재고_없을시_예외() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", "원당대로", 22643);
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5);
+        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
 
         // when
 
@@ -73,17 +73,17 @@ class OrderServiceTest {
 
     }
 
-    private Book getBook(String title, int price, String author, int quantity) {
+    private Book getBook(String title, int price, String author, int quantity, Member member) {
         CategoryBook categoryBook = new CategoryBook();
         em.persist(categoryBook);
-        Book book = Book.createBook(title, price, author, quantity, categoryBook);
+        Book book = Book.createBook(title, price, author, quantity, member);
         em.persist(book);
         return book;
     }
 
     private Member getMember(String name, String email, String password) {
-        Address homeAddress = new Address("인천", "원당대로", 1111);
-        Address workAddress = new Address("서울", "양화대로", 2222);
+        Address homeAddress = new Address("인천", 2222, "원당대로");
+        Address workAddress = new Address("인천", 1111, "원당대로");
         Member member = Member.createMember(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;

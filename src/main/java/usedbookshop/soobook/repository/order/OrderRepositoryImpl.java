@@ -26,9 +26,9 @@ public class OrderRepositoryImpl implements OrderRepository{
     }
 
     @Override
-    public List<Order> findByMember(Member member) {
+    public List<Order> findByMember(Long memberId) {
         return em.createQuery("select o from Order o inner join o.member m on m.id=:memberId", Order.class)
-                .setParameter("memberId", member.getId())
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 }
