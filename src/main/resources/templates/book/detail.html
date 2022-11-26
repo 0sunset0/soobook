@@ -22,22 +22,22 @@
 
 <!-- 책 -->
 <div class="container" id="card">
-    <h2>책 제목</h2>
+    <h2 th:text="${book.title}">책 제목</h2>
         <div class="mb-3">
             <label class="form-label" for="price">가격</label>
-            <p class="form-control" type="text" name="price" id="price">가격1</p>
+            <p class="form-control" type="text" name="price" id="price" th:text="book.price">가격1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="score">평점</label>
-            <p class="form-control" type="text" name="score" id="score">평점1</p>
+            <p class="form-control" type="text" name="score" id="score" th:text="book.score">평점1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="author">작가</label>
-            <p class="form-control" type="text" name="author" id="author">작가1</p>
+            <p class="form-control" type="text" name="author" id="author" th:text="book.author">작가1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="quantity">수량</label>
-            <p class="form-control" type="text" name="quantity" id="quantity">수량1</p>
+            <p class="form-control" type="text" name="quantity" id="quantity" th:text="book.quantity">수량1</p>
         </div>
 </div>
 
@@ -45,21 +45,21 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
+            <div class="col mb-5" th:each="review : ${reviewList}">
                 <div class="card h-100">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <h5 class="fw-bolder">리뷰 제목</h5>
+                            <h5 class="fw-bolder" th:text="${review.title}">리뷰 제목</h5>
                         </div>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <p class="card-text">리뷰 내용</p>
+                        <p class="card-text" th:text="${review.content}">리뷰 내용</p>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <p class="card-text">평점</p>
+                        <p class="card-text" th:text="${review.score}">평점</p>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="../review/detail.html">자세히 보기</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="../review/detail.html" th:href="@{/review/detail}">자세히 보기</a></div>
                     </div>
                 </div>
             </div>

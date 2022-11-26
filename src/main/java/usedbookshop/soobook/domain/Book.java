@@ -31,21 +31,26 @@ public class Book extends Date{
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     List<Review> reviewList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    protected Book() {
+    }
 
     //private 생성자
-    private Book(String title, int price, String author, int quantity, CategoryBook categoryBook) {
+    private Book(String title, int price, String author, int quantity, Member member) {
         this.title = title;
         this.price = price;
         this.score = 0;
         this.author = author;
         this.quantity = quantity;
-        this.categoryBook = categoryBook;
         this.bookStatus = BookStatus.SALE;
+        this.member = member;
     }
 
-    public static Book createBook(String title, int price, String author, int quantity,
-                                  CategoryBook categoryBook){
-        return new Book(title, price, author, quantity, categoryBook);
+    public static Book createBook(String title, int price, String author, int quantity, Member member){
+        return new Book(title, price, author, quantity, member);
     }
 
 
