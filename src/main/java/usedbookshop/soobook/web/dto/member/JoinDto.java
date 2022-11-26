@@ -10,15 +10,19 @@ public class JoinDto {
 
     private String name;
 
-    private Address homeAddress;
+    private String homeArea;
+    private int homeRoadCode;
+    private String homeRoadName;
 
-    private Address workAddress;
+    private String workArea;
+    private int workRoadCode;
+    private String workRoadName;
 
     private String email;
 
     private String password;
 
     public Member toEntity(){
-        return Member.createMember(this.getName(), this.getHomeAddress(), this.getWorkAddress(), this.getEmail(), this.password);
+        return Member.createMember(this.getName(), new Address(homeArea, homeRoadCode, homeRoadName), new Address(workArea, workRoadCode, workRoadName), this.getEmail(), this.password);
     }
 }

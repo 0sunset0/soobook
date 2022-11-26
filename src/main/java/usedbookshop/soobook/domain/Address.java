@@ -17,7 +17,7 @@ public class Address {
     }
 
 
-    public Address(String area, String roadName, int roadCode) {
+    public Address(String area, int roadCode, String roadName) {
         this.area = area;
         this.roadName = roadName;
         this.roadCode = roadCode;
