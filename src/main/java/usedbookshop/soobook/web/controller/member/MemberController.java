@@ -1,12 +1,12 @@
-package usedbookshop.soobook.controller.member;
+package usedbookshop.soobook.web.controller.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.dto.member.LoginDto;
-import usedbookshop.soobook.dto.member.JoinDto;
+import usedbookshop.soobook.web.dto.member.LoginDto;
+import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,15 +23,12 @@ public class MemberController {
      * 회원가입
      */
     @GetMapping("/join")
-    public String join(@ModelAttribute("JoinDto") JoinDto joinDto){
+    public String viewJoin(@ModelAttribute("JoinDto") JoinDto joinDto){
         return "member/join";
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute("JoinDto") JoinDto joinDto, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "member/join";
-        }
+    public String join(@ModelAttribute("JoinDto") JoinDto joinDto){
         memberService.join(joinDto);
         return "redirect:/";
     }
@@ -40,20 +37,20 @@ public class MemberController {
      * 로그인
      */
     @GetMapping("/login")
-    public String login(@ModelAttribute("loginDto") LoginDto loginDto){
+    public String viewLogin(@ModelAttribute("loginDto") LoginDto loginDto){
         return "member/login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request){
         if (bindingResult.hasErrors()){
-            return "/member/login";
+            return "member/login";
         }
 
         Member loginMember = memberService.login(loginDto.getEmail(), loginDto.getPassword());
         if (loginMember == null){
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "/member/login";
+            return "member/login";
         }
 
         /**
@@ -65,6 +62,14 @@ public class MemberController {
         session.setAttribute("loginMember", loginMember);
 
         return "redirect:/";
+    }
+
+    /**
+     * 마이페이지
+     */
+    @GetMapping("/mypage")
+    public String mypage(){
+        return "member/mypage";
     }
 
 

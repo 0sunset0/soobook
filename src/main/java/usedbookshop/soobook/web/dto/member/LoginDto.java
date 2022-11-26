@@ -1,4 +1,4 @@
-package usedbookshop.soobook.dto.member;
+package usedbookshop.soobook.web.dto.member;
 
 import lombok.Data;
 

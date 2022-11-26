@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.dto.member.JoinDto;
+import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
 
 import java.util.Optional;
