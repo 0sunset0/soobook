@@ -2,6 +2,8 @@ package usedbookshop.soobook.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import usedbookshop.soobook.web.dto.member.MemberDto;
+
 import javax.persistence.*;
 
 
@@ -52,5 +54,20 @@ public class Member {
 
     public static Member createMember(String name, Address homeAddress, Address workAddress, String email, String password){
         return new Member(name, homeAddress, workAddress, email, password);
+    }
+    
+    // Member DTO로 변환
+    public MemberDto toMemberDto(){
+        MemberDto memberDto = new MemberDto();
+        memberDto.setName(this.getName());
+        memberDto.setEmail(this.getEmail());
+        memberDto.setHomeArea(this.homeAddress.getArea());
+        memberDto.setHomeRoadCode(this.homeAddress.getRoadCode());
+        memberDto.setHomeRoadName(this.homeAddress.getRoadName());
+        memberDto.setWorkArea(this.workAddress.getArea());
+        memberDto.setWorkRoadCode(this.workAddress.getRoadCode());
+        memberDto.setWorkRoadName(this.workAddress.getRoadName());
+        memberDto.setPassword(this.getPassword());
+        return memberDto;
     }
 }

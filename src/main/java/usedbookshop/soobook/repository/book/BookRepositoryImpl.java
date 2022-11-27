@@ -51,8 +51,10 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findBooksByScore() {
+    public List<Book> findBest10Books() {
         return em.createQuery("select b from Book b order by b.score desc", Book.class)
+                .setFirstResult(0)
+                .setMaxResults(10)
                 .getResultList();
     }
 

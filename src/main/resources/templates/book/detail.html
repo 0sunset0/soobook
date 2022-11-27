@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="../">수북</a>
+        <a class="navbar-brand" href="../" th:href="@{/}">수북</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     </div>
 </nav>
@@ -23,22 +23,26 @@
 <!-- 책 -->
 <div class="container" id="card">
     <h2 th:text="${book.title}">책 제목</h2>
+    <form action="orderComplete.html" th:action="@{/order}" method="post">
         <div class="mb-3">
             <label class="form-label" for="price">가격</label>
-            <p class="form-control" type="text" name="price" id="price" th:text="book.price">가격1</p>
+            <p class="form-control" type="text" name="price" id="price" th:text="${book.price}">가격1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="score">평점</label>
-            <p class="form-control" type="text" name="score" id="score" th:text="book.score">평점1</p>
+            <p class="form-control" type="text" name="score" id="score" th:text="${book.score}">평점1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="author">작가</label>
-            <p class="form-control" type="text" name="author" id="author" th:text="book.author">작가1</p>
+            <p class="form-control" type="text" name="author" id="author" th:text="${book.author}">작가1</p>
         </div>
         <div class="mb-3">
             <label class="form-label" for="quantity">수량</label>
-            <p class="form-control" type="text" name="quantity" id="quantity" th:text="book.quantity">수량1</p>
+            <p class="form-control" type="text" name="quantity" id="quantity" th:text="${book.quantity}">수량1</p>
         </div>
+        <button class="btn btn-dark" type="submit">구매하기</button>
+    </form>
+
 </div>
 
 <!-- 책에 달린 리뷰들 -->
@@ -59,7 +63,7 @@
                         <p class="card-text" th:text="${review.score}">평점</p>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="../review/detail.html" th:href="@{/review/detail}">자세히 보기</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="../review/detail.html" th:href="@{/book/review/detail}">자세히 보기</a></div>
                     </div>
                 </div>
             </div>

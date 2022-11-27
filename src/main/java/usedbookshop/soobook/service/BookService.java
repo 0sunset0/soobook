@@ -42,8 +42,8 @@ public class BookService {
     }
 
     //score 순으로 보기
-    public List<Book> findBooksByScore(){
-        return bookRepository.findBooksByScore();
+    public List<Book> findBest10Books(){
+        return bookRepository.findBest10Books();
     }
 
     //최신순으로 보기

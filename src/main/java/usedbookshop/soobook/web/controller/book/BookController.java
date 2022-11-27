@@ -36,16 +36,15 @@ public class BookController {
     public String books(Model model){
         List<Book> books = bookService.findAllBooks();
         model.addAttribute("books", books);
-        System.out.println("books = " + books);
-        return "book/books";
+        return "books/all";
     }
 
     /**
      * 책 한 권 보기
      */
     // TODO : bookId 넘겨받는 것 보안에 취약하므로 수정해야 함.
-    @GetMapping("/book/detail/{bookId}")
-    public String detail(@PathVariable("bookId") Long bookId, Model model){
+    @GetMapping("/book/detail")
+    public String detail(@RequestParam("bookId") Long bookId, Model model){
         Book book = bookService.findBook(bookId);
         model.addAttribute("book", book);
         List<Review> reviewList = book.getReviewList();
@@ -56,14 +55,17 @@ public class BookController {
     /**
      * 책 등록하기
      */
-    @GetMapping("/book/addBook")
-    public String addBookForm(){
-        return "book/addBook";
+    @GetMapping("/books/addBook")
+    public String addBookForm(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "redirect:/member/login";
+        }
+        return "books/addBook";
     }
 
-    @PostMapping("/book/addBook")
+    @PostMapping("/books/addBook")
     public String addBook(@ModelAttribute("bookDto") BookDto bookDto, HttpServletRequest request){
-        System.out.println("bookDto = " + bookDto);
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";

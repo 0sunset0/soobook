@@ -21,7 +21,7 @@ public interface BookRepository {
 
     List<Book> findByCategoryBook(CategoryBook categoryBook);
 
-    List<Book> findBooksByScore();
+    List<Book> findBest10Books();
 
     List<Book> findByMember(Long id);
 }

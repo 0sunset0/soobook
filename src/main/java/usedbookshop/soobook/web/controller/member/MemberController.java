@@ -16,6 +16,7 @@ import usedbookshop.soobook.service.OrderService;
 import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
+import usedbookshop.soobook.web.dto.member.MemberDto;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -73,6 +74,18 @@ public class MemberController {
         //세션에 로그인 회원 정보 보관
         session.setAttribute("loginMember", loginMember);
 
+        return "redirect:/";
+    }
+
+    /**
+     * 로그아웃
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
     }
 
