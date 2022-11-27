@@ -21,17 +21,17 @@ public class Comment extends Date{
     @JoinColumn(name = "review_id")
     private Review review;
 
-    private String contents;
+    private String content;
 
-    public static Comment createComment(Member member, Review review, String contents) {
-        Comment comment = new Comment(member, contents);
+    public static Comment createComment(Member member, Review review, String content) {
+        Comment comment = new Comment(member, content);
         comment.addComment(review);
         return comment;
     }
 
-    private Comment(Member member, String contents) {
+    private Comment(Member member, String content) {
         this.member = member;
-        this.contents = contents;
+        this.content = content;
     }
 
     /**

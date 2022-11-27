@@ -19,7 +19,7 @@ public class Review extends Date {
     private String title;
 
     @Lob
-    private String contents;
+    private String content;
 
     @Enumerated(EnumType.STRING)
     private ReviewScore score;
@@ -36,23 +36,23 @@ public class Review extends Date {
     private List<Comment> commentList = new ArrayList<>();
 
 
-    private Review(String title, String contents, ReviewScore score, Member member) {
+    private Review(String title, String content, ReviewScore score, Member member) {
         this.title = title;
-        this.contents = contents;
+        this.content = content;
         this.score = score;
         this.member = member;
     }
 
-    public static Review createReview(String title, String contents, ReviewScore score, Book book, Member member){
-        Review review = new Review(title, contents, score, member);
+    public static Review createReview(String title, String content, ReviewScore score, Book book, Member member){
+        Review review = new Review(title, content, score, member);
         review.addReview(book);
         return review;
     }
 
 
-    public Long updateReview(String title, String contents, ReviewScore score, Member member) {
+    public Long updateReview(String title, String content, ReviewScore score, Member member) {
         this.title = title;
-        this.contents = contents;
+        this.content = content;
         this.score = score;
         this.member = member;
         return this.getId();

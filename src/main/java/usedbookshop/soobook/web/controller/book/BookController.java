@@ -40,7 +40,7 @@ public class BookController {
     }
 
     /**
-     * 책 한 권 보기
+     * 책 자세히 보기
      */
     // TODO : bookId 넘겨받는 것 보안에 취약하므로 수정해야 함.
     @GetMapping("/book/detail")

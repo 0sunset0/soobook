@@ -13,7 +13,7 @@ public interface CommentRepository {
 
     List<Comment> findAll();
 
-    List<Comment> findByReview(Review review);
+    List<Comment> findByReview(Long reviewId);
 
     Long delete(Long commentId);
 }

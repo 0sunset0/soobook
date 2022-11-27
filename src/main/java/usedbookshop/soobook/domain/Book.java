@@ -32,7 +32,7 @@ public class Book extends Date{
     List<Review> reviewList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "seller_member_id")
     private Member member;
 
     protected Book() {
