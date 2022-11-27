@@ -12,7 +12,9 @@ import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.order.OrderRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
+import usedbookshop.soobook.service.BookService;
 import usedbookshop.soobook.service.OrderService;
+import usedbookshop.soobook.web.dto.book.ViewBookDto;
 import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
@@ -34,6 +36,7 @@ public class MemberController {
     private final OrderRepository orderRepository;
     private final BookRepository bookRepository;
     private final ReviewRepository reviewRepository;
+    private final BookService bookService;
 
 
     /**
@@ -102,11 +105,11 @@ public class MemberController {
         Member loginMember = (Member) session.getAttribute("loginMember");
         List<Order> orderList = orderRepository.findByMember(loginMember.getId());
         List<Review> reviewList = reviewRepository.findByMember(loginMember.getId());
-        List<Book> bookList = bookRepository.findByMember(loginMember.getId());
+        List<ViewBookDto> viewBookDtos = bookService.findByMember(loginMember.getId());
 
         model.addAttribute("orderList", orderList);
         model.addAttribute("reviewList", reviewList);
-        model.addAttribute("bookList", bookList);
+        model.addAttribute("viewBookDtos", viewBookDtos);
         return "member/mypage";
     }
 

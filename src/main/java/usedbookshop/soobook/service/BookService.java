@@ -68,4 +68,12 @@ public class BookService {
     }
 
 
+    public List<ViewBookDto> findByMember(Long memberId) {
+        List<Book> booksByMember = bookRepository.findByMember(memberId);
+        List<ViewBookDto> bookDtosByMember = new ArrayList<>();
+        for (Book book : booksByMember) {
+            bookDtosByMember.add(book.toViewBookDto());
+        }
+        return bookDtosByMember;
+    }
 }

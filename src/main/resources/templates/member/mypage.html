@@ -32,8 +32,8 @@
     <br>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">내가 판매하는 책</div>
-        <ul class="list-group" th:each="book : ${bookList}">
-            <li class="list-group-item" th:text="|책 제목 : ${book.title}|">판매정보 1</li>
+        <ul class="list-group" th:each="bookDto : ${viewBookDtos}">
+            <li class="list-group-item" th:text="|책 제목 : ${bookDto.title}|">판매정보 1</li>
         </ul>
     </div>
     <br>
