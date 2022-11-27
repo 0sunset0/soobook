@@ -22,25 +22,25 @@
 
 <!-- 책 -->
 <div class="container" id="card">
-    <h2 th:text="${book.title}">책 제목</h2>
+    <h2 th:text="${viewBookDto.title}">책 제목</h2>
     <div class="mb-3">
         <label class="form-label" for="price">가격</label>
-        <p class="form-control" type="text" name="price" id="price" th:text="${book.price}">가격1</p>
+        <p class="form-control" type="text" name="price" id="price" th:text="${viewBookDto.price}">가격1</p>
     </div>
     <div class="mb-3">
         <label class="form-label" for="score">평점</label>
-        <p class="form-control" type="text" name="score" id="score" th:text="${book.score}">평점1</p>
+        <p class="form-control" type="text" name="score" id="score" th:text="${viewBookDto.score}">평점1</p>
     </div>
     <div class="mb-3">
         <label class="form-label" for="author">작가</label>
-        <p class="form-control" type="text" name="author" id="author" th:text="${book.author}">작가1</p>
+        <p class="form-control" type="text" name="author" id="author" th:text="${viewBookDto.author}">작가1</p>
     </div>
     <div class="mb-3">
         <label class="form-label" for="quantity">수량</label>
-        <p class="form-control" type="text" name="quantity" id="quantity" th:text="${book.quantity}">수량1</p>
+        <p class="form-control" type="text" name="quantity" id="quantity" th:text="${viewBookDto.quantity}">수량1</p>
     </div>
     <button class="btn btn-dark" onclick="location.href='./order/createOrder.html'" th:onclick="|location.href='@{/order}'|" type="button">구매하기</button>
-    <button class="btn btn-dark" onclick="location.href='./addReview.html'" th:onclick="|location.href='@{/book/addReview?bookId={bookId}(bookId=${book.id})}'|" type="button" >리뷰 작성하기</button>
+    <button class="btn btn-dark" onclick="location.href='./addReview.html'" th:onclick="|location.href='@{/book/addReview?bookId={viewBookDtoId}(viewBookDtoId=${viewBookDto.id})}'|" type="button" >리뷰 작성하기</button>
 
 
 </div>

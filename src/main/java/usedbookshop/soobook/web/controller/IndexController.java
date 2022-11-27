@@ -11,6 +11,8 @@ import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.CategoryBook;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.repository.book.BookRepository;
+import usedbookshop.soobook.service.BookService;
+import usedbookshop.soobook.web.dto.book.ViewBookDto;
 import usedbookshop.soobook.web.dto.member.MemberDto;
 
 import javax.annotation.PostConstruct;
@@ -21,13 +23,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
     @RequestMapping("/")
     public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model ){
 
         //베스트셀러 10권 가져오기
-        List<Book> bestSellers = bookRepository.findBest10Books();
+        List<ViewBookDto> bestSellers = bookService.findBest10Books();
         model.addAttribute("bestSellers", bestSellers);
 
         if(loginMember==null){

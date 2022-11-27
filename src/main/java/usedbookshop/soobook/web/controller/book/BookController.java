@@ -1,23 +1,17 @@
 package usedbookshop.soobook.web.controller.book;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import usedbookshop.soobook.domain.Book;
-import usedbookshop.soobook.domain.CategoryBook;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.domain.Review;
 import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.service.BookService;
-import usedbookshop.soobook.service.MemberService;
-import usedbookshop.soobook.web.dto.book.BookDto;
-import usedbookshop.soobook.web.dto.member.JoinDto;
-import usedbookshop.soobook.web.dto.member.LoginDto;
+import usedbookshop.soobook.web.dto.book.AddBookDto;
+import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -34,19 +28,20 @@ public class BookController {
      */
     @GetMapping("/books")
     public String books(Model model){
-        List<Book> books = bookService.findAllBooks();
-        model.addAttribute("books", books);
+        List<ViewBookDto> viewBookDtos = bookService.findAllBooks();
+        model.addAttribute("viewBookDtos", viewBookDtos);
         return "books/all";
     }
 
     /**
      * 책 자세히 보기
      */
-    // TODO : bookId 넘겨받는 것 보안에 취약하므로 수정해야 함.
     @GetMapping("/book/detail")
     public String detail(@RequestParam("bookId") Long bookId, Model model){
-        Book book = bookService.findBook(bookId);
-        model.addAttribute("book", book);
+        ViewBookDto viewBookDto = bookService.findBook(bookId);
+        model.addAttribute("viewBookDto", viewBookDto);
+
+        Book book = bookRepository.findById(bookId);
         List<Review> reviewList = book.getReviewList();
         model.addAttribute("reviewList", reviewList);
         return "book/detail";
@@ -65,18 +60,17 @@ public class BookController {
     }
 
     @PostMapping("/books/addBook")
-    public String addBook(@ModelAttribute("bookDto") BookDto bookDto, HttpServletRequest request){
+    public String addBook(@ModelAttribute("addBookDto") AddBookDto addBookDto, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        bookService.saveBook(Book.createBook(bookDto.getTitle(), bookDto.getPrice(), bookDto.getAuthor(),
-                bookDto.getQuantity(), loginMember));
+        bookService.saveBook(addBookDto.getTitle(), addBookDto.getPrice(), addBookDto.getAuthor(),
+                addBookDto.getQuantity(), loginMember);
 
         return "redirect:/books";
     }
-
 
 }

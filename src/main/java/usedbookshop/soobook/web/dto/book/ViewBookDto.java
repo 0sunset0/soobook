@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class BookDto {
+public class ViewBookDto {
 
+    private Long id;
     private String title;
     private int price;
     private int score;
     private String author;
     private int quantity;
+    private BookStatus bookStatus;
+    private Member member;
 }

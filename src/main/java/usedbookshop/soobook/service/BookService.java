@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.CategoryBook;
+import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.repository.book.BookRepository;
+import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -16,9 +19,11 @@ public class BookService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public void saveBook(Book book){
+    public void saveBook(String title, int price, String author, int quantity, Member member){
+        Book book = Book.createBook(title, price, author, quantity, member);
         bookRepository.save(book);
     }
+
 
     @Transactional
     public void updateBook(Long bookId, String name, int price, String author, int quantity, CategoryBook categoryBook){
@@ -32,18 +37,29 @@ public class BookService {
 
 
     //모든 책 보기
-    public List<Book> findAllBooks(){
-        return bookRepository.findAll();
+    public List<ViewBookDto> findAllBooks(){
+        List<Book> allBooks = bookRepository.findAll();
+        List<ViewBookDto> allBookDtos = new ArrayList<>();
+        for (Book book : allBooks) {
+            allBookDtos.add(book.toViewBookDto());
+        }
+        return allBookDtos;
     }
 
     //검색
-    public Book findBook(Long bookId){
-        return bookRepository.findById(bookId);
+    public ViewBookDto findBook(Long bookDtoId){
+        Book findBook = bookRepository.findById(bookDtoId);
+        return findBook.toViewBookDto();
     }
 
     //score 순으로 보기
-    public List<Book> findBest10Books(){
-        return bookRepository.findBest10Books();
+    public List<ViewBookDto> findBest10Books(){
+        List<Book> best10Books = bookRepository.findBest10Books();
+        List<ViewBookDto> best10BookDtos = new ArrayList<>();
+        for (Book book : best10Books) {
+            best10BookDtos.add(book.toViewBookDto());
+        }
+        return best10BookDtos;
     }
 
     //최신순으로 보기

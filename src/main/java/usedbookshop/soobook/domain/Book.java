@@ -2,6 +2,7 @@ package usedbookshop.soobook.domain;
 
 import lombok.Getter;
 import usedbookshop.soobook.exception.NotEnoughStockException;
+import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -78,6 +79,19 @@ public class Book extends Date{
         this.bookStatus = bookStatus;
     }
 
+    public ViewBookDto toViewBookDto() {
+        ViewBookDto viewBookDto = new ViewBookDto();
+        viewBookDto.setId(this.id);
+        viewBookDto.setTitle(this.title);
+        viewBookDto.setPrice(this.price);
+        viewBookDto.setScore(this.score);
+        viewBookDto.setAuthor(this.author);
+        viewBookDto.setQuantity(this.quantity);
+        viewBookDto.setBookStatus(this.bookStatus);
+        viewBookDto.setMember(this.member);
+        return viewBookDto;
+
+    }
 
 
     /**
@@ -110,4 +124,6 @@ public class Book extends Date{
         }
         score =  bookScore/reviewList.size();
     }
+
+
 }
