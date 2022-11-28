@@ -73,10 +73,9 @@ public class OrderController {
         }
 
         Member loginMember = (Member) session.getAttribute("loginMember");
-        Member findMember = memberRepository.findById(loginMember.getId());
 
         Order order = orderRepository.findById(orderId);
-        if (order.getMember().equals(findMember)){
+        if (order.getMember().getId()==loginMember.getId()){
             orderService.cancel(orderId);
         }
 

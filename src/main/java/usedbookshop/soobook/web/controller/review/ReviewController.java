@@ -6,11 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.domain.*;
+import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.repository.comment.CommentRepository;
+import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.order.OrderRepository;
 import usedbookshop.soobook.service.BookService;
+import usedbookshop.soobook.service.MemberService;
 import usedbookshop.soobook.service.ReviewService;
+import usedbookshop.soobook.web.dto.book.AddBookDto;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
+import usedbookshop.soobook.web.dto.review.AddReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,6 +29,8 @@ public class ReviewController {
     private final OrderRepository orderRepository;
     private final BookService bookService;
     private final CommentRepository commentRepository;
+    private final BookRepository bookRepository;
+    private final MemberRepository memberRepository;
 
     /**
      * 리뷰 자세히 보기
@@ -39,9 +46,10 @@ public class ReviewController {
     /**
      * 리뷰 작성
      */
-    //TODO : 테스트 해야 함.
     @GetMapping("book/addReview")
-    public String addReviewForm(@RequestParam("viewBookDtoId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes ){
+    public String addReviewForm(@RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model ){
+
+
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
@@ -56,6 +64,8 @@ public class ReviewController {
             List<OrderBook> orderBookList = order.getOrderBookList();
             for (OrderBook orderBook : orderBookList) {
                 if (orderBook.getBook().getId().equals(findBookDto.getId())){
+                    //---------------------------------
+                    model.addAttribute("reviewScores", ReviewScore.values());
                     return "book/addReview";
                 }
             }
@@ -67,10 +77,24 @@ public class ReviewController {
 
 
     @PostMapping("book/addReview")
-    public String addReview(HttpServletRequest request){
-        return "/";
+    public String addReview(@ModelAttribute("addReviewDto") AddReviewDto addReviewDto, @RequestParam("bookId") Long bookId, HttpServletRequest request){
 
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "redirect:/member/login";
+        }
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member member = memberRepository.findById(loginMember.getId());
+        Book book = bookRepository.findById(bookId);
+
+        reviewService.createReview(Review.createReview(addReviewDto.getTitle(), addReviewDto.getContent(), addReviewDto.getScore(), book, member));
+
+        return "redirect:/book/detail?bookId="+bookId;
     }
 
+    @ModelAttribute("reviewScoreType")
+    public ReviewScore[] reviewScores() {
+        return ReviewScore.values();
+    }
 
 }

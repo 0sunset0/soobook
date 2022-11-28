@@ -36,6 +36,9 @@ public class Review extends Date {
     private List<Comment> commentList = new ArrayList<>();
 
 
+    protected Review() {
+    }
+
     private Review(String title, String content, ReviewScore score, Member member) {
         this.title = title;
         this.content = content;
