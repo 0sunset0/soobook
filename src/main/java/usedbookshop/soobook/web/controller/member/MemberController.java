@@ -19,6 +19,7 @@ import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
 import usedbookshop.soobook.web.dto.member.MemberDto;
+import usedbookshop.soobook.web.dto.order.ViewOrderDto;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -37,6 +38,7 @@ public class MemberController {
     private final BookRepository bookRepository;
     private final ReviewRepository reviewRepository;
     private final BookService bookService;
+    private final OrderService orderService;
 
 
     /**
@@ -103,11 +105,11 @@ public class MemberController {
             return "redirect:/member/login";
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
-        List<Order> orderList = orderRepository.findByMember(loginMember.getId());
+        List<ViewOrderDto> viewOrderDtos = orderService.findByMember(loginMember.getId());
         List<Review> reviewList = reviewRepository.findByMember(loginMember.getId());
         List<ViewBookDto> viewBookDtos = bookService.findByMember(loginMember.getId());
 
-        model.addAttribute("orderList", orderList);
+        model.addAttribute("viewOrderDtos", viewOrderDtos);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("viewBookDtos", viewBookDtos);
         return "member/mypage";

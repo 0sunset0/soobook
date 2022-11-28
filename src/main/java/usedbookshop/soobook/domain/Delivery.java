@@ -25,6 +25,9 @@ public class Delivery {
         this.deliveryStatus = DeliveryStatus.READY;
     }
 
+    protected Delivery() {
+    }
+
     public static Delivery createDelivery(Address address) {
         return new Delivery(address);
     }

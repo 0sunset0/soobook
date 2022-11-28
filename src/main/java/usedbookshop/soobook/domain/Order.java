@@ -2,6 +2,7 @@ package usedbookshop.soobook.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import usedbookshop.soobook.web.dto.order.ViewOrderDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,14 +22,14 @@ public class Order extends Date{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderBook> orderBookList = new ArrayList<>();
 
     public void changeOrderStatus(OrderStatus orderStatus) {
@@ -41,6 +42,9 @@ public class Order extends Date{
         for (OrderBook orderBook : orderBookList){
             this.addOrderBook(orderBook);
         }
+    }
+
+    protected Order() {
     }
 
     /**
@@ -59,6 +63,23 @@ public class Order extends Date{
     private void addOrderBook(OrderBook orderBook) {
         orderBook.setOrder(this);
         orderBookList.add(orderBook);
+    }
+
+
+    /**
+     * ViewOrderDto로 변환
+     */
+    public ViewOrderDto toViewOrderDto(){
+        ViewOrderDto viewOrderDto = new ViewOrderDto();
+        viewOrderDto.setId(this.id);
+        viewOrderDto.setDeliveryArea(this.delivery.getAddress().getArea());
+        viewOrderDto.setDeliveryRoadCode(this.delivery.getAddress().getRoadCode());
+        viewOrderDto.setDeliveryRoadName(this.delivery.getAddress().getRoadName());
+        viewOrderDto.setOrderBookList(this.orderBookList);
+        viewOrderDto.setCreatedDate(this.createdDate);
+        viewOrderDto.setOrderStatus(this.orderStatus);
+
+        return viewOrderDto;
     }
 
 

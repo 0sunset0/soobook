@@ -25,8 +25,8 @@
     <h1>마이페이지</h1>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">나의 주문</div>
-        <ul class="list-group" th:each="order : ${orderList}">
-            <li class="list-group-item" th:text="|주문날짜 : ${order.createDate}|">주문정보 1</li>
+        <ul class="list-group" th:each="viewOrderDto : ${viewOrderDtos}">
+            <li class="list-group-item" th:text="|주문 날짜 : ${#temporals.format(viewOrderDto.createdDate, 'yy-mm-dd HH:mm')}   주문 상태 : ${viewOrderDto.orderStatus}|">주문정보 1</li>
         </ul>
     </div>
     <br>

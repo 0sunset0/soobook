@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <title>주문 정보</title>
+    <style>
+     #card {
+        padding: 50px;
+        max-width: 560px;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="../" th:href="@{/}">수북</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    </div>
+</nav>
+
+<!-- 주문 -->
+<div class="container" id="card">
+    <h2 >주문정보</h2>
+    <div class="mb-3">
+        <label class="form-label" for="createdDate">주문 날짜</label>
+        <p class="form-control" type="text" name="createdDate" id="createdDate" th:text="${#temporals.format(viewOrderDto.createdDate, 'yy-mm-dd HH:mm')}|">주문 날짜1</p>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="deliveryArea">주문한 책</label>
+        <ul class="list-group" th:each="orderBook : ${viewOrderDto.orderBookList}">
+            <li class="list-group-item" th:text="${orderBook.book.title}">판매정보 1</li>
+        </ul>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="deliveryArea">배송 지역</label>
+        <p class="form-control" type="text" name="deliveryArea" id="deliveryArea" th:text="${viewOrderDto.deliveryArea}">배송 지역1</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="deliveryRoadCode">배송 도로코드</label>
+        <p class="form-control" type="text" name="deliveryRoadCode" id="deliveryRoadCode" th:text="${viewOrderDto.deliveryRoadCode}">배송 도로코드1</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="deliveryRoadName">배송 도로명</label>
+        <p class="form-control" type="text" name="deliveryRoadName" id="deliveryRoadName" th:text="${viewOrderDto.deliveryRoadName}">배송 도로명1</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="orderStatus">주문 상태</label>
+        <p class="form-control" type="text" name="orderStatus" id="orderStatus" th:text="${viewOrderDto.orderStatus}">주문 상태1</p>
+    </div>
+
+    <button class="btn btn-dark" onclick="location.href=''" th:onclick="|location.href='@{/order/cancel/?orderId={viewOrderDtoId}(viewOrderDtoId=${viewOrderDto.id})}'|" type="button" >주문 취소</button>
+
+</div>
+
+</body>
+</html>

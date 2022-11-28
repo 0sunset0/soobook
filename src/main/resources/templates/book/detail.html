@@ -39,9 +39,8 @@
         <label class="form-label" for="quantity">수량</label>
         <p class="form-control" type="text" name="quantity" id="quantity" th:text="${viewBookDto.quantity}">수량1</p>
     </div>
-    <button class="btn btn-dark" onclick="location.href='./order/createOrder.html'" th:onclick="|location.href='@{/order}'|" type="button">구매하기</button>
+    <button class="btn btn-dark" onclick="location.href='./order/createOrder.html'" th:onclick="|location.href='@{/order?bookId={viewBookDtoId}(viewBookDtoId=${viewBookDto.id})}'|" type="button">구매하기</button>
     <button class="btn btn-dark" onclick="location.href='./addReview.html'" th:onclick="|location.href='@{/book/addReview?bookId={viewBookDtoId}(viewBookDtoId=${viewBookDto.id})}'|" type="button" >리뷰 작성하기</button>
-
 
 </div>
 

@@ -31,6 +31,9 @@ public class OrderBook {
         this.count = count;
     }
 
+    protected OrderBook() {
+    }
+
     /**
      * 비즈니스 로직
      */
