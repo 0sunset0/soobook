@@ -67,7 +67,6 @@ public class OrderController {
     @GetMapping("/order/cancel")
     public String cancel(@RequestParam("orderId") Long orderId, HttpServletRequest request){
 
-        // 세션에서 loginMember 객체를 가져온다
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
@@ -77,7 +76,6 @@ public class OrderController {
         Member findMember = memberRepository.findById(loginMember.getId());
 
         Order order = orderRepository.findById(orderId);
-
         if (order.getMember().equals(findMember)){
             orderService.cancel(orderId);
         }
