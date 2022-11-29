@@ -26,21 +26,21 @@
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">나의 주문</div>
         <ul class="list-group" th:each="viewOrderDto : ${viewOrderDtos}">
-            <li class="list-group-item" th:text="|주문 날짜 : ${#temporals.format(viewOrderDto.createdDate, 'yy-mm-dd HH:mm')}   주문 상태 : ${viewOrderDto.orderStatus}|">주문정보 1</li>
+            <li class="list-group-item" th:text="|주문 날짜 : ${#temporals.format(viewOrderDto.createdDate, 'yy-mm-dd HH:mm')}        주문 상태 : ${viewOrderDto.orderStatus}|">주문정보 1</li>
         </ul>
     </div>
     <br>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">내가 판매하는 책</div>
-        <ul class="list-group" th:each="bookDto : ${viewBookDtos}">
-            <li class="list-group-item" th:text="|책 제목 : ${bookDto.title}|">판매정보 1</li>
+        <ul class="list-group" th:each="viewBookDto : ${viewBookDtos}">
+            <li class="list-group-item" th:text="|책 제목 : ${viewBookDto.title}|">판매정보 1</li>
         </ul>
     </div>
     <br>
     <div class="mb-3">
         <div class="alert alert-dark" role="alert">나의 리뷰</div>
-        <ul class="list-group" th:each="review : ${reviewList}">
-            <li class="list-group-item" th:text="|리뷰 제목 : ${review.title}|">리뷰정보 1</li>
+        <ul class="list-group" th:each="viewReviewDto : ${viewReviewDtos}">
+            <li class="list-group-item" th:text="|리뷰 제목 : ${viewReviewDto.title}|">리뷰정보 1</li>
         </ul>
     </div>
     <br>

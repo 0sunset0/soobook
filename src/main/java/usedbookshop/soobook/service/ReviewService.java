@@ -6,7 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,13 +42,29 @@ public class ReviewService {
     }
 
     //도서 별 리뷰들 보기
-    public List<Review> findByBook(Long bookId){
-        return reviewRepository.findByBook(bookId);
+    public List<ViewReviewDto> findByBook(Long bookId){
+        List<Review> reviews = reviewRepository.findByBook(bookId);
+        List<ViewReviewDto> viewReviewDto = new ArrayList<>();
+        for (Review review : reviews) {
+            viewReviewDto.add(review.toViewReviewDto());
+        }
+        return viewReviewDto;
     }
 
     //멤버 별 리뷰들 보기
-    public List<Review> findByMember(Long memberId){
-        return reviewRepository.findByMember(memberId);
+    public List<ViewReviewDto> findByMember(Long memberId){
+        List<Review> reviews = reviewRepository.findByMember(memberId);
+        List<ViewReviewDto> viewReviewDto = new ArrayList<>();
+        for (Review review : reviews) {
+            viewReviewDto.add(review.toViewReviewDto());
+        }
+        return viewReviewDto;
+    }
+
+    // 리뷰 하나 보기
+    public ViewReviewDto findReview(Long reviewId){
+        Review review = reviewRepository.findById(reviewId);
+        return review.toViewReviewDto();
     }
 
 

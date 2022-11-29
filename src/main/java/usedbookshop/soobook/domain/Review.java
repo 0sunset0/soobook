@@ -2,6 +2,7 @@ package usedbookshop.soobook.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -59,6 +60,19 @@ public class Review extends Date {
         this.score = score;
         this.member = member;
         return this.getId();
+    }
+
+    public ViewReviewDto toViewReviewDto(){
+        ViewReviewDto viewReviewDto = new ViewReviewDto();
+        viewReviewDto.setId(this.id);
+        viewReviewDto.setTitle(this.title);
+        viewReviewDto.setContent(this.content);
+        viewReviewDto.setScore(this.score);
+        viewReviewDto.setBook(this.book);
+        viewReviewDto.setMember(this.member);
+        viewReviewDto.setCommentList(this.commentList);
+        return viewReviewDto;
+
     }
 
 

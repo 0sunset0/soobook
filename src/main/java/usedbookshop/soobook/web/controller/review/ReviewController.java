@@ -16,6 +16,7 @@ import usedbookshop.soobook.service.ReviewService;
 import usedbookshop.soobook.web.dto.book.AddBookDto;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
 import usedbookshop.soobook.web.dto.review.AddReviewDto;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,11 +37,12 @@ public class ReviewController {
      * 리뷰 자세히 보기
      */
     @GetMapping("book/review/detail")
-    public String reviewDetail(@ModelAttribute Review review, Model model){
-        model.addAttribute("review", review);
-        List<Comment> commentList = commentRepository.findByReview(review.getId());
+    public String reviewDetail(@RequestParam("reviewId") Long reviewId, Model model){
+        ViewReviewDto viewReviewDto = reviewService.findReview(reviewId);
+        model.addAttribute("viewReviewDto", viewReviewDto);
+        List<Comment> commentList = commentRepository.findByReview(reviewId);
         model.addAttribute("commentList", commentList);
-        return "review/detail";
+        return "book/review/detail";
     }
 
     /**

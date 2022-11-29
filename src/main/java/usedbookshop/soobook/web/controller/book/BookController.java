@@ -9,8 +9,10 @@ import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.domain.Review;
 import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.service.BookService;
+import usedbookshop.soobook.service.ReviewService;
 import usedbookshop.soobook.web.dto.book.AddBookDto;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,7 @@ public class BookController {
 
     private final BookRepository bookRepository;
     private final BookService bookService;
+    private final ReviewService reviewService;
 
     /**
      * 모든 책 보기
@@ -41,9 +44,8 @@ public class BookController {
         ViewBookDto viewBookDto = bookService.findBook(bookId);
         model.addAttribute("viewBookDto", viewBookDto);
 
-        Book book = bookRepository.findById(bookId);
-        List<Review> reviewList = book.getReviewList();
-        model.addAttribute("reviewList", reviewList);
+        List<ViewReviewDto> viewReviewDtos = reviewService.findByBook(bookId);
+        model.addAttribute("viewReviewDtos", viewReviewDtos);
         return "book/detail";
     }
 

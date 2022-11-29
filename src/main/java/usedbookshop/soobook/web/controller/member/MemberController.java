@@ -14,12 +14,14 @@ import usedbookshop.soobook.repository.order.OrderRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
 import usedbookshop.soobook.service.BookService;
 import usedbookshop.soobook.service.OrderService;
+import usedbookshop.soobook.service.ReviewService;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
 import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
 import usedbookshop.soobook.web.dto.member.MemberDto;
 import usedbookshop.soobook.web.dto.order.ViewOrderDto;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -39,6 +41,7 @@ public class MemberController {
     private final ReviewRepository reviewRepository;
     private final BookService bookService;
     private final OrderService orderService;
+    private final ReviewService reviewService;
 
 
     /**
@@ -106,11 +109,11 @@ public class MemberController {
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
         List<ViewOrderDto> viewOrderDtos = orderService.findByMember(loginMember.getId());
-        List<Review> reviewList = reviewRepository.findByMember(loginMember.getId());
+        List<ViewReviewDto> viewReviewDtos = reviewService.findByMember(loginMember.getId());
         List<ViewBookDto> viewBookDtos = bookService.findByMember(loginMember.getId());
 
         model.addAttribute("viewOrderDtos", viewOrderDtos);
-        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("viewReviewDtos", viewReviewDtos);
         model.addAttribute("viewBookDtos", viewBookDtos);
         return "member/mypage";
     }
