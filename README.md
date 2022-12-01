@@ -8,10 +8,11 @@
 ### 개발 기간
 
 2022.09.18~(진행중)
+<br><br><br>
 
 # 💡 실행화면
 
-<iframe width="636" height="338" src="https://www.youtube.com/embed/SNdy74XbPfQ" title="데이터베이스 최종 발표 실행 화면 영상1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[회원가입, 로그인, 판매, 주문, 리뷰 작성](https://www.youtube.com/watch?v=SNdy74XbPfQ&feature=youtu.be)
 
 - 홈 화면에서 베스트셀러를 확인할 수 있다.
 - 회원가입, 로그인을 하면 마이페이지를 볼 수 있고 로그아웃을 할 수 있다.
@@ -19,9 +20,12 @@
 - 책을 사면 산 수량만큼 책 재고가 줄어든다.
 - 구매한 책의 리뷰를 작성하면 책의 평점이 업데이트 된다.
 
+<br>
 
-<iframe width="708" height="398" src="https://www.youtube.com/embed/N4A_q47xY18" title="데이터베이스 최종 발표 실행 화면 영상2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-주문을 취소하면 책의 수량이 올라감.
+[주문 취소](https://www.youtube.com/watch?v=N4A_q47xY18)
+- 주문을 취소하면 책의 수량이 올라감.
+
+<br><br><br>
 
 # 💡 사용기술
 
@@ -41,6 +45,8 @@
 ### Build Tool
 
 - gradle
+
+  <br><br><br>
 
 # 💡 요구사항, 기능 소개
 
@@ -66,7 +72,7 @@
 
 - 로그인 한 회원 중에서 해당 책을 구매한 회원만 리뷰를 작성할 수 있다.
 - 리뷰를 삭제하면 리뷰에 달린 댓글들도 삭제된다.
-
+  <br><br><br>
 # 💡 프로젝트 아키텍처
 
 ![img_5.png](img_5.png)
@@ -95,6 +101,8 @@
 
 </aside>
 
+<br><br><br>
+
 # 💡 엔티티 구조
 
 ![img_4.png](img_4.png)
@@ -107,6 +115,8 @@
 - `Date` : Date는 jpa 영속성 컨텍스트에서 관리되는 엔티티는 아니며 `@MappedSuperclass` 어노테이션이 붙은 클래스이다. 객체의 입장에서 공통매핑정보를 사용하기 위해 쓰인다. 위 엔티티 구조에서는 Review, Comment, Book 에서 상속받아 쓰고 있다.
 - `CategoryBook` : Category와 Book 엔티티가 다대다 관계인데 다대다는 구현이 복잡하고 수정이 어렵기 때문에 중간에 매핑테이블을 두기 위해 만든 엔티티이다.
 
+<br><br><br>
+
 # 💡 데이터베이스 구조
 
 ![img_3.png](img_3.png)
@@ -114,11 +124,15 @@
 - 각 테이블의 pk인 id는 auto_increment 방식으로 의미 없는 값을 자동 생성하게 만들었다.
 - `order` 가 예약어라서 테이블명으로 orders라는 이름을 사용했다.
 
+<br><br><br>
+
 # 💡 세부 구현 방법
 
 ## 로그인(세션, 쿠키)
 
 로그인 기능을 http 세션, 쿠키로 구현하였다.
+
+<br>
 
 ![img_2.png](img_2.png)
 
@@ -132,6 +146,8 @@
 
 - 클라이언트가 다시 요청했을 경우, 세션 저장소에서 세션이 있는지 확인한다.
 - 세션이 있다면 로그인 유지, 없다면 로그아웃 처리된다.
+
+<br>
 
 ## Dto ↔ Entity
 
@@ -148,6 +164,8 @@
 ![img_1.png](img_1.png)
 
 dto와 entity를 변환하는 작업은 서비스 계층에서 이루어지도록 하였다.
+
+<br>
 
 ## 생성자 대신 정적팩토리 메서드 사용
 
@@ -178,6 +196,8 @@ public 생성자 대신 정적팩토리메서드를 사용하였다.
 
 그리고 무분별한 객체 생성을 막는다는 장점이 있어 정적 팩토리 메서드를 만들었다.
 
+<br>
+
 ## 직관적인 url 설계를 위한 패키지 구조
 
 **변경 전**
@@ -204,6 +224,8 @@ public 생성자 대신 정적팩토리메서드를 사용하였다.
 - service와 repository, controller 모두 도메인 별로 패키지를 나누었지만, 직관적인 url을 위해 view의 패키지를 다르게 설계하였다.
 - 이전에는 모든 책을 보기 위해 유저가 `/book/books` url을 요청해야 했지만 변경 후에는  `/book/all` url을 요청해야 한다. 변경 전보다 변경 후 더 직관적인 url이 되어 서비스의 접근성을 높였다.
 
+<br>
+
 ## 테스트코드 작성
 
 ![img.png](img.png)
@@ -218,6 +240,8 @@ public 생성자 대신 정적팩토리메서드를 사용하였다.
 ☑️ 테스트 코드를 작성함으로써 에러의 원인을 빨리 파악할 수 있었고 컨트롤러 없이 구현한 코드가 올바른 코드인지 확인할 수 있어 개발 속도를 높일 수 있었다.
 
 </aside>
+
+<br><br><br>
 
 # 💡To Be Continue
 
