@@ -75,7 +75,7 @@
   <br><br><br>
 # 💡 프로젝트 아키텍처
 
-![img_5.png](img_5.png)
+![img_5.png](src/image/img_5.png)
 
 - **Controller**
 
@@ -105,7 +105,7 @@
 
 # 💡 엔티티 구조
 
-![img_4.png](img_4.png)
+![img_4.png](src/image/img_4.png)
 
 - 엔티티들은 서로 일대일 연관관계 혹은 다대일 연관관계를 맺고있다.
 - ‘다’에 해당하는 엔티티가 연관관계의 주인이며 외래키가 존재한다.
@@ -119,7 +119,7 @@
 
 # 💡 데이터베이스 구조
 
-![img_3.png](img_3.png)
+![img_3.png](src/image/img_3.png)
 
 - 각 테이블의 pk인 id는 auto_increment 방식으로 의미 없는 값을 자동 생성하게 만들었다.
 - `order` 가 예약어라서 테이블명으로 orders라는 이름을 사용했다.
