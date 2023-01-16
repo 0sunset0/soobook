@@ -51,7 +51,6 @@ public class ReviewController {
     @GetMapping("book/addReview")
     public String addReviewForm(@RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model ){
 
-
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
@@ -66,7 +65,6 @@ public class ReviewController {
             List<OrderBook> orderBookList = order.getOrderBookList();
             for (OrderBook orderBook : orderBookList) {
                 if (orderBook.getBook().getId().equals(findBookDto.getId())){
-                    //---------------------------------
                     model.addAttribute("reviewScores", ReviewScore.values());
                     return "book/addReview";
                 }
@@ -94,9 +92,5 @@ public class ReviewController {
         return "redirect:/book/detail?bookId="+bookId;
     }
 
-    @ModelAttribute("reviewScoreType")
-    public ReviewScore[] reviewScores() {
-        return ReviewScore.values();
-    }
 
 }
