@@ -16,11 +16,14 @@ public class Address {
     protected Address() {
     }
 
-
-    public Address(String area, int roadCode, String roadName) {
+    private Address(String area, int roadCode, String roadName) {
         this.area = area;
         this.roadName = roadName;
         this.roadCode = roadCode;
+    }
+
+    public static Address createAddress(String area, int roadCode, String roadName) {
+        return new Address(area, roadCode, roadName);
     }
 
     @Override

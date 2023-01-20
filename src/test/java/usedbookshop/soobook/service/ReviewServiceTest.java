@@ -111,8 +111,8 @@ class ReviewServiceTest {
     }
 
     private Member getMember(String name, String email, String password) {
-        Address homeAddress = new Address("인천", 1111, "원당대로");
-        Address workAddress = new Address("서울", 2222, "양화대로");
+        Address homeAddress = Address.createAddress("인천", 1111, "원당대로");
+        Address workAddress = Address.createAddress("서울", 2222, "양화대로");
         Member member = Member.createMember(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;

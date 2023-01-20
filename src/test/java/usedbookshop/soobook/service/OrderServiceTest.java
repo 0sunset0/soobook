@@ -27,7 +27,7 @@ class OrderServiceTest {
     void 주문() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
 
         // when
@@ -44,7 +44,7 @@ class OrderServiceTest {
     void 주문취소() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
         Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
 
@@ -61,7 +61,7 @@ class OrderServiceTest {
     void 재고_없을시_예외() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = new Address("인천", 22643, "원당대로");
+        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
 
         // when
@@ -82,8 +82,8 @@ class OrderServiceTest {
     }
 
     private Member getMember(String name, String email, String password) {
-        Address homeAddress = new Address("인천", 2222, "원당대로");
-        Address workAddress = new Address("인천", 1111, "원당대로");
+        Address homeAddress = Address.createAddress("인천", 2222, "원당대로");
+        Address workAddress = Address.createAddress("인천", 1111, "원당대로");
         Member member = Member.createMember(name, homeAddress, workAddress, email, password);
         em.persist(member);
         return member;

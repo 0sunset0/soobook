@@ -23,6 +23,8 @@ public class JoinDto {
     private String password;
 
     public Member toEntity(){
-        return Member.createMember(this.getName(), new Address(homeArea, homeRoadCode, homeRoadName), new Address(workArea, workRoadCode, workRoadName), this.getEmail(), this.password);
+        Address homeAddress = Address.createAddress(homeArea, homeRoadCode, homeRoadName);
+        Address workAddress = Address.createAddress(workArea, workRoadCode, workRoadName);
+        return Member.createMember(this.getName(), homeAddress, workAddress, this.getEmail(), this.password);
     }
 }

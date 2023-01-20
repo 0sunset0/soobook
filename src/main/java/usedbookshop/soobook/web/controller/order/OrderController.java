@@ -45,7 +45,7 @@ public class OrderController {
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         // 폼에서 배송 정보 받기 -> 주문 처리
-        Address deliveryAddress = new Address(createOrderDto.getDeliveryArea(), createOrderDto.getDeliveryRoadCode(), createOrderDto.getDeliveryRoadName());
+        Address deliveryAddress = Address.createAddress(createOrderDto.getDeliveryArea(), createOrderDto.getDeliveryRoadCode(), createOrderDto.getDeliveryRoadName());
         Order order = orderService.order(loginMember.getId(), deliveryAddress, bookId, createOrderDto.getQuantity());
 
         // 주문 성공 -> 주문 상세 폼으로 보여주기
