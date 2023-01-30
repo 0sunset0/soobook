@@ -2,10 +2,7 @@ package usedbookshop.soobook.web.dto.order;
 
 import lombok.Getter;
 import lombok.Setter;
-import usedbookshop.soobook.domain.Delivery;
-import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.domain.OrderBook;
-import usedbookshop.soobook.domain.OrderStatus;
+import usedbookshop.soobook.domain.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,4 +21,20 @@ public class ViewOrderDto {
     private OrderStatus orderStatus;
     private List<OrderBook> orderBookList = new ArrayList<>();
     private LocalDateTime createdDate;
+
+
+    // Entity -> Dto
+    public static ViewOrderDto from(Order order){
+
+        ViewOrderDto viewOrderDto = new ViewOrderDto();
+        viewOrderDto.setId(order.getId());
+        viewOrderDto.setDeliveryArea(order.getDelivery().getAddress().getArea());
+        viewOrderDto.setDeliveryRoadCode(order.getDelivery().getAddress().getRoadCode());
+        viewOrderDto.setDeliveryRoadName(order.getDelivery().getAddress().getRoadName());
+        viewOrderDto.setOrderBookList(order.getOrderBookList());
+        viewOrderDto.setCreatedDate(order.getCreatedDate());
+        viewOrderDto.setOrderStatus(order.getOrderStatus());
+
+        return viewOrderDto;
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
+import usedbookshop.soobook.web.dto.review.AddReviewDto;
 import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.swing.text.View;
@@ -22,7 +23,8 @@ public class ReviewService {
 
     //리뷰 작성
     @Transactional
-    public Long createReview(Review review){
+    public Long createReview(AddReviewDto addReviewDto, Book book, Member member){
+        Review review = Review.createReview(addReviewDto.getTitle(), addReviewDto.getContent(), addReviewDto.getScore(), book, member);
         reviewRepository.save(review);
         review.getBook().updateScore();
         return review.getId();
@@ -46,7 +48,7 @@ public class ReviewService {
         List<Review> reviews = reviewRepository.findByBook(bookId);
         List<ViewReviewDto> viewReviewDto = new ArrayList<>();
         for (Review review : reviews) {
-            viewReviewDto.add(review.toViewReviewDto());
+            viewReviewDto.add(ViewReviewDto.from(review));
         }
         return viewReviewDto;
     }
@@ -56,7 +58,7 @@ public class ReviewService {
         List<Review> reviews = reviewRepository.findByMember(memberId);
         List<ViewReviewDto> viewReviewDto = new ArrayList<>();
         for (Review review : reviews) {
-            viewReviewDto.add(review.toViewReviewDto());
+            viewReviewDto.add(ViewReviewDto.from(review));
         }
         return viewReviewDto;
     }
@@ -64,7 +66,7 @@ public class ReviewService {
     // 리뷰 하나 보기
     public ViewReviewDto findReview(Long reviewId){
         Review review = reviewRepository.findById(reviewId);
-        return review.toViewReviewDto();
+        return ViewReviewDto.from(review);
     }
 
 

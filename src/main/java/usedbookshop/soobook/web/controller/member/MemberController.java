@@ -68,7 +68,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute("loginDto") LoginDto loginDto, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        Member loginMember = memberService.login(loginDto.getEmail(), loginDto.getPassword());
+        Member loginMember = memberService.login(loginDto);
         if (loginMember == null){
             redirectAttributes.addAttribute("loginStatus", "fail");
             return "redirect:/member/login";

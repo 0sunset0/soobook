@@ -11,6 +11,8 @@ import usedbookshop.soobook.domain.*;
 import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.repository.comment.CommentRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
+import usedbookshop.soobook.web.dto.review.AddReviewDto;
+import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.persistence.EntityManager;
 
@@ -33,31 +35,41 @@ class ReviewServiceTest {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
-        Review review = getReview("리뷰제목","리뷰내용", ReviewScore.FIVE, book, member);
+        AddReviewDto addReviewDto = getAddReviewDto("리뷰제목","리뷰내용", ReviewScore.FIVE);
 
         // when
-        Long saveId = reviewService.createReview(review);
+        Long saveId = reviewService.createReview(addReviewDto, book, member);
 
         // then
-        Assertions.assertThat(review.getId()).isEqualTo(saveId);
+        Review savedReview = reviewRepository.findById(saveId);
+        Assertions.assertThat(addReviewDto.getTitle()).isEqualTo(savedReview.getTitle());
+    }
+
+    private AddReviewDto getAddReviewDto(String title, String content, ReviewScore reviewScore) {
+        AddReviewDto addReviewDto = new AddReviewDto();
+
+        addReviewDto.setTitle(title);
+        addReviewDto.setContent(content);
+        addReviewDto.setScore(reviewScore);
+        return addReviewDto;
     }
 
     @Test
-    void 리뷰들_점수의_평균이_책평점() {
+    void 리뷰들_점수의_평균이_책_평점() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
 
-        Review review1 = getReview("리뷰제목1","good", ReviewScore.FIVE, book, member);
-        Review review2 = getReview("리뷰제목2","bad", ReviewScore.ONE, book, member);
+        AddReviewDto addReviewDto1 = getAddReviewDto("리뷰제목1","good", ReviewScore.FIVE);
+        AddReviewDto addReviewDto2 = getAddReviewDto("리뷰제목2","bad", ReviewScore.ONE);
 
         // when
-        reviewService.createReview(review1);
-        reviewService.createReview(review2);
+        reviewService.createReview(addReviewDto1, book, member);
+        reviewService.createReview(addReviewDto2, book, member);
 
         // then
         int bookScore = book.getScore();
-        Assertions.assertThat(bookScore).isEqualTo((review1.getScore().getValue()+review2.getScore().getValue())/2);
+        Assertions.assertThat(bookScore).isEqualTo((addReviewDto1.getScore().getValue()+addReviewDto2.getScore().getValue())/2);
     }
 
     @Test
@@ -66,17 +78,19 @@ class ReviewServiceTest {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
-        Review review = getReview("리뷰제목","good", ReviewScore.FIVE, book, member);
-        Comment comment = getComment(member, review, "Good");
+        AddReviewDto addReviewDto = getAddReviewDto("리뷰제목","good", ReviewScore.FIVE);
 
         // when
-        reviewService.createReview(review);
-        reviewService.deleteReview(review.getId());
+        Long savedId = reviewService.createReview(addReviewDto, book, member);
+        Review savedReview = reviewRepository.findById(savedId);
+        Comment comment = getComment(member, savedReview, "Good");
+
+        reviewService.deleteReview(savedReview.getId());
 
         //then
         List<Review> findReviews = reviewRepository.findByBook(book.getId());
         List<Comment> findComments = commentRepository.findAll();
-        Assertions.assertThat(review).isNotIn(findReviews);
+        Assertions.assertThat(savedReview).isNotIn(findReviews);
         Assertions.assertThat(comment).isNotIn(findComments);
 
     }
@@ -86,21 +100,18 @@ class ReviewServiceTest {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
         Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
-        Review review = getReview("리뷰제목","good", ReviewScore.FIVE, book, member);
+        AddReviewDto addReviewDto = getAddReviewDto("리뷰제목","good", ReviewScore.FIVE);
 
         // when
-        reviewService.createReview(review);
-        reviewService.updateReview(review.getId(), "리뷰 제목", "bad", ReviewScore.ONE, member.getId());
+        Long savedId = reviewService.createReview(addReviewDto, book, member);
+        Review savedReview = reviewRepository.findById(savedId);
+        reviewService.updateReview(savedReview.getId(), "리뷰 제목", "bad", ReviewScore.ONE, member.getId());
 
         // then
-        Review findReview = reviewRepository.findById(review.getId());
+        Review findReview = reviewRepository.findById(savedReview.getId());
         Assertions.assertThat(findReview.getScore()).isEqualTo(ReviewScore.ONE);
     }
 
-    private Review getReview(String title, String contents, ReviewScore reviewScore, Book book, Member member) {
-        Review review = Review.createReview(title, contents, reviewScore, book, member);
-        return review;
-    }
 
     private Book getBook(String title, int price, String author, int quantity, Member member) {
         CategoryBook categoryBook = new CategoryBook();

@@ -62,20 +62,6 @@ public class Review extends Date {
         return this.getId();
     }
 
-    public ViewReviewDto toViewReviewDto(){
-        ViewReviewDto viewReviewDto = new ViewReviewDto();
-        viewReviewDto.setId(this.id);
-        viewReviewDto.setTitle(this.title);
-        viewReviewDto.setContent(this.content);
-        viewReviewDto.setScore(this.score);
-        viewReviewDto.setBook(this.book);
-        viewReviewDto.setMember(this.member);
-        viewReviewDto.setCommentList(this.commentList);
-        return viewReviewDto;
-
-    }
-
-
     /**
      * 연관관계 메서드
      */

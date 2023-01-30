@@ -69,8 +69,7 @@ public class BookController {
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        bookService.saveBook(addBookDto.getTitle(), addBookDto.getPrice(), addBookDto.getAuthor(),
-                addBookDto.getQuantity(), loginMember);
+        bookService.saveBook(addBookDto, loginMember);
 
         return "redirect:/books";
     }

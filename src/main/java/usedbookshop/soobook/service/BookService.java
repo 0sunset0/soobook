@@ -7,6 +7,7 @@ import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.CategoryBook;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.repository.book.BookRepository;
+import usedbookshop.soobook.web.dto.book.AddBookDto;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class BookService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public void saveBook(String title, int price, String author, int quantity, Member member){
-        Book book = Book.createBook(title, price, author, quantity, member);
+    public void saveBook(AddBookDto addBookDto, Member member){
+        Book book = Book.createBook(addBookDto.getTitle(), addBookDto.getPrice(), addBookDto.getAuthor(), addBookDto.getQuantity(), member);
         bookRepository.save(book);
     }
 
@@ -41,7 +42,7 @@ public class BookService {
         List<Book> allBooks = bookRepository.findAll();
         List<ViewBookDto> allBookDtos = new ArrayList<>();
         for (Book book : allBooks) {
-            allBookDtos.add(book.toViewBookDto());
+            allBookDtos.add(ViewBookDto.from(book));
         }
         return allBookDtos;
     }
@@ -49,7 +50,7 @@ public class BookService {
     //검색
     public ViewBookDto findBook(Long bookDtoId){
         Book findBook = bookRepository.findById(bookDtoId);
-        return findBook.toViewBookDto();
+        return ViewBookDto.from(findBook);
     }
 
     //score 순으로 보기
@@ -57,7 +58,7 @@ public class BookService {
         List<Book> best10Books = bookRepository.findBest10Books();
         List<ViewBookDto> best10BookDtos = new ArrayList<>();
         for (Book book : best10Books) {
-            best10BookDtos.add(book.toViewBookDto());
+            best10BookDtos.add(ViewBookDto.from(book));
         }
         return best10BookDtos;
     }
@@ -72,7 +73,7 @@ public class BookService {
         List<Book> booksByMember = bookRepository.findByMember(memberId);
         List<ViewBookDto> bookDtosByMember = new ArrayList<>();
         for (Book book : booksByMember) {
-            bookDtosByMember.add(book.toViewBookDto());
+            bookDtosByMember.add(ViewBookDto.from(book));
         }
         return bookDtosByMember;
     }

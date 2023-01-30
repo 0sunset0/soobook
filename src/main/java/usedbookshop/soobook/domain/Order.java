@@ -66,22 +66,4 @@ public class Order extends Date{
     }
 
 
-    /**
-     * ViewOrderDto로 변환
-     */
-    public ViewOrderDto toViewOrderDto(){
-        ViewOrderDto viewOrderDto = new ViewOrderDto();
-        viewOrderDto.setId(this.id);
-        viewOrderDto.setDeliveryArea(this.delivery.getAddress().getArea());
-        viewOrderDto.setDeliveryRoadCode(this.delivery.getAddress().getRoadCode());
-        viewOrderDto.setDeliveryRoadName(this.delivery.getAddress().getRoadName());
-        viewOrderDto.setOrderBookList(this.orderBookList);
-        viewOrderDto.setCreatedDate(this.createdDate);
-        viewOrderDto.setOrderStatus(this.orderStatus);
-
-        return viewOrderDto;
-    }
-
-
-
 }

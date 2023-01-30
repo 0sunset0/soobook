@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
+import usedbookshop.soobook.web.dto.member.LoginDto;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class MemberService {
     //회원가입
     public Long join(JoinDto joinDto){
         //Dto -> domain
-        Member member = joinDto.toEntity();
+        Member member = JoinDto.toMember(joinDto);
         //중복메일 검증
         checkDuplicateMember(member);
         memberRepository.save(member);
@@ -35,7 +36,10 @@ public class MemberService {
         }
     }
 
-    public Member login(String email, String password) {
+    public Member login(LoginDto loginDto) {
+        String email = loginDto.getEmail();
+        String password = loginDto.getPassword();
+
         return memberRepository.findByEmail(email)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);

@@ -87,7 +87,7 @@ public class ReviewController {
         Member member = memberRepository.findById(loginMember.getId());
         Book book = bookRepository.findById(bookId);
 
-        reviewService.createReview(Review.createReview(addReviewDto.getTitle(), addReviewDto.getContent(), addReviewDto.getScore(), book, member));
+        reviewService.createReview(addReviewDto, book, member);
 
         return "redirect:/book/detail?bookId="+bookId;
     }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.repository.member.MemberRepository;
+import usedbookshop.soobook.web.dto.member.LoginDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +25,7 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         //given
-        JoinDto joinDto = getMemberDto("노을", "1234@naver.com", "1234");
+        JoinDto joinDto = getJoinDto("노을", "1234@naver.com", "1234");
 
         //when
         Long savedId = memberService.join(joinDto);
@@ -37,8 +38,8 @@ class MemberServiceTest {
     @Test
     void 중복회원검사() {
         // given
-        JoinDto memberDto1 = getMemberDto("노을1", "sunset@naver.com", "1234");
-        JoinDto memberDto2 = getMemberDto("노을2", "sunset@naver.com", "1234");
+        JoinDto memberDto1 = getJoinDto("노을1", "sunset@naver.com", "1234");
+        JoinDto memberDto2 = getJoinDto("노을2", "sunset@naver.com", "1234");
 
         // when
         memberService.join(memberDto1);
@@ -51,23 +52,32 @@ class MemberServiceTest {
     @Test
     void 로그인() {
         // given
-        JoinDto memberDto = getMemberDto("노을", "abcd@naver.com", "1111");
+        JoinDto joinDto = getJoinDto("노을", "abcd@naver.com", "1111");
+        LoginDto loginDto = getLoginDto("abcd@naver.com", "1111");
 
         // when
-        memberService.join(memberDto);
-        Member loginMember = memberService.login(memberDto.getEmail(), memberDto.getPassword());
+        memberService.join(joinDto);
+        Member loginMember = memberService.login(loginDto);
 
         // then
         Assertions.assertThat(loginMember).isNotNull();
 
     }
 
-    private JoinDto getMemberDto(String name, String email, String password) {
-        JoinDto memberDto = new JoinDto();
-        memberDto.setName(name);
-        memberDto.setEmail(email);
-        memberDto.setPassword(password);
-        return memberDto;
+    private LoginDto getLoginDto(String email, String password) {
+        LoginDto loginDto = new LoginDto();
+        loginDto.setEmail(email);
+        loginDto.setPassword(password);
+        return loginDto;
+
+    }
+
+    private JoinDto getJoinDto(String name, String email, String password) {
+        JoinDto joinDto = new JoinDto();
+        joinDto.setName(name);
+        joinDto.setEmail(email);
+        joinDto.setPassword(password);
+        return joinDto;
     }
 
 }

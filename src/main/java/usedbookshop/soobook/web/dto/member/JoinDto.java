@@ -22,9 +22,9 @@ public class JoinDto {
 
     private String password;
 
-    public Member toEntity(){
-        Address homeAddress = Address.createAddress(homeArea, homeRoadCode, homeRoadName);
-        Address workAddress = Address.createAddress(workArea, workRoadCode, workRoadName);
-        return Member.createMember(this.getName(), homeAddress, workAddress, this.getEmail(), this.password);
+    public static Member toMember(JoinDto joinDto){
+        Address homeAddress = Address.createAddress(joinDto.getHomeArea(), joinDto.getHomeRoadCode(), joinDto.getHomeRoadName());
+        Address workAddress = Address.createAddress(joinDto.getHomeArea(), joinDto.getHomeRoadCode(), joinDto.getHomeRoadName());
+        return Member.createMember(joinDto.getName(), homeAddress, workAddress, joinDto.getEmail(), joinDto.getPassword());
     }
 }
