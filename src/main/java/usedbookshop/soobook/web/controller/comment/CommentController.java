@@ -19,7 +19,6 @@ public class CommentController {
 
     @PostMapping("review/addComment")
     public String addComment(@ModelAttribute("addReviewDto") AddReviewDto addReviewDto, @RequestParam("reviewId") Long reviewId){
-
         return "redirect:/book/review/detail?reviewId=" + reviewId;
     }
 }
