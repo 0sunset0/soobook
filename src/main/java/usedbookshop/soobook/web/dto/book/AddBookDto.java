@@ -11,8 +11,4 @@ public class AddBookDto {
     private int price;
     private String author;
     private int quantity;
-
-    //Dto -> Entity
-
-
 }
