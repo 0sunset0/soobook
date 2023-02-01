@@ -1,6 +1,8 @@
 package usedbookshop.soobook.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import usedbookshop.soobook.exception.NotEnoughStockException;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book extends Date{
 
     @Id @GeneratedValue
@@ -36,8 +39,6 @@ public class Book extends Date{
     @JoinColumn(name = "seller_member_id")
     private Member member;
 
-    protected Book() {
-    }
 
     //private 생성자
     private Book(String title, int price, String author, int quantity, Member member) {
@@ -55,30 +56,17 @@ public class Book extends Date{
     }
 
 
-    public void modifyName(String title) {
+    public void modifyBook(String title, int price, String author, int quantity, CategoryBook categoryBook) {
         this.title = title;
-    }
-
-    public void modifyPrice(int price) {
         this.price = price;
-    }
-
-    public void modifyAuthor(String author) {
         this.author = author;
-    }
-
-    public void modifyQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public void modifyCategoryBook(CategoryBook categoryBook) {
         this.categoryBook = categoryBook;
     }
 
-    public void modifyBookStatus(BookStatus bookStatus){
+    private void modifyBookStatus(BookStatus bookStatus) {
         this.bookStatus = bookStatus;
     }
-
 
 
     /**
