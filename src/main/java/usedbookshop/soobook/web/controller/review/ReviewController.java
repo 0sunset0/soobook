@@ -12,6 +12,7 @@ import usedbookshop.soobook.repository.member.MemberRepository;
 import usedbookshop.soobook.repository.order.OrderRepository;
 import usedbookshop.soobook.service.BookService;
 import usedbookshop.soobook.service.MemberService;
+import usedbookshop.soobook.service.OrderService;
 import usedbookshop.soobook.service.ReviewService;
 import usedbookshop.soobook.web.dto.book.AddBookDto;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
@@ -27,18 +28,17 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final OrderRepository orderRepository;
     private final BookService bookService;
+    private final OrderService orderService;
+    private final MemberService memberService;
     private final CommentRepository commentRepository;
-    private final BookRepository bookRepository;
-    private final MemberRepository memberRepository;
 
     /**
      * 리뷰 자세히 보기
      */
     @GetMapping("book/review/detail")
     public String reviewDetail(@RequestParam("reviewId") Long reviewId, Model model){
-        ViewReviewDto viewReviewDto = reviewService.findReview(reviewId);
+        ViewReviewDto viewReviewDto = ViewReviewDto.from(reviewService.findReview(reviewId));
         model.addAttribute("viewReviewDto", viewReviewDto);
         List<Comment> commentList = commentRepository.findByReview(reviewId);
         model.addAttribute("commentList", commentList);
@@ -57,14 +57,15 @@ public class ReviewController {
         }
 
         //멤버가 사지 않은 책에 리뷰를 쓰려고 하면 에러 메세지 출력
-        ViewBookDto findBookDto = bookService.findBook(bookId);
+        Book book = bookService.findBook(bookId);
         Member loginMember = (Member) session.getAttribute("loginMember");
-        List<Order> orderList = orderRepository.findByMember(loginMember.getId());
+        List<Order> orderList = orderService.findByMember(loginMember.getId());
 
+        //TODO 서비스에서 엔티티 반환하는 걸로 바꾸면서 이 부분도 수정 필요
         for (Order order : orderList) {
             List<OrderBook> orderBookList = order.getOrderBookList();
             for (OrderBook orderBook : orderBookList) {
-                if (orderBook.getBook().getId().equals(findBookDto.getId())){
+                if (orderBook.getBook().getId().equals(book.getId())){
                     model.addAttribute("reviewScores", ReviewScore.values());
                     return "book/addReview";
                 }
@@ -84,9 +85,8 @@ public class ReviewController {
             return "redirect:/member/login";
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
-        Member member = memberRepository.findById(loginMember.getId());
-        Book book = bookRepository.findById(bookId);
-
+        Member member = memberService.findMember(loginMember.getId());
+        Book book = bookService.findBook(bookId);
         reviewService.createReview(addReviewDto, book, member);
 
         return "redirect:/book/detail?bookId="+bookId;

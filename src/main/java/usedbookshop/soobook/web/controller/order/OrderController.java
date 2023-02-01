@@ -25,7 +25,6 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderRepository orderRepository;
-    private final MemberRepository memberRepository;
 
     @GetMapping("/order")
     public String orderForm(@RequestParam("bookId") Long bookId, Model model){
@@ -56,7 +55,7 @@ public class OrderController {
     @GetMapping("/order/detail")
     public String detail(@RequestParam("orderId") Long orderId, Model model){
 
-        ViewOrderDto viewOrderDto = orderService.findOrder(orderId);
+        ViewOrderDto viewOrderDto = ViewOrderDto.from(orderService.findOrder(orderId));
         model.addAttribute("viewOrderDto", viewOrderDto);
 
         return "order/detail";

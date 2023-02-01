@@ -16,13 +16,14 @@ import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookRepository bookRepository;
     private final BookService bookService;
     private final ReviewService reviewService;
 
@@ -31,7 +32,11 @@ public class BookController {
      */
     @GetMapping("/books")
     public String books(Model model){
-        List<ViewBookDto> viewBookDtos = bookService.findAllBooks();
+        List<Book> allBooks = bookService.findAllBooks();
+        List<ViewBookDto> viewBookDtos = new ArrayList<>();
+        for (Book book : allBooks) {
+            viewBookDtos.add(ViewBookDto.from(book));
+        }
         model.addAttribute("viewBookDtos", viewBookDtos);
         return "books/all";
     }
@@ -41,10 +46,14 @@ public class BookController {
      */
     @GetMapping("/book/detail")
     public String detail(@RequestParam("bookId") Long bookId, Model model){
-        ViewBookDto viewBookDto = bookService.findBook(bookId);
+        ViewBookDto viewBookDto = ViewBookDto.from(bookService.findBook(bookId));
         model.addAttribute("viewBookDto", viewBookDto);
 
-        List<ViewReviewDto> viewReviewDtos = reviewService.findByBook(bookId);
+        List<Review> reviewsBtBook = reviewService.findByBook(bookId);
+        List<ViewReviewDto> viewReviewDtos = new ArrayList<>();
+        for (Review review : reviewsBtBook) {
+            viewReviewDtos.add(ViewReviewDto.from(review));
+        }
         model.addAttribute("viewReviewDtos", viewReviewDtos);
         return "book/detail";
     }
@@ -70,7 +79,6 @@ public class BookController {
         Member loginMember = (Member) session.getAttribute("loginMember");
 
         bookService.saveBook(addBookDto, loginMember);
-
         return "redirect:/books";
     }
 

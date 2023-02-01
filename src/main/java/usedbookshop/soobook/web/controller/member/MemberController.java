@@ -1,10 +1,8 @@
 package usedbookshop.soobook.web.controller.member;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.domain.*;
@@ -19,14 +17,12 @@ import usedbookshop.soobook.web.dto.book.ViewBookDto;
 import usedbookshop.soobook.web.dto.member.LoginDto;
 import usedbookshop.soobook.web.dto.member.JoinDto;
 import usedbookshop.soobook.service.MemberService;
-import usedbookshop.soobook.web.dto.member.MemberDto;
 import usedbookshop.soobook.web.dto.order.ViewOrderDto;
 import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,10 +31,6 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final OrderRepository orderRepository;
-    private final BookRepository bookRepository;
-    private final ReviewRepository reviewRepository;
     private final BookService bookService;
     private final OrderService orderService;
     private final ReviewService reviewService;
@@ -108,10 +100,23 @@ public class MemberController {
             return "redirect:/member/login";
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
-        List<ViewOrderDto> viewOrderDtos = orderService.findByMember(loginMember.getId());
-        List<ViewReviewDto> viewReviewDtos = reviewService.findByMember(loginMember.getId());
-        List<ViewBookDto> viewBookDtos = bookService.findByMember(loginMember.getId());
 
+        List<Order> ordersByMember = orderService.findByMember(loginMember.getId());
+        List<ViewOrderDto> viewOrderDtos = new ArrayList<>();
+        for (Order order : ordersByMember) {
+            viewOrderDtos.add(ViewOrderDto.from(order));
+        }
+
+        List<Review> reviewsByMember = reviewService.findByMember(loginMember.getId());
+        List<ViewReviewDto> viewReviewDtos = new ArrayList<>();
+        for (Review review : reviewsByMember) {
+            viewReviewDtos.add(ViewReviewDto.from(review));
+        }
+        List<Book> booksByMember = bookService.findByMember(loginMember.getId());
+        List<ViewBookDto> viewBookDtos = new ArrayList<>();
+        for (Book book : booksByMember) {
+            viewBookDtos.add(ViewBookDto.from(book));
+        }
         model.addAttribute("viewOrderDtos", viewOrderDtos);
         model.addAttribute("viewReviewDtos", viewReviewDtos);
         model.addAttribute("viewBookDtos", viewBookDtos);

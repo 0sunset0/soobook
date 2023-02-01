@@ -1,21 +1,18 @@
 package usedbookshop.soobook.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import usedbookshop.soobook.domain.Book;
-import usedbookshop.soobook.domain.CategoryBook;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.service.BookService;
 import usedbookshop.soobook.web.dto.book.ViewBookDto;
-import usedbookshop.soobook.web.dto.member.MemberDto;
+import usedbookshop.soobook.web.dto.member.ViewMemberDto;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,14 +26,18 @@ public class IndexController {
     public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model ){
 
         //베스트셀러 10권 가져오기
-        List<ViewBookDto> bestSellers = bookService.findBest10Books();
-        model.addAttribute("bestSellers", bestSellers);
+        List<Book> best10Books = bookService.findBest10Books();
+        List<ViewBookDto> best10BookDtos = new ArrayList<>();
+        for (Book book : best10Books) {
+            best10BookDtos.add(ViewBookDto.from(book));
+        }
+        model.addAttribute("best10BookDtos", best10BookDtos);
 
         if(loginMember==null){
             return "index";
         }
-        MemberDto memberDto = loginMember.toMemberDto();
-        model.addAttribute("memberDto", memberDto);
+        ViewMemberDto viewMemberDto = ViewMemberDto.from(loginMember);
+        model.addAttribute("memberDto", viewMemberDto);
         return "indexForMember";
 
 
