@@ -1,6 +1,8 @@
 package usedbookshop.soobook.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import usedbookshop.soobook.web.dto.order.ViewOrderDto;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends Date{
 
     @Id @GeneratedValue
@@ -44,8 +47,6 @@ public class Order extends Date{
         }
     }
 
-    protected Order() {
-    }
 
     /**
      * 주문 정적 팩토리 메서드

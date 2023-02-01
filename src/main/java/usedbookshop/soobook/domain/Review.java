@@ -1,6 +1,8 @@
 package usedbookshop.soobook.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends Date {
 
     @Id
@@ -37,9 +40,6 @@ public class Review extends Date {
     private List<Comment> commentList = new ArrayList<>();
 
 
-    protected Review() {
-    }
-
     private Review(String title, String content, ReviewScore score, Member member) {
         this.title = title;
         this.content = content;
@@ -53,13 +53,11 @@ public class Review extends Date {
         return review;
     }
 
-
-    public Long updateReview(String title, String content, ReviewScore score, Member member) {
+    public void modifyReview(String title, String content, ReviewScore score, Member member) {
         this.title = title;
         this.content = content;
         this.score = score;
         this.member = member;
-        return this.getId();
     }
 
     /**
