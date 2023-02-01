@@ -56,17 +56,13 @@ public class OrderService {
     }
 
     //주문 정보 보기
-    public ViewOrderDto findOrder(Long orderId){
+    public Order findOrder(Long orderId){
         Order order = orderRepository.findById(orderId);
-        return ViewOrderDto.from(order);
+        return order;
     }
 
-    public List<ViewOrderDto> findByMember(Long memberId) {
+    public List<Order> findByMember(Long memberId) {
         List<Order> ordersByMember = orderRepository.findByMember(memberId);
-        List<ViewOrderDto> orderDtosByMember = new ArrayList<>();
-        for (Order order : ordersByMember) {
-            orderDtosByMember.add(ViewOrderDto.from(order));
-        }
-        return orderDtosByMember;
+        return ordersByMember;
     }
 }

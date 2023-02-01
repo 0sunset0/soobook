@@ -39,34 +39,27 @@ public class ReviewService {
     public Long updateReview(Long reviewId, String title, String contents, ReviewScore score, Long memberId){
         Review findReview = reviewRepository.findById(reviewId);
         Member findMember = memberRepository.findById(memberId);
-        findReview.updateReview(title, contents, score, findMember);
+        findReview.modifyReview(title, contents, score, findMember);
         return findReview.getId();
     }
 
     //도서 별 리뷰들 보기
-    public List<ViewReviewDto> findByBook(Long bookId){
+    public List<Review> findByBook(Long bookId){
         List<Review> reviews = reviewRepository.findByBook(bookId);
-        List<ViewReviewDto> viewReviewDto = new ArrayList<>();
-        for (Review review : reviews) {
-            viewReviewDto.add(ViewReviewDto.from(review));
-        }
-        return viewReviewDto;
+
+        return reviews;
     }
 
     //멤버 별 리뷰들 보기
-    public List<ViewReviewDto> findByMember(Long memberId){
+    public List<Review> findByMember(Long memberId){
         List<Review> reviews = reviewRepository.findByMember(memberId);
-        List<ViewReviewDto> viewReviewDto = new ArrayList<>();
-        for (Review review : reviews) {
-            viewReviewDto.add(ViewReviewDto.from(review));
-        }
-        return viewReviewDto;
+        return reviews;
     }
 
     // 리뷰 하나 보기
-    public ViewReviewDto findReview(Long reviewId){
+    public Review findReview(Long reviewId){
         Review review = reviewRepository.findById(reviewId);
-        return ViewReviewDto.from(review);
+        return review;
     }
 
 

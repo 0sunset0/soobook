@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderServiceTest {
 
     @Autowired OrderService orderService;
-    @Autowired OrderRepository orderRepository;
     @Autowired EntityManager em;
 
     @Test
@@ -34,7 +33,7 @@ class OrderServiceTest {
         Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
 
         // then
-        Order findOrder = orderRepository.findById(order.getId());
+        Order findOrder = orderService.findOrder(order.getId());
         Assertions.assertThat(findOrder).isEqualTo(order);
         Assertions.assertThat(book.getQuantity()).isEqualTo(1);
 
@@ -52,7 +51,7 @@ class OrderServiceTest {
         orderService.cancel(order.getId());
 
         // then(주문상태 변화(ORDER->CANCEL), book 수량 중가)
-        Order findOrder = orderRepository.findById(order.getId());
+        Order findOrder = orderService.findOrder(order.getId());
         Assertions.assertThat(findOrder.getOrderStatus()).isEqualTo(OrderStatus.CANCEL);
         Assertions.assertThat(book.getQuantity()).isEqualTo(5);
 

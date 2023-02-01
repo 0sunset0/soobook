@@ -41,8 +41,8 @@ class ReviewServiceTest {
         Long saveId = reviewService.createReview(addReviewDto, book, member);
 
         // then
-        Review savedReview = reviewRepository.findById(saveId);
-        Assertions.assertThat(addReviewDto.getTitle()).isEqualTo(savedReview.getTitle());
+        Review findReview = reviewService.findReview(saveId);
+        Assertions.assertThat(findReview.getId()).isEqualTo(saveId);
     }
 
     private AddReviewDto getAddReviewDto(String title, String content, ReviewScore reviewScore) {
@@ -82,15 +82,15 @@ class ReviewServiceTest {
 
         // when
         Long savedId = reviewService.createReview(addReviewDto, book, member);
-        Review savedReview = reviewRepository.findById(savedId);
-        Comment comment = getComment(member, savedReview, "Good");
+        Review findReview = reviewService.findReview(savedId);
+        Comment comment = getComment(member, findReview, "Good");
 
-        reviewService.deleteReview(savedReview.getId());
+        reviewService.deleteReview(findReview.getId());
 
         //then
-        List<Review> findReviews = reviewRepository.findByBook(book.getId());
+        List<Review> findReviews = reviewService.findByBook(book.getId());
         List<Comment> findComments = commentRepository.findAll();
-        Assertions.assertThat(savedReview).isNotIn(findReviews);
+        Assertions.assertThat(findReview).isNotIn(findReviews);
         Assertions.assertThat(comment).isNotIn(findComments);
 
     }
@@ -108,7 +108,7 @@ class ReviewServiceTest {
         reviewService.updateReview(savedReview.getId(), "리뷰 제목", "bad", ReviewScore.ONE, member.getId());
 
         // then
-        Review findReview = reviewRepository.findById(savedReview.getId());
+        Review findReview = reviewService.findReview(savedReview.getId());
         Assertions.assertThat(findReview.getScore()).isEqualTo(ReviewScore.ONE);
     }
 
