@@ -1,6 +1,7 @@
 package usedbookshop.soobook.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import usedbookshop.soobook.exception.NotEnoughStockException;
@@ -41,10 +42,10 @@ public class Book extends Date{
 
 
     //private 생성자
+    @Builder
     private Book(String title, int price, String author, int quantity, Member member) {
         this.title = title;
         this.price = price;
-        this.score = 0;
         this.author = author;
         this.quantity = quantity;
         this.bookStatus = BookStatus.SALE;
@@ -52,9 +53,14 @@ public class Book extends Date{
     }
 
     public static Book createBook(String title, int price, String author, int quantity, Member member){
-        return new Book(title, price, author, quantity, member);
+        return Book.builder()
+                .title(title)
+                .price(price)
+                .author(author)
+                .quantity(quantity)
+                .member(member)
+                .build();
     }
-
 
     public void modifyBook(String title, int price, String author, int quantity, CategoryBook categoryBook) {
         this.title = title;

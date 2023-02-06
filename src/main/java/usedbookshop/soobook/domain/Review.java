@@ -1,9 +1,6 @@
 package usedbookshop.soobook.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.persistence.*;
@@ -40,6 +37,7 @@ public class Review extends Date {
     private List<Comment> commentList = new ArrayList<>();
 
 
+    @Builder
     private Review(String title, String content, ReviewScore score, Member member) {
         this.title = title;
         this.content = content;
@@ -48,8 +46,13 @@ public class Review extends Date {
     }
 
     public static Review createReview(String title, String content, ReviewScore score, Book book, Member member){
-        Review review = new Review(title, content, score, member);
-        review.addReview(book);
+        Review review = Review.builder()
+                .title(title)
+                .content(content)
+                .score(score)
+                .member(member)
+                .build();
+        review.setBook(book);
         return review;
     }
 
@@ -63,7 +66,7 @@ public class Review extends Date {
     /**
      * 연관관계 메서드
      */
-    private void addReview(Book book) {
+    private void setBook(Book book) {
         this.book = book;
         book.getReviewList().add(this);
     }

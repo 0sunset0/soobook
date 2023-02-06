@@ -1,7 +1,9 @@
 package usedbookshop.soobook.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -23,7 +25,8 @@ public class Comment extends Date{
 
     private String content;
 
-    public static Comment createComment(Member member, Review review, String content) {
+    public static @NotNull
+    Comment createComment(Member member, Review review, String content) {
         Comment comment = new Comment(member, content);
         comment.addComment(review);
         return comment;

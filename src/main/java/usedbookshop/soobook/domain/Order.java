@@ -1,9 +1,6 @@
 package usedbookshop.soobook.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import usedbookshop.soobook.web.dto.order.ViewOrderDto;
 
 import javax.persistence.*;
@@ -39,12 +36,15 @@ public class Order extends Date{
         this.orderStatus = orderStatus;
     }
 
+    @Builder
     private Order(Member member, Delivery delivery, OrderBook... orderBookList) {
         this.member = member;
         this.delivery = delivery;
         for (OrderBook orderBook : orderBookList){
             this.addOrderBook(orderBook);
         }
+        this.createdDate = LocalDateTime.now();
+        this.orderStatus = OrderStatus.ORDER;
     }
 
 
@@ -52,10 +52,11 @@ public class Order extends Date{
      * 주문 정적 팩토리 메서드
      */
     public static Order createOrder(Member member, Delivery delivery, OrderBook... orderBookList) {
-        Order order = new Order(member, delivery, orderBookList);
-        order.createdDate = LocalDateTime.now();
-        order.orderStatus = OrderStatus.ORDER;
-        return order;
+        return Order.builder()
+                .member(member)
+                .delivery(delivery)
+                .orderBookList(orderBookList)
+                .build();
     }
 
     /**

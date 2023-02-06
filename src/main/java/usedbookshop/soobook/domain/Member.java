@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
 
@@ -37,6 +38,7 @@ public class Member {
     })
     private Address workAddress;
 
+    //TODO email: string->객체
     @Column(unique = true)
     private String email;
 
@@ -44,9 +46,7 @@ public class Member {
     private Password password;
 
 
-    protected Member() {
-    }
-
+    @Builder
     private Member(String name, Address homeAddress, Address workAddress, String email, Password password) {
         this.name = name;
         this.homeAddress = homeAddress;
@@ -56,7 +56,13 @@ public class Member {
     }
 
     public static Member createMember(String name, Address homeAddress, Address workAddress, String email, Password password){
-        return new Member(name, homeAddress, workAddress, email, password);
+        return Member.builder()
+                .name(name)
+                .homeAddress(homeAddress)
+                .workAddress(workAddress)
+                .email(email)
+                .password(password)
+                .build();
     }
 
     @Embeddable
@@ -76,7 +82,6 @@ public class Member {
         @Column(name = "password_ttl")
         private long ttl;
 
-        @Builder
         public Password(final String value) {
             this.ttl = 3; // 3개월
             this.value = value;
