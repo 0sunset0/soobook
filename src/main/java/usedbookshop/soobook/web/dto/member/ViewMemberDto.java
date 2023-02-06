@@ -2,9 +2,7 @@ package usedbookshop.soobook.web.dto.member;
 
 import lombok.Getter;
 import lombok.Setter;
-import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.web.dto.book.ViewBookDto;
 
 @Getter @Setter
 public class ViewMemberDto {
@@ -21,7 +19,6 @@ public class ViewMemberDto {
 
     private String email;
 
-    private String password;
 
     //Entity -> Dto
     public static ViewMemberDto from(Member member) {
