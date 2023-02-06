@@ -41,7 +41,7 @@ public class MemberService {
         String password = loginDto.getPassword();
 
         return memberRepository.findByEmail(email)
-                .filter(m -> m.getPassword().equals(password))
+                .filter(m -> m.getPassword().isMatched(password))
                 .orElse(null);
     }
 

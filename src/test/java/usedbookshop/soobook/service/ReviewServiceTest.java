@@ -8,17 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.*;
-import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.repository.comment.CommentRepository;
 import usedbookshop.soobook.repository.review.ReviewRepository;
 import usedbookshop.soobook.web.dto.review.AddReviewDto;
-import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.persistence.EntityManager;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
@@ -124,7 +121,7 @@ class ReviewServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = Address.createAddress("인천", 1111, "원당대로");
         Address workAddress = Address.createAddress("서울", 2222, "양화대로");
-        Member member = Member.createMember(name, homeAddress, workAddress, email, password);
+        Member member = Member.createMember(name, homeAddress, workAddress, email, new Member.Password(password));
         em.persist(member);
         return member;
     }

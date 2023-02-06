@@ -25,6 +25,6 @@ public class JoinDto {
     public static Member toMember(JoinDto joinDto){
         Address homeAddress = Address.createAddress(joinDto.getHomeArea(), joinDto.getHomeRoadCode(), joinDto.getHomeRoadName());
         Address workAddress = Address.createAddress(joinDto.getHomeArea(), joinDto.getHomeRoadCode(), joinDto.getHomeRoadName());
-        return Member.createMember(joinDto.getName(), homeAddress, workAddress, joinDto.getEmail(), joinDto.getPassword());
+        return Member.createMember(joinDto.getName(), homeAddress, workAddress, joinDto.getEmail(), new Member.Password(joinDto.getPassword()));
     }
 }
