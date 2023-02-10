@@ -1,13 +1,16 @@
 package usedbookshop.soobook.domain;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
     @Id @GeneratedValue
@@ -23,9 +26,6 @@ public class Delivery {
     private Delivery(Address address) {
         this.address = address;
         this.deliveryStatus = DeliveryStatus.READY;
-    }
-
-    protected Delivery() {
     }
 
     public static Delivery createDelivery(Address address) {

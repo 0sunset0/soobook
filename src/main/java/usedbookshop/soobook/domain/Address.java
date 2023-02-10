@@ -16,15 +16,15 @@ public class Address {
 
     private String area;
     private String roadName;
-    private int roadCode;
+    private Integer roadCode;
 
-    private Address(String area, int roadCode, String roadName) {
+    private Address(String area, Integer roadCode, String roadName) {
         this.area = area;
         this.roadName = roadName;
         this.roadCode = roadCode;
     }
 
-    public static Address createAddress(String area, int roadCode, String roadName) {
+    public static Address createAddress(String area, Integer roadCode, String roadName) {
         return new Address(area, roadCode, roadName);
     }
 }

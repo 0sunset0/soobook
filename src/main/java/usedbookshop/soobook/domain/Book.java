@@ -21,10 +21,10 @@ public class Book extends Date{
     private Long id;
 
     private String title;
-    private int price;
-    private int score;
+    private Integer price;
+    private Integer score;
     private String author;
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_book_id")
@@ -43,7 +43,7 @@ public class Book extends Date{
 
     //private 생성자
     @Builder
-    private Book(String title, int price, String author, int quantity, Member member) {
+    private Book(String title, Integer price, String author, Integer quantity, Member member) {
         this.title = title;
         this.price = price;
         this.author = author;
@@ -52,7 +52,7 @@ public class Book extends Date{
         this.member = member;
     }
 
-    public static Book createBook(String title, int price, String author, int quantity, Member member){
+    public static Book createBook(String title, Integer price, String author, Integer quantity, Member member){
         return Book.builder()
                 .title(title)
                 .price(price)
@@ -62,7 +62,7 @@ public class Book extends Date{
                 .build();
     }
 
-    public void modifyBook(String title, int price, String author, int quantity, CategoryBook categoryBook) {
+    public void modifyBook(String title, Integer price, String author, Integer quantity, CategoryBook categoryBook) {
         this.title = title;
         this.price = price;
         this.author = author;
@@ -79,12 +79,12 @@ public class Book extends Date{
      * 비즈니스 로직
      */
     //quantity 증가
-    public void increaseQuantity(int quantity){
+    public void increaseQuantity(Integer quantity){
         this.quantity += quantity;
     }
 
     //quantity 감소
-    public void reduceQuantity(int quantity){
+    public void reduceQuantity(Integer quantity){
         int restStock = this.quantity - quantity;
         if (restStock < 0) {
             throw new NotEnoughStockException("need more stock");
