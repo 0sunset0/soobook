@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import usedbookshop.soobook.domain.Book;
 import usedbookshop.soobook.domain.Member;
 import usedbookshop.soobook.domain.Review;
-import usedbookshop.soobook.repository.book.BookRepository;
 import usedbookshop.soobook.service.BookService;
 import usedbookshop.soobook.service.ReviewService;
 import usedbookshop.soobook.web.dto.book.AddBookDto;
@@ -16,7 +15,6 @@ import usedbookshop.soobook.web.dto.review.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
