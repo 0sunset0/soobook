@@ -40,7 +40,7 @@ public class MemberController {
      * 회원가입
      */
     @GetMapping("/join")
-    public String viewJoin(@ModelAttribute("JoinDto") JoinDto joinDto){
+    public String viewJoin(){
         return "member/join";
     }
 
