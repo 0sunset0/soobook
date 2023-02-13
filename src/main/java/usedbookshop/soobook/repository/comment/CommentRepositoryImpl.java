@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class CommentRepositoryImpl implements CommentRepository{
+class CommentRepositoryImpl implements CommentRepository{
     @PersistenceContext
     private final EntityManager em;
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ReviewRepositoryImpl implements ReviewRepository{
+class ReviewRepositoryImpl implements ReviewRepository{
     @PersistenceContext
     private final EntityManager em;
 

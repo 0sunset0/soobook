@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class BookRepositoryImpl implements BookRepository {
+class BookRepositoryImpl implements BookRepository {
     @PersistenceContext
     private final EntityManager em;
 
