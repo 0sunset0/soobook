@@ -15,10 +15,10 @@ public class ViewBookDto {
 
     private Long id;
     private String title;
-    private int price;
-    private int score;
+    private Integer price;
+    private Integer score;
     private String author;
-    private int quantity;
+    private Integer quantity;
     private BookStatus bookStatus;
     private Member member;
 
