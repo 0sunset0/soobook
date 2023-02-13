@@ -15,11 +15,11 @@ public class JoinDto {
     private String password;
 
     private String homeArea;
-    private int homeRoadCode;
+    private Integer homeRoadCode;
     private String homeRoadName;
 
     private String workArea;
-    private int workRoadCode;
+    private Integer workRoadCode;
     private String workRoadName;
 
     public static Member toMember(JoinDto joinDto){
