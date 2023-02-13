@@ -77,7 +77,7 @@ public class Member {
         private LocalDateTime expirationDate;
 
         @Column(name = "password_failed_count", nullable = false)
-        private Integer failedCount;
+        private int failedCount;
 
         @Column(name = "password_ttl")
         private long ttl;
