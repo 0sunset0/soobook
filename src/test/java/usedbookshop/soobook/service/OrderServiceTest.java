@@ -82,7 +82,7 @@ class OrderServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = Address.createAddress("인천", 2222, "원당대로");
         Address workAddress = Address.createAddress("인천", 1111, "원당대로");
-        Member member = Member.createMember(name, homeAddress, workAddress, email, new Member.Password(password));
+        Member member = Member.createMember(name, email, new Member.Password(password), homeAddress, workAddress);
         em.persist(member);
         return member;
     }

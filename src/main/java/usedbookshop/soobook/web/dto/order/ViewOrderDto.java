@@ -1,5 +1,6 @@
 package usedbookshop.soobook.web.dto.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import usedbookshop.soobook.domain.*;
@@ -9,7 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@AllArgsConstructor
 public class ViewOrderDto {
 
     private Long id;
@@ -25,16 +27,13 @@ public class ViewOrderDto {
 
     // Entity -> Dto
     public static ViewOrderDto from(Order order){
-
-        ViewOrderDto viewOrderDto = new ViewOrderDto();
-        viewOrderDto.setId(order.getId());
-        viewOrderDto.setDeliveryArea(order.getDelivery().getAddress().getArea());
-        viewOrderDto.setDeliveryRoadCode(order.getDelivery().getAddress().getRoadCode());
-        viewOrderDto.setDeliveryRoadName(order.getDelivery().getAddress().getRoadName());
-        viewOrderDto.setOrderBookList(order.getOrderBookList());
-        viewOrderDto.setCreatedDate(order.getCreatedDate());
-        viewOrderDto.setOrderStatus(order.getOrderStatus());
-
-        return viewOrderDto;
+        return new ViewOrderDto(order.getId(),
+                order.getDelivery().getAddress().getArea(),
+                order.getDelivery().getAddress().getRoadCode(),
+                order.getDelivery().getAddress().getRoadName(),
+                order.getOrderStatus(),
+                order.getOrderBookList(),
+                order.getCreatedDate()
+                );
     }
 }

@@ -1,5 +1,6 @@
 package usedbookshop.soobook.web.dto.book;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import usedbookshop.soobook.domain.*;
@@ -8,7 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@AllArgsConstructor
 public class ViewBookDto {
 
     private Long id;
@@ -22,15 +24,8 @@ public class ViewBookDto {
 
     //Entity -> Dto
     public static ViewBookDto from(Book book) {
-        ViewBookDto viewBookDto = new ViewBookDto();
-        viewBookDto.setId(book.getId());
-        viewBookDto.setTitle(book.getTitle());
-        viewBookDto.setPrice(book.getPrice());
-        viewBookDto.setScore(book.getScore());
-        viewBookDto.setAuthor(book.getAuthor());
-        viewBookDto.setQuantity(book.getQuantity());
-        viewBookDto.setBookStatus(book.getBookStatus());
-        viewBookDto.setMember(book.getMember());
-        return viewBookDto;
+        return new ViewBookDto(book.getId(), book.getTitle(), book.getPrice(),
+                book.getScore(), book.getAuthor(), book.getQuantity(),
+                book.getBookStatus(), book.getMember());
     }
 }

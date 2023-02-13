@@ -43,12 +43,7 @@ class ReviewServiceTest {
     }
 
     private AddReviewDto getAddReviewDto(String title, String content, ReviewScore reviewScore) {
-        AddReviewDto addReviewDto = new AddReviewDto();
-
-        addReviewDto.setTitle(title);
-        addReviewDto.setContent(content);
-        addReviewDto.setScore(reviewScore);
-        return addReviewDto;
+        return new AddReviewDto(title, content, reviewScore);
     }
 
     @Test
@@ -121,7 +116,7 @@ class ReviewServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = Address.createAddress("인천", 1111, "원당대로");
         Address workAddress = Address.createAddress("서울", 2222, "양화대로");
-        Member member = Member.createMember(name, homeAddress, workAddress, email, new Member.Password(password));
+        Member member = Member.createMember(name, email, new Member.Password(password), homeAddress, workAddress);
         em.persist(member);
         return member;
     }

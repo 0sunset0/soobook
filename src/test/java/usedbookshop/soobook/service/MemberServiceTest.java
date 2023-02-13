@@ -65,19 +65,11 @@ class MemberServiceTest {
     }
 
     private LoginDto getLoginDto(String email, String password) {
-        LoginDto loginDto = new LoginDto();
-        loginDto.setEmail(email);
-        loginDto.setPassword(password);
-        return loginDto;
-
+        return new LoginDto(email, password);
     }
 
     private JoinDto getJoinDto(String name, String email, String password) {
-        JoinDto joinDto = new JoinDto();
-        joinDto.setName(name);
-        joinDto.setEmail(email);
-        joinDto.setPassword(password);
-        return joinDto;
+        return new JoinDto(name, email, password, "서울", 111, "양화대로", "서울", 111, "마포대로");
     }
 
 }

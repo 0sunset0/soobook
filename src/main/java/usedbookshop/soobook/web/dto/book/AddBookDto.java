@@ -1,10 +1,12 @@
 package usedbookshop.soobook.web.dto.book;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import usedbookshop.soobook.domain.Book;
 
-@Getter @Setter
+@Getter
+@AllArgsConstructor
 public class AddBookDto {
 
     private String title;

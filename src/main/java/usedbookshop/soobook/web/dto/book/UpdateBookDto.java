@@ -1,11 +1,11 @@
 package usedbookshop.soobook.web.dto.book;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import usedbookshop.soobook.domain.CategoryBook;
 
 @Getter
-@Setter
+@AllArgsConstructor
 public class UpdateBookDto {
 
     private Long id;

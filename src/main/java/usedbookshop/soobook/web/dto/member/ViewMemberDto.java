@@ -1,10 +1,12 @@
 package usedbookshop.soobook.web.dto.member;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import usedbookshop.soobook.domain.Member;
 
-@Getter @Setter
+@Getter
+@AllArgsConstructor
 public class ViewMemberDto {
 
     private String name;
@@ -19,18 +21,10 @@ public class ViewMemberDto {
 
     private String email;
 
-
     //Entity -> Dto
     public static ViewMemberDto from(Member member) {
-        ViewMemberDto viewMemberDto = new ViewMemberDto();
-        viewMemberDto.setName(member.getName());
-        viewMemberDto.setHomeArea(member.getHomeAddress().getArea());
-        viewMemberDto.setHomeRoadCode(member.getWorkAddress().getRoadCode());
-        viewMemberDto.setWorkRoadName(member.getWorkAddress().getRoadName());
-        viewMemberDto.setWorkArea(member.getWorkAddress().getArea());
-        viewMemberDto.setWorkRoadCode(member.getWorkAddress().getRoadCode());
-        viewMemberDto.setWorkRoadName(member.getWorkAddress().getRoadName());
-        return viewMemberDto;
+        return new ViewMemberDto(member.getName(), member.getHomeAddress().getArea(),
+                member.getWorkAddress().getRoadCode(), member.getWorkAddress().getRoadName(), member.getWorkAddress().getArea(),
+                member.getWorkAddress().getRoadCode(), member.getWorkAddress().getRoadName(), member.getEmail());
     }
-
 }
