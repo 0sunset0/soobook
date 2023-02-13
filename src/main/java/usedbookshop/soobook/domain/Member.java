@@ -22,6 +22,13 @@ public class Member {
 
     private String name;
 
+    //TODO email: string->객체
+    @Column(unique = true)
+    private String email;
+
+    @Embedded
+    private Password password;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="area", column = @Column(name = "home_area"))
@@ -38,13 +45,6 @@ public class Member {
     })
     private Address workAddress;
 
-    //TODO email: string->객체
-    @Column(unique = true)
-    private String email;
-
-    @Embedded
-    private Password password;
-
 
     @Builder
     private Member(String name, Address homeAddress, Address workAddress, String email, Password password) {
@@ -55,13 +55,13 @@ public class Member {
         this.password = password;
     }
 
-    public static Member createMember(String name, Address homeAddress, Address workAddress, String email, Password password){
+    public static Member createMember(String name, String email, Password password, Address homeAddress, Address workAddress ){
         return Member.builder()
                 .name(name)
-                .homeAddress(homeAddress)
-                .workAddress(workAddress)
                 .email(email)
                 .password(password)
+                .homeAddress(homeAddress)
+                .workAddress(workAddress)
                 .build();
     }
 
