@@ -3,8 +3,8 @@ package usedbookshop.soobook.review.comment;
 
 import lombok.Getter;
 import usedbookshop.soobook.common.Date;
-import usedbookshop.soobook.member.Member;
-import usedbookshop.soobook.review.review.Review;
+import usedbookshop.soobook.member.domain.Member;
+import usedbookshop.soobook.review.review.domain.Review;
 
 import javax.persistence.*;
 

@@ -4,7 +4,7 @@ package usedbookshop.soobook.delivery;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import usedbookshop.soobook.member.Address;
+import usedbookshop.soobook.member.domain.Address;
 
 import javax.persistence.*;
 

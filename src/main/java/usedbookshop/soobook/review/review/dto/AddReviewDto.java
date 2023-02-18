@@ -2,7 +2,7 @@ package usedbookshop.soobook.review.review.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import usedbookshop.soobook.review.review.ReviewScore;
+import usedbookshop.soobook.review.review.domain.ReviewScore;
 
 @Getter
 @AllArgsConstructor

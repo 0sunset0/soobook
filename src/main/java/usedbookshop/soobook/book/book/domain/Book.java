@@ -1,4 +1,4 @@
-package usedbookshop.soobook.book.book;
+package usedbookshop.soobook.book.book.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import usedbookshop.soobook.book.category.CategoryBook;
 import usedbookshop.soobook.common.Date;
 import usedbookshop.soobook.exception.NotEnoughStockException;
-import usedbookshop.soobook.member.Member;
-import usedbookshop.soobook.review.review.Review;
+import usedbookshop.soobook.member.domain.Member;
+import usedbookshop.soobook.review.review.domain.Review;
 
 import javax.persistence.*;
 import java.util.ArrayList;

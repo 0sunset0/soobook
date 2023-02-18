@@ -1,6 +1,6 @@
 package usedbookshop.soobook.order.repository;
 
-import usedbookshop.soobook.order.Order;
+import usedbookshop.soobook.order.domain.Order;
 
 import java.util.List;
 

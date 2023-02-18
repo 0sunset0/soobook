@@ -1,4 +1,4 @@
-package usedbookshop.soobook.member;
+package usedbookshop.soobook.member.domain;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

@@ -2,7 +2,7 @@ package usedbookshop.soobook.member.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 
 import javax.persistence.EntityManager;
 import java.util.List;

@@ -1,9 +1,9 @@
-package usedbookshop.soobook.review.review;
+package usedbookshop.soobook.review.review.domain;
 
 import lombok.*;
-import usedbookshop.soobook.book.book.Book;
+import usedbookshop.soobook.book.book.domain.Book;
 import usedbookshop.soobook.common.Date;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.review.comment.Comment;
 
 import javax.persistence.*;

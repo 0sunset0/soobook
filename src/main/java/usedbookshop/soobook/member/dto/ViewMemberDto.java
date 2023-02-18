@@ -2,7 +2,7 @@ package usedbookshop.soobook.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 
 @Getter
 @AllArgsConstructor

@@ -2,7 +2,7 @@ package usedbookshop.soobook.review.review.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import usedbookshop.soobook.review.review.Review;
+import usedbookshop.soobook.review.review.domain.Review;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

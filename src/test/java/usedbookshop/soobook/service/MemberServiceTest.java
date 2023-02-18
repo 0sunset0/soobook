@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.member.service.MemberService;
 import usedbookshop.soobook.member.dto.JoinDto;
 import usedbookshop.soobook.member.repository.MemberRepository;

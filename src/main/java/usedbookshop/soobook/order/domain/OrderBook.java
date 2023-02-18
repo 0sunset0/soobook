@@ -1,10 +1,10 @@
-package usedbookshop.soobook.order;
+package usedbookshop.soobook.order.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import usedbookshop.soobook.book.book.Book;
+import usedbookshop.soobook.book.book.domain.Book;
 
 import javax.persistence.*;
 

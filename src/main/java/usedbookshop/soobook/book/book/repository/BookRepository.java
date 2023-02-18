@@ -1,6 +1,6 @@
 package usedbookshop.soobook.book.book.repository;
 
-import usedbookshop.soobook.book.book.Book;
+import usedbookshop.soobook.book.book.domain.Book;
 import usedbookshop.soobook.book.category.CategoryBook;
 
 import java.util.List;

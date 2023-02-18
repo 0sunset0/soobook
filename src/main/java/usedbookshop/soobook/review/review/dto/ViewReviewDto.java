@@ -2,11 +2,11 @@ package usedbookshop.soobook.review.review.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import usedbookshop.soobook.book.book.Book;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.book.book.domain.Book;
+import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.review.comment.Comment;
-import usedbookshop.soobook.review.review.Review;
-import usedbookshop.soobook.review.review.ReviewScore;
+import usedbookshop.soobook.review.review.domain.Review;
+import usedbookshop.soobook.review.review.domain.ReviewScore;
 
 import java.util.ArrayList;
 import java.util.List;

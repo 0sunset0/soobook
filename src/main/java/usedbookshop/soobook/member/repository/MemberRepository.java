@@ -1,6 +1,6 @@
 package usedbookshop.soobook.member.repository;
 
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 
 import java.util.List;
 import java.util.Optional;

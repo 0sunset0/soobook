@@ -1,4 +1,4 @@
-package usedbookshop.soobook.review.review;
+package usedbookshop.soobook.review.review.domain;
 
 import lombok.Getter;
 

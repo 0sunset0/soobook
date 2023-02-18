@@ -1,6 +1,6 @@
 package usedbookshop.soobook.review.review.repository;
 
-import usedbookshop.soobook.review.review.Review;
+import usedbookshop.soobook.review.review.domain.Review;
 
 import java.util.List;
 

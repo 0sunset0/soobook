@@ -3,7 +3,7 @@ package usedbookshop.soobook.member.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.member.dto.JoinDto;
 import usedbookshop.soobook.member.repository.MemberRepository;
 import usedbookshop.soobook.member.dto.LoginDto;
