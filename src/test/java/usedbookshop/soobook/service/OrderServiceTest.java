@@ -12,9 +12,9 @@ import usedbookshop.soobook.book.category.CategoryBook;
 import usedbookshop.soobook.member.domain.Address;
 import usedbookshop.soobook.exception.NotEnoughStockException;
 import usedbookshop.soobook.member.domain.Member;
-import usedbookshop.soobook.order.domain.Order;
-import usedbookshop.soobook.order.domain.OrderStatus;
-import usedbookshop.soobook.order.service.OrderService;
+import usedbookshop.soobook.order.order.domain.Order;
+import usedbookshop.soobook.order.order.domain.OrderStatus;
+import usedbookshop.soobook.order.order.service.OrderService;
 
 import javax.persistence.EntityManager;
 

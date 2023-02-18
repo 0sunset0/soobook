@@ -1,4 +1,4 @@
-package usedbookshop.soobook.order.dto;
+package usedbookshop.soobook.order.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

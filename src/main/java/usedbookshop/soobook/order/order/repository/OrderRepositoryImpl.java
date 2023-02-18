@@ -1,8 +1,8 @@
-package usedbookshop.soobook.order.repository;
+package usedbookshop.soobook.order.order.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import usedbookshop.soobook.order.domain.Order;
+import usedbookshop.soobook.order.order.domain.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

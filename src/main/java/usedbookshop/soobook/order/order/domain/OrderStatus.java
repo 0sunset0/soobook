@@ -1,4 +1,4 @@
-package usedbookshop.soobook.order.domain;
+package usedbookshop.soobook.order.order.domain;
 
 public enum OrderStatus {
     ORDER, FAIL, CANCEL

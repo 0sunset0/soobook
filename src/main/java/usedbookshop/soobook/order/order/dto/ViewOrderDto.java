@@ -1,10 +1,10 @@
-package usedbookshop.soobook.order.dto;
+package usedbookshop.soobook.order.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import usedbookshop.soobook.order.domain.Order;
-import usedbookshop.soobook.order.domain.OrderBook;
-import usedbookshop.soobook.order.domain.OrderStatus;
+import usedbookshop.soobook.order.order.domain.Order;
+import usedbookshop.soobook.order.order.domain.OrderBook;
+import usedbookshop.soobook.order.order.domain.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package usedbookshop.soobook.delivery;
+package usedbookshop.soobook.order.delivery;
 
 
 import lombok.AccessLevel;

@@ -1,8 +1,8 @@
-package usedbookshop.soobook.order.domain;
+package usedbookshop.soobook.order.order.domain;
 
 import lombok.*;
 import usedbookshop.soobook.common.Date;
-import usedbookshop.soobook.delivery.Delivery;
+import usedbookshop.soobook.order.delivery.Delivery;
 import usedbookshop.soobook.member.domain.Member;
 
 import javax.persistence.*;

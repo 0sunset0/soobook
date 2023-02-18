@@ -1,19 +1,19 @@
-package usedbookshop.soobook.order.service;
+package usedbookshop.soobook.order.order.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.book.book.domain.Book;
 import usedbookshop.soobook.book.book.repository.BookRepository;
-import usedbookshop.soobook.delivery.DeliveryStatus;
+import usedbookshop.soobook.order.delivery.DeliveryStatus;
 import usedbookshop.soobook.member.domain.Address;
-import usedbookshop.soobook.delivery.Delivery;
+import usedbookshop.soobook.order.delivery.Delivery;
 import usedbookshop.soobook.member.domain.Member;
-import usedbookshop.soobook.order.domain.Order;
-import usedbookshop.soobook.order.domain.OrderBook;
-import usedbookshop.soobook.order.domain.OrderStatus;
+import usedbookshop.soobook.order.order.domain.Order;
+import usedbookshop.soobook.order.order.domain.OrderBook;
+import usedbookshop.soobook.order.order.domain.OrderStatus;
 import usedbookshop.soobook.member.repository.MemberRepository;
-import usedbookshop.soobook.order.repository.OrderRepository;
+import usedbookshop.soobook.order.order.repository.OrderRepository;
 
 import java.util.List;
 

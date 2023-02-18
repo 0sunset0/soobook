@@ -1,4 +1,4 @@
-package usedbookshop.soobook.order.controller;
+package usedbookshop.soobook.order.order.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.member.domain.Address;
 import usedbookshop.soobook.member.domain.Member;
-import usedbookshop.soobook.order.domain.Order;
-import usedbookshop.soobook.order.repository.OrderRepository;
-import usedbookshop.soobook.order.service.OrderService;
-import usedbookshop.soobook.order.dto.CreateOrderDto;
-import usedbookshop.soobook.order.dto.ViewOrderDto;
+import usedbookshop.soobook.order.order.domain.Order;
+import usedbookshop.soobook.order.order.repository.OrderRepository;
+import usedbookshop.soobook.order.order.service.OrderService;
+import usedbookshop.soobook.order.order.dto.CreateOrderDto;
+import usedbookshop.soobook.order.order.dto.ViewOrderDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
