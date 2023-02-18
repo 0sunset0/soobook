@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.domain.Member;
-import usedbookshop.soobook.web.dto.member.JoinDto;
-import usedbookshop.soobook.repository.member.MemberRepository;
-import usedbookshop.soobook.web.dto.member.LoginDto;
+import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.member.service.MemberService;
+import usedbookshop.soobook.member.dto.JoinDto;
+import usedbookshop.soobook.member.repository.MemberRepository;
+import usedbookshop.soobook.member.dto.LoginDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class MemberServiceTest {
 
-    @Autowired MemberService memberService;
+    @Autowired
+    MemberService memberService;
     @Autowired MemberRepository memberRepository;
 
     @Test

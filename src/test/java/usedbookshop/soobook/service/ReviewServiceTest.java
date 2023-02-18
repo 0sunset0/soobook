@@ -7,10 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.domain.*;
-import usedbookshop.soobook.repository.comment.CommentRepository;
-import usedbookshop.soobook.repository.review.ReviewRepository;
-import usedbookshop.soobook.web.dto.review.AddReviewDto;
+import usedbookshop.soobook.book.book.Book;
+import usedbookshop.soobook.book.category.CategoryBook;
+import usedbookshop.soobook.member.Address;
+import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.review.comment.Comment;
+import usedbookshop.soobook.review.review.Review;
+import usedbookshop.soobook.review.review.ReviewScore;
+import usedbookshop.soobook.review.comment.repository.CommentRepository;
+import usedbookshop.soobook.review.review.repository.ReviewRepository;
+import usedbookshop.soobook.review.review.service.ReviewService;
+import usedbookshop.soobook.review.review.dto.AddReviewDto;
 
 import javax.persistence.EntityManager;
 
@@ -21,7 +28,8 @@ import java.util.List;
 @Transactional
 class ReviewServiceTest {
 
-    @Autowired ReviewService reviewService;
+    @Autowired
+    ReviewService reviewService;
     @Autowired ReviewRepository reviewRepository;
     @Autowired CommentRepository commentRepository;
     @Autowired EntityManager em;

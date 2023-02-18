@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.domain.*;
+import usedbookshop.soobook.book.book.Book;
+import usedbookshop.soobook.book.category.CategoryBook;
+import usedbookshop.soobook.member.Address;
 import usedbookshop.soobook.exception.NotEnoughStockException;
+import usedbookshop.soobook.member.Member;
+import usedbookshop.soobook.order.Order;
+import usedbookshop.soobook.order.OrderStatus;
+import usedbookshop.soobook.order.service.OrderService;
 
 import javax.persistence.EntityManager;
 
@@ -18,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class OrderServiceTest {
 
-    @Autowired OrderService orderService;
+    @Autowired
+    OrderService orderService;
     @Autowired EntityManager em;
 
     @Test
