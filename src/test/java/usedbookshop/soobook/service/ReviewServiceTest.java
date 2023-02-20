@@ -11,6 +11,7 @@ import usedbookshop.soobook.book.book.domain.Book;
 import usedbookshop.soobook.book.category.CategoryBook;
 import usedbookshop.soobook.member.domain.Address;
 import usedbookshop.soobook.member.domain.Member;
+import usedbookshop.soobook.member.domain.Password;
 import usedbookshop.soobook.review.comment.Comment;
 import usedbookshop.soobook.review.review.domain.Review;
 import usedbookshop.soobook.review.review.domain.ReviewScore;
@@ -124,7 +125,7 @@ class ReviewServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = Address.createAddress("인천", 1111, "원당대로");
         Address workAddress = Address.createAddress("서울", 2222, "양화대로");
-        Member member = Member.createMember(name, email, new Member.Password(password), homeAddress, workAddress);
+        Member member = Member.createMember(name, email, new Password(password), homeAddress, workAddress);
         em.persist(member);
         return member;
     }
