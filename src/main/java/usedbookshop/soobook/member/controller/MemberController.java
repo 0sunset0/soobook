@@ -63,12 +63,18 @@ public class MemberController {
      * 로그인
      */
     @GetMapping("/login")
-    public String viewLogin(@ModelAttribute("loginDto") LoginDto loginDto){
+    public String viewLogin(Model model){
+        model.addAttribute("loginDto", new LoginDto());
         return "member/login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginDto") LoginDto loginDto, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "member/login";
+        }
+
         Member loginMember = memberService.login(loginDto);
         if (loginMember == null){
             redirectAttributes.addAttribute("loginStatus", "fail");
