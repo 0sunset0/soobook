@@ -12,6 +12,7 @@ import usedbookshop.soobook.book.category.CategoryBook;
 import usedbookshop.soobook.member.domain.Address;
 import usedbookshop.soobook.exception.NotEnoughStockException;
 import usedbookshop.soobook.member.domain.Member;
+import usedbookshop.soobook.member.domain.Password;
 import usedbookshop.soobook.order.order.domain.Order;
 import usedbookshop.soobook.order.order.domain.OrderStatus;
 import usedbookshop.soobook.order.order.service.OrderService;
@@ -89,7 +90,7 @@ class OrderServiceTest {
     private Member getMember(String name, String email, String password) {
         Address homeAddress = Address.createAddress("인천", 2222, "원당대로");
         Address workAddress = Address.createAddress("인천", 1111, "원당대로");
-        Member member = Member.createMember(name, email, new Member.Password(password), homeAddress, workAddress);
+        Member member = Member.createMember(name, email, new Password(password), homeAddress, workAddress);
         em.persist(member);
         return member;
     }

@@ -1,8 +1,10 @@
 package usedbookshop.soobook.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.book.book.domain.Book;
@@ -21,12 +23,14 @@ import usedbookshop.soobook.review.review.dto.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -39,12 +43,18 @@ public class MemberController {
      * 회원가입
      */
     @GetMapping("/join")
-    public String viewJoin(){
+    public String viewJoin(Model model){
+        model.addAttribute("joinDto", new JoinDto());
         return "member/join";
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute("JoinDto") JoinDto joinDto){
+    public String join(@Valid @ModelAttribute("joinDto") JoinDto joinDto, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "member/join";
+        }
         memberService.join(joinDto);
         return "redirect:/";
     }

@@ -10,6 +10,10 @@
         padding: 50px;
         max-width: 560px;
     }
+    .field-error {
+         border-color: #dc3545;
+         color: #dc3545;
+    }
     </style>
 </head>
 <body>
@@ -21,34 +25,63 @@
 </nav>
 <div class="container" id="card">
     <h2>회원가입</h2>
-    <form action="" th:action="@{/member/join}" method="post">
+    <form action="" th:action="@{/member/join}" th:object="${joinDto}" method="post">
         <div class="mb-3">
             <label class="form-label" for="name">이름</label>
-            <input class="form-control" type="text" name="name" id="name" />
+            <input  type="text" name="name" id="name"
+                   th:field="*{name}" th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요"/>
+            <div class="field-error" th:errors="*{name}">
+                이름 입력 오류
+            </div>
         </div>
+
         <div class="mb-3">
             <label class="form-label" for="email">이메일</label>
-            <input class="form-control" type="email" name="email" id="email" />
+            <input th:field="*{email}" th:errorclass="field-error" class="form-control" type="email" name="email" id="email" placeholder="이메일을 입력하세요"/>
+            <div class="field-error" th:errors="*{email}">
+                이메일 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="password">비밀번호</label>
-            <input class="form-control" type="password" name="password" id="password" />
+            <input th:field="*{password}" th:errorclass="field-error" class="form-control" type="password" name="password" id="password" placeholder="비밀번호를 입력하세요"/>
+            <div class="field-error" th:errors="*{password}">
+                비밀번호 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="homeArea">집 지역</label>
-            <input class="form-control" type="text" name="homeArea" id="homeArea" />
+            <input th:field="*{homeArea}" th:errorclass="field-error" class="form-control" type="text" name="homeArea" id="homeArea" placeholder="집 지역을 입력하세요"/>
+            <div class="field-error" th:errors="*{homeArea}">
+                집 지역 입력 오류
+            </div>
             <label class="form-label" for="homeRoadCode">집 도로 코드</label>
-            <input class="form-control" type="text" name="homeRoadCode" id="homeRoadCode" />
+            <input th:field="*{homeRoadCode}" th:errorclass="field-error" class="form-control" type="text" name="homeRoadCode" id="homeRoadCode" placeholder="집 도로코드를 입력하세요"/>
+            <div class="field-error" th:errors="*{homeRoadCode}">
+                집 도로 코드 입력 오류
+            </div>
             <label class="form-label" for="homeRoadName">집 도로명</label>
-            <input class="form-control" type="text" name="homeRoadName" id="homeRoadName" />
+            <input th:field="*{homeRoadName}" th:errorclass="field-error" class="form-control" type="text" name="homeRoadName" id="homeRoadName" placeholder="집 도로명을 입력하세요"/>
+            <div class="field-error" th:errors="*{homeRoadName}">
+                집 도로명 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="workArea">회사 지역</label>
-            <input class="form-control" type="text" name="workAddress" id="workArea" />
+            <input th:field="*{workArea}" th:errorclass="field-error" class="form-control" type="text" name="workArea" id="workArea" placeholder="회사 지역을 입력하세요"/>
+            <div class="field-error" th:errors="*{workArea}">
+                회사 도로명 입력 오류
+            </div>
             <label class="form-label" for="workRoadCode">회사 도로 코드</label>
-            <input class="form-control" type="text" name="workAddress" id="workRoadCode" />
+            <input th:field="*{workRoadCode}" th:errorclass="field-error" class="form-control" type="text" name="workRoadCode" id="workRoadCode" placeholder="회사 도로코드를 입력하세요"/>
+            <div class="field-error" th:errors="*{workRoadCode}">
+                회사 도로명 입력 오류
+            </div>
             <label class="form-label" for="workRoadName">회사 도로명</label>
-            <input class="form-control" type="text" name="workAddress" id="workRoadName" />
+            <input th:field="*{workRoadName}" th:errorclass="field-error" class="form-control" type="text" name="workRoadName" id="workRoadName" placeholder="회사 도로명을 입력하세요"/>
+            <div class="field-error" th:errors="*{workRoadName}">
+                회사 도로명 입력 오류
+            </div>
         </div>
         <button class="btn btn-dark" type="submit">회원가입</button>
     </form>
