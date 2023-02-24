@@ -26,14 +26,14 @@ public class JoinDto {
     @NotBlank
     private String homeArea;
     @NotNull
-    private Integer homeRoadCode;
+    private Long homeRoadCode;
     @NotBlank
     private String homeRoadName;
 
     @NotBlank
     private String workArea;
     @NotNull
-    private Integer workRoadCode;
+    private Long workRoadCode;
     @NotBlank
     private String workRoadName;
 

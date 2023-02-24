@@ -71,7 +71,7 @@ class MemberServiceTest {
     }
 
     private JoinDto getJoinDto(String name, String email, String password) {
-        return new JoinDto(name, email, password, "서울", 111, "양화대로", "서울", 111, "마포대로");
+        return new JoinDto(name, email, password, "서울", 111L, "양화대로", "서울", 111L, "마포대로");
     }
 
 }

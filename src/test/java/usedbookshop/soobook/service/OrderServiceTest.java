@@ -33,11 +33,11 @@ class OrderServiceTest {
     void 주문() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
+        Address deliveryAddress = Address.createAddress("인천", 22643L, "원당대로");
+        Book book = getBook("데이터베이스", 20000L, "박다솜", 5L, member);
 
         // when
-        Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
+        Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4L);
 
         // then
         Order findOrder = orderService.findOrder(order.getId());
@@ -50,9 +50,9 @@ class OrderServiceTest {
     void 주문취소() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
-        Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4);
+        Address deliveryAddress = Address.createAddress("인천", 22643L, "원당대로");
+        Book book = getBook("데이터베이스", 20000L, "박다솜", 5L, member);
+        Order order = orderService.order(member.getId(), deliveryAddress, book.getId(), 4L);
 
         // when
         orderService.cancel(order.getId());
@@ -67,19 +67,19 @@ class OrderServiceTest {
     void 재고_없을시_예외() {
         // given
         Member member = getMember("노을", "1234@naver.com", "1234");
-        Address deliveryAddress = Address.createAddress("인천", 22643, "원당대로");
-        Book book = getBook("데이터베이스", 20000, "박다솜", 5, member);
+        Address deliveryAddress = Address.createAddress("인천", 22643L, "원당대로");
+        Book book = getBook("데이터베이스", 20000L, "박다솜", 5L, member);
 
         // when
 
         // then
         assertThrows(NotEnoughStockException.class, () -> {
-            orderService.order(member.getId(), deliveryAddress, book.getId(), 6);
+            orderService.order(member.getId(), deliveryAddress, book.getId(), 6L);
         });
 
     }
 
-    private Book getBook(String title, int price, String author, int quantity, Member member) {
+    private Book getBook(String title, Long price, String author, Long quantity, Member member) {
         CategoryBook categoryBook = new CategoryBook();
         em.persist(categoryBook);
         Book book = Book.createBook(title, price, author, quantity, member);
@@ -88,8 +88,8 @@ class OrderServiceTest {
     }
 
     private Member getMember(String name, String email, String password) {
-        Address homeAddress = Address.createAddress("인천", 2222, "원당대로");
-        Address workAddress = Address.createAddress("인천", 1111, "원당대로");
+        Address homeAddress = Address.createAddress("인천", 2222L, "원당대로");
+        Address workAddress = Address.createAddress("인천", 1111L, "원당대로");
         Member member = Member.createMember(name, email, new Password(password), homeAddress, workAddress);
         em.persist(member);
         return member;

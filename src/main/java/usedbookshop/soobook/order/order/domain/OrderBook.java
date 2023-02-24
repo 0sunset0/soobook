@@ -25,11 +25,11 @@ public class OrderBook {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int orderPrice;
+    private Long orderPrice;
 
-    private int count;
+    private Long count;
 
-    public OrderBook(Book book, int orderPrice, int count) {
+    public OrderBook(Book book, Long orderPrice, Long count) {
         this.book = book;
         this.orderPrice = orderPrice;
         this.count = count;

@@ -17,7 +17,7 @@ public class ViewOrderDto {
     private Long id;
 
     private String deliveryArea;
-    private int deliveryRoadCode;
+    private Long deliveryRoadCode;
     private String deliveryRoadName;
 
     private OrderStatus orderStatus;

@@ -12,10 +12,10 @@ public class ViewBookDto {
 
     private Long id;
     private String title;
-    private Integer price;
-    private Integer score;
+    private Long price;
+    private Long score;
     private String author;
-    private Integer quantity;
+    private Long quantity;
     private BookStatus bookStatus;
     private Member member;
 

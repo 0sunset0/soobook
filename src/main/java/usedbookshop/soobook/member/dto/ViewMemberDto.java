@@ -11,11 +11,11 @@ public class ViewMemberDto {
     private String name;
 
     private String homeArea;
-    private int homeRoadCode;
+    private Long homeRoadCode;
     private String homeRoadName;
 
     private String workArea;
-    private int workRoadCode;
+    private Long workRoadCode;
     private String workRoadName;
 
     private String email;
