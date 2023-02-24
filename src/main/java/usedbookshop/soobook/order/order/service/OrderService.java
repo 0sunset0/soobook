@@ -28,7 +28,7 @@ public class OrderService {
 
 
     //주문
-    public Order order(Long memberId, Address deliveryAddress, Long bookId, int count){
+    public Order order(Long memberId, Address deliveryAddress, Long bookId, Long count){
 
         Member member = memberRepository.findById(memberId);
         Book book = bookRepository.findById(bookId);
