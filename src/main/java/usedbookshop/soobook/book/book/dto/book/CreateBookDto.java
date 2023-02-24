@@ -1,29 +1,31 @@
-package usedbookshop.soobook.order.order.dto;
+package usedbookshop.soobook.book.book.dto.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-@Setter
 @NoArgsConstructor
-public class CreateOrderDto {
+@Setter
+public class CreateBookDto {
 
     @NotBlank
-    private String deliveryArea;
+    private String title;
 
     @NotNull
-    private Long deliveryRoadCode;
+    @Range(min = 0L)
+    private Long price;
 
     @NotBlank
-    private String deliveryRoadName;
+    private String author;
 
     @NotNull
+    @Range(min = 0L)
     private Long quantity;
-
 }
