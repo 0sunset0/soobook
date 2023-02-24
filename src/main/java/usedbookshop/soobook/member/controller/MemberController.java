@@ -70,6 +70,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        // validation 에러 검사
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "member/login";
