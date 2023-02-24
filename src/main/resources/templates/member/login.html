@@ -28,14 +28,14 @@
     <form action="" th:action="@{/member/login}" th:object="${loginDto}" method="post">
         <div class="mb-3">
             <label class="form-label" for="email">이메일</label>
-            <input th:field="*{email}" th:errorclass="field-error" class="form-control" type="email" name="email" id="email" placeholder="이메일을 입력하세요"/>
+            <input th:field="*{email}" th:errorclass="field-error" class="form-control" type="email" name="email" id="email" placeholder="이메일"/>
             <div class="field-error" th:errors="*{email}">
                 이메일 입력 오류
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="password">비밀번호</label>
-            <input th:field="*{password}" th:errorclass="field-error" class="form-control" type="password" name="password" id="password" placeholder="비밀번호를 입력하세요"/>
+            <input th:field="*{password}" th:errorclass="field-error" class="form-control" type="password" name="password" id="password" placeholder="비밀번호"/>
             <div class="field-error" th:errors="*{password}">
                 비밀번호 입력 오류
             </div>
