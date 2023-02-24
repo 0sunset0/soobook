@@ -8,8 +8,6 @@ import usedbookshop.soobook.exception.PasswordFailedExceededException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Embeddable
