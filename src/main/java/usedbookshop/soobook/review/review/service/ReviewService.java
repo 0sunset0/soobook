@@ -9,7 +9,7 @@ import usedbookshop.soobook.review.review.domain.Review;
 import usedbookshop.soobook.review.review.domain.ReviewScore;
 import usedbookshop.soobook.member.repository.MemberRepository;
 import usedbookshop.soobook.review.review.repository.ReviewRepository;
-import usedbookshop.soobook.review.review.dto.AddReviewDto;
+import usedbookshop.soobook.review.review.dto.CreateReviewDto;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class ReviewService {
 
     //리뷰 작성
     @Transactional
-    public Long createReview(AddReviewDto addReviewDto, Book book, Member member){
-        Review review = Review.createReview(addReviewDto.getTitle(), addReviewDto.getContent(), addReviewDto.getScore(), book, member);
+    public Long createReview(CreateReviewDto createReviewDto, Book book, Member member){
+        Review review = Review.createReview(createReviewDto.getTitle(), createReviewDto.getContent(), createReviewDto.getScore(), book, member);
         reviewRepository.save(review);
         review.getBook().updateScore();
         return review.getId();

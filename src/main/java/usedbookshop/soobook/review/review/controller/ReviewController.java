@@ -1,14 +1,17 @@
 package usedbookshop.soobook.review.review.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.book.book.domain.Book;
 import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.order.order.domain.Order;
 import usedbookshop.soobook.order.order.domain.OrderBook;
+import usedbookshop.soobook.order.order.dto.CreateOrderDto;
 import usedbookshop.soobook.review.comment.Comment;
 import usedbookshop.soobook.review.review.domain.ReviewScore;
 import usedbookshop.soobook.review.comment.repository.CommentRepository;
@@ -16,15 +19,17 @@ import usedbookshop.soobook.book.book.service.BookService;
 import usedbookshop.soobook.member.service.MemberService;
 import usedbookshop.soobook.order.order.service.OrderService;
 import usedbookshop.soobook.review.review.service.ReviewService;
-import usedbookshop.soobook.review.review.dto.AddReviewDto;
+import usedbookshop.soobook.review.review.dto.CreateReviewDto;
 import usedbookshop.soobook.review.review.dto.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -48,8 +53,9 @@ public class ReviewController {
     /**
      * 리뷰 작성
      */
-    @GetMapping("book/addReview")
-    public String addReviewForm(@RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model ){
+    @GetMapping("book/createReview")
+    public String createReviewForm(@RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model ){
+
 
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -61,13 +67,13 @@ public class ReviewController {
         Member loginMember = (Member) session.getAttribute("loginMember");
         List<Order> orderList = orderService.findByMember(loginMember.getId());
 
-        //TODO 서비스에서 엔티티 반환하는 걸로 바꾸면서 이 부분도 수정 필요
         for (Order order : orderList) {
             List<OrderBook> orderBookList = order.getOrderBookList();
             for (OrderBook orderBook : orderBookList) {
-                if (orderBook.getBook().getId().equals(book.getId())){
+                if (orderBook.getBook() == book){
                     model.addAttribute("reviewScores", ReviewScore.values());
-                    return "book/addReview";
+                    model.addAttribute("createReviewDto", new CreateReviewDto());
+                    return "book/createReview";
                 }
             }
         }
@@ -77,8 +83,16 @@ public class ReviewController {
     }
 
 
-    @PostMapping("book/addReview")
-    public String addReview(@ModelAttribute("addReviewDto") AddReviewDto addReviewDto, @RequestParam("bookId") Long bookId, HttpServletRequest request){
+    @PostMapping("book/createReview")
+    public String createReview(@Valid @ModelAttribute("createReviewDto") CreateReviewDto createReviewDto, BindingResult bindingResult,
+                               @RequestParam("bookId") Long bookId, HttpServletRequest request, Model model){
+
+        //검증 에러 검사
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            model.addAttribute("reviewScores", ReviewScore.values());
+            return "book/createReview";
+        }
 
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -87,7 +101,7 @@ public class ReviewController {
         Member loginMember = (Member) session.getAttribute("loginMember");
         Member member = memberService.findMember(loginMember.getId());
         Book book = bookService.findBook(bookId);
-        reviewService.createReview(addReviewDto, book, member);
+        reviewService.createReview(createReviewDto, book, member);
 
         return "redirect:/book/detail?bookId="+bookId;
     }

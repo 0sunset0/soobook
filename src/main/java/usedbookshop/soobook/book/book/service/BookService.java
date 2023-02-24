@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.book.book.domain.Book;
+import usedbookshop.soobook.book.book.dto.book.CreateBookDto;
 import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.book.book.repository.BookRepository;
-import usedbookshop.soobook.book.book.dto.book.AddBookDto;
 import usedbookshop.soobook.book.book.dto.book.UpdateBookDto;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class BookService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public void saveBook(AddBookDto addBookDto, Member member){
-        Book book = Book.createBook(addBookDto.getTitle(), addBookDto.getPrice(), addBookDto.getAuthor(), addBookDto.getQuantity(), member);
+    public void saveBook(CreateBookDto createBookDto, Member member){
+        Book book = Book.createBook(createBookDto.getTitle(), createBookDto.getPrice(), createBookDto.getAuthor(), createBookDto.getQuantity(), member);
         bookRepository.save(book);
     }
 

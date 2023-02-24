@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import usedbookshop.soobook.review.review.dto.AddReviewDto;
+import usedbookshop.soobook.review.review.dto.CreateReviewDto;
 
 
 @Controller
@@ -13,7 +13,7 @@ import usedbookshop.soobook.review.review.dto.AddReviewDto;
 public class CommentController {
 
     @PostMapping("review/addComment")
-    public String addComment(@ModelAttribute("addReviewDto") AddReviewDto addReviewDto, @RequestParam("reviewId") Long reviewId){
+    public String addComment(@ModelAttribute("addReviewDto") CreateReviewDto addReviewDto, @RequestParam("reviewId") Long reviewId){
         return "redirect:/book/review/detail?reviewId=" + reviewId;
     }
 }

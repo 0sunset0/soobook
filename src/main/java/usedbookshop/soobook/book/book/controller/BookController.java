@@ -1,25 +1,30 @@
 package usedbookshop.soobook.book.book.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import usedbookshop.soobook.book.book.domain.Book;
+import usedbookshop.soobook.book.book.dto.book.CreateBookDto;
 import usedbookshop.soobook.member.domain.Member;
 import usedbookshop.soobook.review.review.domain.Review;
 import usedbookshop.soobook.book.book.service.BookService;
 import usedbookshop.soobook.review.review.service.ReviewService;
-import usedbookshop.soobook.book.book.dto.book.AddBookDto;
+import usedbookshop.soobook.book.book.dto.book.CreateBookDto;
 import usedbookshop.soobook.book.book.dto.book.ViewBookDto;
 import usedbookshop.soobook.review.review.dto.ViewReviewDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class BookController {
 
     private final BookService bookService;
@@ -59,24 +64,31 @@ public class BookController {
     /**
      * 책 등록하기
      */
-    @GetMapping("/books/addBook")
-    public String addBookForm(HttpServletRequest request){
+    @GetMapping("/books/createBook")
+    public String createBookForm(HttpServletRequest request, Model model){
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
         }
-        return "books/addBook";
+        model.addAttribute("createBookDto", new CreateBookDto());
+        return "books/createBook";
     }
 
-    @PostMapping("/books/addBook")
-    public String addBook(@ModelAttribute("addBookDto") AddBookDto addBookDto, HttpServletRequest request){
+    @PostMapping("/books/createBook")
+    public String createBook(@Valid @ModelAttribute("createBookDto") CreateBookDto createBookDto, BindingResult bindingResult, HttpServletRequest request){
+        //검증 에러 검사
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "books/createBook";
+        }
+
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "redirect:/member/login";
         }
         Member loginMember = (Member) session.getAttribute("loginMember");
 
-        bookService.saveBook(addBookDto, loginMember);
+        bookService.saveBook(createBookDto, loginMember);
         return "redirect:/books";
     }
 
