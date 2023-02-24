@@ -10,6 +10,10 @@
         padding: 50px;
         max-width: 560px;
     }
+    .field-error {
+         border-color: #dc3545;
+         color: #dc3545;
+    }
     </style>
 </head>
 
@@ -22,20 +26,31 @@
 </nav>
 <div class="container" id="card">
     <h2>리뷰 등록하기</h2>
-    <form action="" method="post">
+    <form action="" method="post" th:object="${createReviewDto}">
         <div class="mb-3">
             <label class="form-label" for="title">리뷰 제목</label>
-            <input class="form-control" type="text" name="title" id="title" />
+            <input class="form-control" type="text" name="title" id="title"
+                   th:field="*{title}" th:errorclass="field-error" placeholder="리뷰 제목"/>
+            <div class="field-error" th:errors="*{title}">
+                가격 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="content">내용</label>
-            <input class="form-control" type="text" name="content" id="content" />
+            <input class="form-control" type="text" name="content" id="content"
+                   th:field="*{content}" th:errorclass="field-error" placeholder="내용"/>
+            <div class="field-error" th:errors="*{content}">
+                내용 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="score">평점</label>
-            <select th:name="score" class="form-select" aria-label="Default select example">
-                <option th:each="score : ${reviewScores}" th:value="${score}" th:text="${score.getValue()}" id="score" ></option>
+            <select th:name="score" class="form-select" aria-label="Default select example" th:field="*{score}" th:errorclass="field-error">
+                <option th:each="reviewScore : ${reviewScores}" th:value="${reviewScore}" th:text="${reviewScore.getValue()}" id="score" ></option>
             </select>
+            <div class="field-error" th:errors="*{score}">
+                평점 입력 오류
+            </div>
         </div>
         <button class="btn btn-dark" type="submit">리뷰 등록하기</button>
     </form>

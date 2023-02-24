@@ -10,6 +10,10 @@
         padding: 50px;
         max-width: 560px;
     }
+    .field-error {
+         border-color: #dc3545;
+         color: #dc3545;
+    }
     </style>
 </head>
 <body>
@@ -21,22 +25,38 @@
 </nav>
 <div class="container" id="card">
     <h2>도서 판매하기</h2>
-    <form action="" method="post">
+    <form action="" method="post" th:object="${createBookDto}">
         <div class="mb-3">
             <label class="form-label" for="title">책 제목</label>
-            <input class="form-control" type="text" name="title" id="title" />
+            <input class="form-control" type="text" name="title" id="title"
+                   th:field="*{title}" th:errorclass="field-error" placeholder="책 제목"/>
+            <div class="field-error" th:errors="*{title}">
+                책 제목 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="price">가격</label>
-            <input class="form-control" type="text" name="price" id="price" />
+            <input class="form-control" type="text" name="price" id="price"
+                   th:field="*{price}" th:errorclass="field-error" placeholder="가격"/>
+            <div class="field-error" th:errors="*{price}">
+                가격 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="quantity">수량</label>
-            <input class="form-control" type="text" name="quantity" id="quantity" />
+            <input class="form-control" type="text" name="quantity" id="quantity"
+                   th:field="*{quantity}" th:errorclass="field-error" placeholder="수량"/>
+            <div class="field-error" th:errors="*{quantity}">
+                수량 입력 오류
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="author">작가</label>
-            <input class="form-control" type="text" name="author" id="author" />
+            <input class="form-control" type="text" name="author" id="author"
+                   th:field="*{author}" th:errorclass="field-error" placeholder="작가"/>
+            <div class="field-error" th:errors="*{author}">
+                작가 입력 오류
+            </div>
         </div>
         <button class="btn btn-dark" type="submit">도서 판매하기</button>
     </form>
