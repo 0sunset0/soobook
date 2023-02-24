@@ -1,8 +1,10 @@
 package usedbookshop.soobook.order.order.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.member.domain.Address;
@@ -15,9 +17,11 @@ import usedbookshop.soobook.order.order.dto.ViewOrderDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
 
     private final OrderService orderService;
@@ -25,14 +29,21 @@ public class OrderController {
 
     @GetMapping("/order")
     public String orderForm(@RequestParam("bookId") Long bookId, Model model){
-        model.addAttribute("bookId", bookId);
+        model.addAttribute("createOrderDto", new CreateOrderDto());
         return "order/createOrder";
 
     }
 
     @PostMapping("/order")
-    public String order(@ModelAttribute("createOrderDto") CreateOrderDto createOrderDto,
+    public String order(@Valid @ModelAttribute("createOrderDto") CreateOrderDto createOrderDto, BindingResult bindingResult,
                         @RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes){
+
+        //검증 에러 검사
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "order/createOrder";
+        }
+
         // 로그인 회원인지 검사
         HttpSession session = request.getSession(false);
         if (session == null) {
