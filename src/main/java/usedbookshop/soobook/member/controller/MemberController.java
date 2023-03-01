@@ -78,6 +78,7 @@ public class MemberController {
 
         Member loginMember = memberService.login(loginDto);
         if (loginMember == null){
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             redirectAttributes.addAttribute("loginStatus", "fail");
             return "redirect:/member/login";
         }
