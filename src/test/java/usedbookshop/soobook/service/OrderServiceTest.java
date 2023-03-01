@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import usedbookshop.soobook.book.book.domain.Book;
-import usedbookshop.soobook.book.category.CategoryBook;
-import usedbookshop.soobook.member.domain.Address;
-import usedbookshop.soobook.exception.NotEnoughStockException;
-import usedbookshop.soobook.member.domain.Member;
-import usedbookshop.soobook.member.domain.Password;
-import usedbookshop.soobook.order.order.domain.Order;
-import usedbookshop.soobook.order.order.domain.OrderStatus;
-import usedbookshop.soobook.order.order.service.OrderService;
+import usedbookshop.soobook.domain.book.book.entity.Book;
+import usedbookshop.soobook.domain.book.category.CategoryBook;
+import usedbookshop.soobook.domain.model.Address;
+import usedbookshop.soobook.domain.book.book.exception.NotEnoughStockException;
+import usedbookshop.soobook.domain.member.entity.Member;
+import usedbookshop.soobook.domain.member.entity.Password;
+import usedbookshop.soobook.domain.order.order.entity.Order;
+import usedbookshop.soobook.domain.order.order.entity.OrderStatus;
+import usedbookshop.soobook.domain.order.order.service.OrderService;
 
 import javax.persistence.EntityManager;
 
