@@ -33,7 +33,7 @@ public class IndexController {
         }
         model.addAttribute("best10BookDtos", best10BookDtos);
 
-        if(loginMember==null){
+        if(loginMember == null){
             return "index";
         }
         ViewMemberDto viewMemberDto = ViewMemberDto.from(loginMember);
