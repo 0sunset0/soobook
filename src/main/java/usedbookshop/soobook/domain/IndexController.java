@@ -1,6 +1,7 @@
 package usedbookshop.soobook.domain;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import usedbookshop.soobook.domain.member.entity.Member;
 import usedbookshop.soobook.domain.book.book.service.BookService;
 import usedbookshop.soobook.domain.book.book.dto.book.ViewBookDto;
 import usedbookshop.soobook.domain.member.dto.ViewMemberDto;
+import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +20,13 @@ import java.util.List;
 @Controller
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class IndexController {
 
     private final BookService bookService;
 
     @RequestMapping("/")
-    public String index(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model ){
+    public String index(@LoginMember Member loginMember, Model model){
 
         //베스트셀러 10권 가져오기
         List<Book> best10Books = bookService.findBest10Books();
@@ -36,10 +39,10 @@ public class IndexController {
         if(loginMember == null){
             return "index";
         }
+
         ViewMemberDto viewMemberDto = ViewMemberDto.from(loginMember);
         model.addAttribute("memberDto", viewMemberDto);
         return "indexForMember";
-
 
     }
 
