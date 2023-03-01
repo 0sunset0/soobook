@@ -14,6 +14,7 @@ import usedbookshop.soobook.domain.review.review.dto.ViewReviewDto;
 import usedbookshop.soobook.domain.review.review.service.ReviewService;
 import usedbookshop.soobook.domain.review.review.entity.Review;
 import usedbookshop.soobook.domain.book.book.service.BookService;
+import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,27 +66,17 @@ public class BookController {
      */
     @GetMapping("/books/createBook")
     public String createBookForm(HttpServletRequest request, Model model){
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
         model.addAttribute("createBookDto", new CreateBookDto());
         return "books/createBook";
     }
 
     @PostMapping("/books/createBook")
-    public String createBook(@Valid @ModelAttribute("createBookDto") CreateBookDto createBookDto, BindingResult bindingResult, HttpServletRequest request){
+    public String createBook(@Valid @ModelAttribute("createBookDto") CreateBookDto createBookDto, BindingResult bindingResult, @LoginMember Member loginMember){
         //검증 에러 검사
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "books/createBook";
         }
-
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
-        Member loginMember = (Member) session.getAttribute("loginMember");
 
         bookService.saveBook(createBookDto, loginMember);
         return "redirect:/books";

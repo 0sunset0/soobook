@@ -20,6 +20,8 @@ import usedbookshop.soobook.domain.book.book.service.BookService;
 import usedbookshop.soobook.domain.order.order.service.OrderService;
 import usedbookshop.soobook.domain.review.review.service.ReviewService;
 import usedbookshop.soobook.domain.member.dto.LoginDto;
+import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
+import usedbookshop.soobook.global.common.interceptor.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,7 +71,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request, RedirectAttributes redirectAttributes){
         // validation 에러 검사
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -89,8 +92,8 @@ public class MemberController {
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
         HttpSession session = request.getSession(true);
         //세션에 로그인 회원 정보 보관
-        session.setAttribute("loginMember", loginMember);
-
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        log.info("redirectURL: {}", redirectURL);
         return "redirect:/";
     }
 
@@ -110,13 +113,7 @@ public class MemberController {
      * 마이페이지
      */
     @GetMapping("/mypage")
-    public String mypage(HttpServletRequest request, Model model){
-
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
-        Member loginMember = (Member) session.getAttribute("loginMember");
+    public String mypage(Model model, @LoginMember Member loginMember){
 
         List<Order> ordersByMember = orderService.findByMember(loginMember.getId());
         List<ViewOrderDto> viewOrderDtos = new ArrayList<>();

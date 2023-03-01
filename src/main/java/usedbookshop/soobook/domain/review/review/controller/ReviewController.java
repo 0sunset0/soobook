@@ -20,6 +20,7 @@ import usedbookshop.soobook.domain.review.review.entity.ReviewScore;
 import usedbookshop.soobook.domain.book.book.service.BookService;
 import usedbookshop.soobook.domain.order.order.service.OrderService;
 import usedbookshop.soobook.domain.review.review.service.ReviewService;
+import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,7 +41,7 @@ public class ReviewController {
     /**
      * 리뷰 자세히 보기
      */
-    @GetMapping("book/review/detail")
+    @GetMapping("/book/review/detail")
     public String reviewDetail(@RequestParam("reviewId") Long reviewId, Model model){
         ViewReviewDto viewReviewDto = ViewReviewDto.from(reviewService.findReview(reviewId));
         model.addAttribute("viewReviewDto", viewReviewDto);
@@ -52,18 +53,11 @@ public class ReviewController {
     /**
      * 리뷰 작성
      */
-    @GetMapping("book/createReview")
-    public String createReviewForm(@RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model ){
-
-
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
+    @GetMapping("/book/createReview")
+    public String createReviewForm(@RequestParam("bookId") Long bookId, @LoginMember Member loginMember, RedirectAttributes redirectAttributes, Model model ){
 
         //멤버가 사지 않은 책에 리뷰를 쓰려고 하면 에러 메세지 출력
         Book book = bookService.findBook(bookId);
-        Member loginMember = (Member) session.getAttribute("loginMember");
         List<Order> orderList = orderService.findByMember(loginMember.getId());
 
         for (Order order : orderList) {
@@ -82,8 +76,9 @@ public class ReviewController {
     }
 
 
-    @PostMapping("book/createReview")
+    @PostMapping("/book/createReview")
     public String createReview(@Valid @ModelAttribute("createReviewDto") CreateReviewDto createReviewDto, BindingResult bindingResult,
+                               @LoginMember Member loginMember,
                                @RequestParam("bookId") Long bookId, HttpServletRequest request, Model model){
 
         //검증 에러 검사
@@ -93,16 +88,10 @@ public class ReviewController {
             return "book/createReview";
         }
 
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
-        Member loginMember = (Member) session.getAttribute("loginMember");
-        Member member = memberService.findMember(loginMember.getId());
         Book book = bookService.findBook(bookId);
-        reviewService.createReview(createReviewDto, book, member);
+        reviewService.createReview(createReviewDto, book, loginMember);
 
-        return "redirect:/book/detail?bookId="+bookId;
+        return "redirect:/book/detail?bookId=" + bookId;
     }
 
 

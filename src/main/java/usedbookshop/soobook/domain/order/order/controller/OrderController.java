@@ -8,12 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.domain.member.entity.Member;
+import usedbookshop.soobook.domain.member.exception.PasswordFailedExceededException;
 import usedbookshop.soobook.domain.order.order.dto.CreateOrderDto;
 import usedbookshop.soobook.domain.order.order.dto.ViewOrderDto;
 import usedbookshop.soobook.domain.order.order.entity.Order;
 import usedbookshop.soobook.domain.order.order.repository.OrderRepository;
 import usedbookshop.soobook.domain.model.Address;
 import usedbookshop.soobook.domain.order.order.service.OrderService;
+import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,6 +29,9 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
 
+    /**
+     *  주문
+     */
     @GetMapping("/order")
     public String orderForm(@RequestParam("bookId") Long bookId, Model model){
         model.addAttribute("createOrderDto", new CreateOrderDto());
@@ -36,20 +41,13 @@ public class OrderController {
 
     @PostMapping("/order")
     public String order(@Valid @ModelAttribute("createOrderDto") CreateOrderDto createOrderDto, BindingResult bindingResult,
-                        @RequestParam("bookId") Long bookId, HttpServletRequest request, RedirectAttributes redirectAttributes){
+                        @RequestParam("bookId") Long bookId, @LoginMember Member loginMember, RedirectAttributes redirectAttributes){
 
         //검증 에러 검사
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "order/createOrder";
         }
-
-        // 로그인 회원인지 검사
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
-        Member loginMember = (Member) session.getAttribute("loginMember");
 
         // 폼에서 배송 정보 받기 -> 주문 처리
         Address deliveryAddress = Address.createAddress(createOrderDto.getDeliveryArea(), createOrderDto.getDeliveryRoadCode(), createOrderDto.getDeliveryRoadName());
@@ -60,32 +58,29 @@ public class OrderController {
         return "redirect:/order/detail";
     }
 
+    /**
+     * 주문 내역 보기
+     */
+    //TODO 본인이 구매한 상품의 주문정보만 볼 수 있게 수정해야 함.
     @GetMapping("/order/detail")
     public String detail(@RequestParam("orderId") Long orderId, Model model){
-
         ViewOrderDto viewOrderDto = ViewOrderDto.from(orderService.findOrder(orderId));
         model.addAttribute("viewOrderDto", viewOrderDto);
-
         return "order/detail";
 
     }
 
 
+    /**
+     * 주문 취소
+     */
     @GetMapping("/order/cancel")
-    public String cancel(@RequestParam("orderId") Long orderId, HttpServletRequest request){
-
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/member/login";
-        }
-
-        Member loginMember = (Member) session.getAttribute("loginMember");
+    public String cancel(@RequestParam("orderId") Long orderId, @LoginMember Member loginMember){
 
         Order order = orderRepository.findById(orderId);
         if (order.getMember().getId()==loginMember.getId()){
             orderService.cancel(orderId);
         }
-
         return "redirect:/member/mypage";
     }
 
