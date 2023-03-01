@@ -25,7 +25,7 @@
 </nav>
 <div class="container" id="card">
     <h2>로그인</h2>
-    <form action="" th:action="@{/member/login}" th:object="${loginDto}" method="post">
+    <form action="" th:object="${loginDto}" method="post">
         <div class="mb-3">
             <label class="form-label" for="email">이메일</label>
             <input th:field="*{email}" th:errorclass="field-error" class="form-control" type="email" name="email" id="email" placeholder="이메일"/>
