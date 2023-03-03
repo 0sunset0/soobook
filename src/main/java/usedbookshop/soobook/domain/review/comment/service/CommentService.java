@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import usedbookshop.soobook.domain.review.comment.entity.Comment;
 import usedbookshop.soobook.domain.review.comment.repository.CommentRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -15,13 +17,18 @@ public class CommentService {
 
     //댓글 등록
     @Transactional
-    public void createComment(Comment comment){
-        commentRepository.save(comment);
+    public Long createComment(Comment comment){
+        return commentRepository.save(comment);
     }
 
     //댓글 삭제
     @Transactional
     public Long deleteComment(Long commentId){
         return commentRepository.delete(commentId);
+    }
+
+    //댓글들 조회
+    public List<Comment> findCommentsByReview(Long reviewId){
+        return commentRepository.findByReview(reviewId);
     }
 }
