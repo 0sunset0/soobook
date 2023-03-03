@@ -15,8 +15,9 @@ class CommentRepositoryImpl implements CommentRepository{
     private final EntityManager em;
 
     @Override
-    public void save(Comment comment) {
+    public Long save(Comment comment) {
         em.persist(comment);
+        return comment.getId();
     }
 
     @Override
