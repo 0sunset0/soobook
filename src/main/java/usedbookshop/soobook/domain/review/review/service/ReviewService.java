@@ -36,11 +36,10 @@ public class ReviewService {
     }
 
     //리뷰 수정
-    public Long updateReview(Long reviewId, String title, String contents, ReviewScore score, Long memberId){
+    public void updateReview(Long reviewId, String title, String contents, ReviewScore score, Long memberId){
         Review findReview = reviewRepository.findById(reviewId);
         Member findMember = memberRepository.findById(memberId);
         findReview.modifyReview(title, contents, score, findMember);
-        return findReview.getId();
     }
 
     //도서 별 리뷰들 보기
