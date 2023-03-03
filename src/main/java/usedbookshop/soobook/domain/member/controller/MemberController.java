@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -116,21 +117,22 @@ public class MemberController {
     public String mypage(Model model, @LoginMember Member loginMember){
 
         List<Order> ordersByMember = orderService.findByMember(loginMember.getId());
-        List<ViewOrderDto> viewOrderDtos = new ArrayList<>();
-        for (Order order : ordersByMember) {
-            viewOrderDtos.add(ViewOrderDto.from(order));
-        }
+        List<ViewOrderDto> viewOrderDtos = ordersByMember.stream()
+                .map(o -> ViewOrderDto.from(o))
+                .collect(Collectors.toList());
+
 
         List<Review> reviewsByMember = reviewService.findByMember(loginMember.getId());
-        List<ViewReviewDto> viewReviewDtos = new ArrayList<>();
-        for (Review review : reviewsByMember) {
-            viewReviewDtos.add(ViewReviewDto.from(review));
-        }
+        List<ViewReviewDto> viewReviewDtos = reviewsByMember.stream()
+                .map(r -> ViewReviewDto.from(r))
+                .collect(Collectors.toList());
+
+
         List<Book> booksByMember = bookService.findByMember(loginMember.getId());
-        List<ViewBookDto> viewBookDtos = new ArrayList<>();
-        for (Book book : booksByMember) {
-            viewBookDtos.add(ViewBookDto.from(book));
-        }
+        List<ViewBookDto> viewBookDtos = booksByMember.stream()
+                .map(b -> ViewBookDto.from(b))
+                .collect(Collectors.toList());
+
         model.addAttribute("viewOrderDtos", viewOrderDtos);
         model.addAttribute("viewReviewDtos", viewReviewDtos);
         model.addAttribute("viewBookDtos", viewBookDtos);

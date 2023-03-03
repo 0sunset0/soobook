@@ -14,6 +14,7 @@ import usedbookshop.soobook.domain.order.order.entity.Order;
 import usedbookshop.soobook.domain.order.order.entity.OrderBook;
 import usedbookshop.soobook.domain.review.comment.entity.Comment;
 import usedbookshop.soobook.domain.review.comment.repository.CommentRepository;
+import usedbookshop.soobook.domain.review.comment.service.CommentService;
 import usedbookshop.soobook.domain.review.review.dto.CreateReviewDto;
 import usedbookshop.soobook.domain.review.review.dto.ViewReviewDto;
 import usedbookshop.soobook.domain.review.review.entity.ReviewScore;
@@ -35,8 +36,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final BookService bookService;
     private final OrderService orderService;
-    private final MemberService memberService;
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     /**
      * 리뷰 자세히 보기
@@ -45,7 +45,7 @@ public class ReviewController {
     public String reviewDetail(@RequestParam("reviewId") Long reviewId, Model model){
         ViewReviewDto viewReviewDto = ViewReviewDto.from(reviewService.findReview(reviewId));
         model.addAttribute("viewReviewDto", viewReviewDto);
-        List<Comment> commentList = commentRepository.findByReview(reviewId);
+        List<Comment> commentList = commentService.findCommentsByReview(reviewId);
         model.addAttribute("commentList", commentList);
         return "book/review/detail";
     }
@@ -70,6 +70,7 @@ public class ReviewController {
                 }
             }
         }
+
         redirectAttributes.addAttribute("bookId", bookId);
         return "redirect:/book/detail";
 

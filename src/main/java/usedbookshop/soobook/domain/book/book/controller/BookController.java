@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,11 +37,11 @@ public class BookController {
     @GetMapping("/books")
     public String books(Model model){
         List<Book> allBooks = bookService.findAllBooks();
-        List<ViewBookDto> viewBookDtos = new ArrayList<>();
-        for (Book book : allBooks) {
-            viewBookDtos.add(ViewBookDto.from(book));
-        }
+        List<ViewBookDto> viewBookDtos = allBooks.stream()
+                .map(b -> ViewBookDto.from(b))
+                .collect(Collectors.toList());
         model.addAttribute("viewBookDtos", viewBookDtos);
+
         return "books/all";
     }
 
@@ -52,12 +53,12 @@ public class BookController {
         ViewBookDto viewBookDto = ViewBookDto.from(bookService.findBook(bookId));
         model.addAttribute("viewBookDto", viewBookDto);
 
-        List<Review> reviewsBtBook = reviewService.findByBook(bookId);
-        List<ViewReviewDto> viewReviewDtos = new ArrayList<>();
-        for (Review review : reviewsBtBook) {
-            viewReviewDtos.add(ViewReviewDto.from(review));
-        }
+        List<Review> reviewsByBook = reviewService.findByBook(bookId);
+        List<ViewReviewDto> viewReviewDtos = reviewsByBook.stream()
+                .map(r -> ViewReviewDto.from(r))
+                .collect(Collectors.toList());
         model.addAttribute("viewReviewDtos", viewReviewDtos);
+
         return "book/detail";
     }
 
@@ -65,7 +66,7 @@ public class BookController {
      * 책 등록하기
      */
     @GetMapping("/books/createBook")
-    public String createBookForm(HttpServletRequest request, Model model){
+    public String createBookForm (Model model){
         model.addAttribute("createBookDto", new CreateBookDto());
         return "books/createBook";
     }

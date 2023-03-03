@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import usedbookshop.soobook.domain.book.book.entity.Book;
 import usedbookshop.soobook.domain.member.entity.Member;
 import usedbookshop.soobook.domain.book.book.service.BookService;
@@ -16,6 +15,7 @@ import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Component
@@ -30,10 +30,9 @@ public class IndexController {
 
         //베스트셀러 10권 가져오기
         List<Book> best10Books = bookService.findBest10Books();
-        List<ViewBookDto> best10BookDtos = new ArrayList<>();
-        for (Book book : best10Books) {
-            best10BookDtos.add(ViewBookDto.from(book));
-        }
+        List<ViewBookDto> best10BookDtos = best10Books.stream()
+                .map(b -> ViewBookDto.from(b))
+                .collect(Collectors.toList());
         model.addAttribute("best10BookDtos", best10BookDtos);
 
         if(loginMember == null){
