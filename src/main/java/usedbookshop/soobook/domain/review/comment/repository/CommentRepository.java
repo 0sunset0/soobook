@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentRepository {
 
-    Long save(Comment comment);
+    void save(Comment comment);
 
     Comment findById(Long commentId);
 
