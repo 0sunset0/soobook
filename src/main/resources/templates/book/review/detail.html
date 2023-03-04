@@ -26,6 +26,10 @@
 <div class="container" id="card">
     <h2 th:text="${viewReviewDto.title}">리뷰 제목</h2>
     <div class="mb-3">
+        <label class="form-label" for="author">작성자</label>
+        <p class="form-control" type="text" name="author" id="author" th:text="${viewReviewDto.author}">리뷰 내용1</p>
+    </div>
+    <div class="mb-3">
         <label class="form-label" for="content">리뷰 내용</label>
         <p class="form-control" type="text" name="content" id="content" th:text="${viewReviewDto.content}">리뷰 내용1</p>
     </div>
