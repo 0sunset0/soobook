@@ -16,10 +16,12 @@ import usedbookshop.soobook.domain.review.comment.entity.Comment;
 import usedbookshop.soobook.domain.review.comment.service.CommentService;
 import usedbookshop.soobook.domain.review.review.dto.CreateReviewDto;
 import usedbookshop.soobook.domain.review.review.dto.ViewReviewDto;
+import usedbookshop.soobook.domain.review.review.entity.Review;
 import usedbookshop.soobook.domain.review.review.entity.ReviewScore;
 import usedbookshop.soobook.domain.book.book.service.BookService;
 import usedbookshop.soobook.domain.order.order.service.OrderService;
 import usedbookshop.soobook.domain.review.review.service.ReviewService;
+import usedbookshop.soobook.global.common.aop.LogExecutionTime;
 import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,10 +43,13 @@ public class ReviewController {
      * 리뷰 자세히 보기
      */
     @GetMapping("/book/review/detail")
+    @LogExecutionTime
     public String reviewDetail(@RequestParam("reviewId") Long reviewId, Model model){
-        ViewReviewDto viewReviewDto = ViewReviewDto.from(reviewService.findReview(reviewId));
+        Review findReview = reviewService.findReview(reviewId);
+        ViewReviewDto viewReviewDto = ViewReviewDto.from(findReview); //지연로딩 Member 프록시 초기화 (n+1 묹제 발생)
         model.addAttribute("viewReviewDto", viewReviewDto);
-        List<Comment> commentList = commentService.findCommentsByReview(reviewId);
+
+        List<Comment> commentList = findReview.getCommentList(); //지연로딩 초기화
         List<ViewCommentDto> viewCommentDtos = commentList.stream()
                 .map(c -> ViewCommentDto.from(c))
                 .collect(Collectors.toList());
@@ -62,10 +67,11 @@ public class ReviewController {
         Book book = bookService.findBook(bookId);
         List<Order> orderList = orderService.findByMember(loginMember.getId());
 
+        // n+1 문제 발생
         for (Order order : orderList) {
-            List<OrderBook> orderBookList = order.getOrderBookList();
+            List<OrderBook> orderBookList = order.getOrderBookList(); //지연로딩 초기화
             for (OrderBook orderBook : orderBookList) {
-                if (orderBook.getBook() == book){
+                if (orderBook.getBook() == book){ //지연로딩 초기화
                     model.addAttribute("reviewScores", ReviewScore.values());
                     model.addAttribute("createReviewDto", new CreateReviewDto());
                     return "book/createReview";
