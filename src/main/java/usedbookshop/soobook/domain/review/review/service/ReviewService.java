@@ -44,8 +44,7 @@ public class ReviewService {
 
     //도서 별 리뷰들 보기
     public List<Review> findByBook(Long bookId){
-        List<Review> reviews = reviewRepository.findByBook(bookId);
-
+        List<Review> reviews = reviewRepository.findByBookWithMember(bookId);
         return reviews;
     }
 

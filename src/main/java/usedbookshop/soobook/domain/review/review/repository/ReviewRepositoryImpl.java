@@ -6,6 +6,7 @@ import usedbookshop.soobook.domain.review.review.entity.Review;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -26,6 +27,11 @@ class ReviewRepositoryImpl implements ReviewRepository{
         return em.find(Review.class, reviewId);
     }
 
+    @Override
+    public Review findWithMember(Long reviewId) {
+        return em.createQuery("select r from Review r inner join fetch r.member m", Review.class).getSingleResult();
+    }
+
 
     @Override
     public List<Review> findByMember(Long memberId) {
@@ -37,6 +43,15 @@ class ReviewRepositoryImpl implements ReviewRepository{
     @Override
     public List<Review> findByBook(Long bookId) {
         return em.createQuery("select r from Review r inner join r.book b on b.id=:bookId", Review.class)
+                .setParameter("bookId", bookId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Review> findByBookWithMember(Long bookId) {
+        return em.createQuery("select r from Review r" +
+                        " join fetch r.member m" +
+                        " inner join r.book b on b.id=:bookId", Review.class)
                 .setParameter("bookId", bookId)
                 .getResultList();
     }
