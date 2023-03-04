@@ -77,7 +77,7 @@ public class OrderController {
     @GetMapping("/order/cancel")
     public String cancel(@RequestParam("orderId") Long orderId, @LoginMember Member loginMember){
 
-        Order order = orderRepository.findById(orderId);
+        Order order = orderService.findOrder(orderId);
         if (order.getMember().getId()==loginMember.getId()){
             orderService.cancel(orderId);
         }
