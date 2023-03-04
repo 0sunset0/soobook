@@ -5,8 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import usedbookshop.soobook.domain.model.Address;
+import usedbookshop.soobook.domain.order.order.entity.Order;
+import usedbookshop.soobook.domain.review.comment.entity.Comment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -42,7 +46,6 @@ public class Member {
             ,@AttributeOverride(name="roadCode", column = @Column(name = "work_roadCode"))
     })
     private Address workAddress;
-
 
     @Builder
     private Member(String name, Address homeAddress, Address workAddress, String email, Password password) {

@@ -5,6 +5,10 @@ import lombok.Getter;
 import usedbookshop.soobook.domain.book.book.entity.Book;
 import usedbookshop.soobook.domain.book.book.entity.BookStatus;
 import usedbookshop.soobook.domain.member.entity.Member;
+import usedbookshop.soobook.domain.review.review.dto.ViewReviewDto;
+import usedbookshop.soobook.domain.review.review.entity.Review;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
