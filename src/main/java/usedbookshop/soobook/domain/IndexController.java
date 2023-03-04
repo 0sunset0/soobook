@@ -11,6 +11,7 @@ import usedbookshop.soobook.domain.member.entity.Member;
 import usedbookshop.soobook.domain.book.book.service.BookService;
 import usedbookshop.soobook.domain.book.book.dto.book.ViewBookDto;
 import usedbookshop.soobook.domain.member.dto.ViewMemberDto;
+import usedbookshop.soobook.global.common.aop.LogExecutionTime;
 import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import java.util.ArrayList;
