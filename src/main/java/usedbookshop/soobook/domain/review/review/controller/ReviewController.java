@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import usedbookshop.soobook.domain.book.book.entity.Book;
 import usedbookshop.soobook.domain.member.entity.Member;
-import usedbookshop.soobook.domain.member.service.MemberService;
 import usedbookshop.soobook.domain.order.order.entity.Order;
 import usedbookshop.soobook.domain.order.order.entity.OrderBook;
+import usedbookshop.soobook.domain.review.comment.dto.ViewCommentDto;
 import usedbookshop.soobook.domain.review.comment.entity.Comment;
-import usedbookshop.soobook.domain.review.comment.repository.CommentRepository;
 import usedbookshop.soobook.domain.review.comment.service.CommentService;
 import usedbookshop.soobook.domain.review.review.dto.CreateReviewDto;
 import usedbookshop.soobook.domain.review.review.dto.ViewReviewDto;
@@ -24,9 +23,9 @@ import usedbookshop.soobook.domain.review.review.service.ReviewService;
 import usedbookshop.soobook.global.common.argumentresolver.LoginMember;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,7 +45,10 @@ public class ReviewController {
         ViewReviewDto viewReviewDto = ViewReviewDto.from(reviewService.findReview(reviewId));
         model.addAttribute("viewReviewDto", viewReviewDto);
         List<Comment> commentList = commentService.findCommentsByReview(reviewId);
-        model.addAttribute("commentList", commentList);
+        List<ViewCommentDto> viewCommentDtos = commentList.stream()
+                .map(c -> ViewCommentDto.from(c))
+                .collect(Collectors.toList());
+        model.addAttribute("viewCommentDtos", viewCommentDtos);
         return "book/review/detail";
     }
 

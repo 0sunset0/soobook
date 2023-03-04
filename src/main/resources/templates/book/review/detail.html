@@ -56,12 +56,12 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            <div class="col mb-5" th:each="comment : ${commentList}">
+            <div class="col mb-5" th:each="viewCommentDto : ${viewCommentDtos}">
                 <div class="card h-100">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <h5 class="fw-bolder" th:text="${comment.member.name}">작성자</h5>
-                            <p class="card-text" th:text="${comment.content}">댓글 내용</p>
+                            <h5 class="fw-bolder" th:text="${viewCommentDto.member.name}">작성자</h5>
+                            <p class="card-text" th:text="${viewCommentDto.content}">댓글 내용</p>
                         </div>
                     </div>
                 </div>
