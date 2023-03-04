@@ -20,12 +20,12 @@ public class ViewReviewDto {
     private String content;
     private ReviewScore score;
     private Book book;
-    private Member member;
-    private List<Comment> commentList = new ArrayList<>();
+    private String author;
+    private List<Comment> commentList;
 
     public static ViewReviewDto from(Review review){
         return new ViewReviewDto(review.getId(),
                 review.getTitle(), review.getContent(), review.getScore(),
-                review.getBook(), review.getMember(), review.getCommentList());
+                review.getBook(), review.getMember().getName(), review.getCommentList());
     }
 }
