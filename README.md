@@ -48,7 +48,7 @@
 
   <br><br><br>
 
-# 💡 요구사항, 기능 소개
+# 💡 주요 기능
 
 ### 회원
 
@@ -103,7 +103,7 @@
 
 <br><br><br>
 
-# 💡 엔티티 구조
+# 💡 도메인 설계
 
 ![img_4.png](src/image/img_4.png)
 
@@ -121,7 +121,9 @@
 
 ![img_3.png](src/image/img_3.png)
 
-- 각 테이블의 pk인 id는 auto_increment 방식으로 의미 없는 값을 자동 생성하게 만들었다.
-- `order` 가 예약어라서 테이블명으로 orders라는 이름을 사용했다.
 
 <br><br><br>
+
+
+
+# 💡 이슈 사항
