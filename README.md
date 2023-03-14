@@ -119,11 +119,9 @@
 
 # 💡 데이터베이스 구조
 
-![img_3.png](src/image/img_3.png)
+![image](https://user-images.githubusercontent.com/81086966/224981502-33a9e9fe-ba2d-4491-9df0-916fcd0febcf.png)
 
 
 <br><br><br>
 
 
-
-# 💡 이슈 사항
