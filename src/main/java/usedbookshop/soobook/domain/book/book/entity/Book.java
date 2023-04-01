@@ -44,7 +44,6 @@ public class Book extends Date {
     private Member member;
 
 
-    //private 생성자
     @Builder
     private Book(String title, Long price, String author, Long quantity, Member member) {
         this.title = title;
