@@ -1,7 +1,9 @@
 package usedbookshop.soobook.domain.review.comment.entity;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import usedbookshop.soobook.domain.model.Date;
 import usedbookshop.soobook.domain.member.entity.Member;
 import usedbookshop.soobook.domain.review.review.entity.Review;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends Date {
 
     @Id @GeneratedValue
