@@ -32,9 +32,9 @@ class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public List<Book> findByName(String name) {
-        return em.createQuery("select b from Book b where name=:name", Book.class)
-                .setParameter("name", name)
+    public List<Book> findByName(String title) {
+        return em.createQuery("select b from Book b where title=:title", Book.class)
+                .setParameter(title, title)
                 .getResultList();
     }
 
